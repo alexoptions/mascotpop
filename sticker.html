@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MASCOT POP! ⚡ Sticker & Rig Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FAF7F0;
+      --card-bg: #FFFFFF;
+      --border-ink: #1E1B18;
+      --text-main: #1E1B18;
+      --text-sub: #78716C;
+      --pop-yellow: #FACC15;
+      --pop-orange: #FB923C;
+      --pop-pink: #F472B6;
+      --pop-mint: #34D399;
+      --pop-purple: #A78BFA;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Header */
+    header {
+      background: var(--card-bg);
+      border-bottom: 2.5px solid var(--border-ink);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      background: var(--pop-yellow);
+      color: var(--border-ink);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 11px;
+      border-radius: 9px;
+      border: 2px solid var(--border-ink);
+      box-shadow: 2px 2px 0 var(--border-ink);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transform: rotate(-1.5deg);
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subtag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9A3412;
+      background: #FFEDD5;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-ink);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 2px solid var(--border-ink);
+      background: #FFFFFF;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 7px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+    }
+
+    .btn:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: 4px 4px 0 var(--border-ink);
+    }
+
+    .btn:active {
+      transform: translate(1.5px, 1.5px);
+      box-shadow: 1px 1px 0 var(--border-ink);
+    }
+
+    .btn-surprise {
+      background: #E9D5FF;
+      color: var(--border-ink);
+    }
+
+    .btn-yellow {
+      background: var(--pop-yellow);
+    }
+
+    .btn-mint {
+      background: var(--pop-mint);
+    }
+
+    .btn-orange {
+      background: var(--pop-orange);
+      color: #1E1B18;
+    }
+
+    /* Main 3-Column Studio */
+    .workspace {
+      display: grid;
+      grid-template-columns: 325px 1fr 335px;
+      flex: 1;
+      height: calc(100vh - 59px);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      background: var(--card-bg);
+      border-right: 2.5px solid var(--border-ink);
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sidebar-right {
+      border-right: none;
+      border-left: 2.5px solid var(--border-ink);
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--text-sub);
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-badge {
+      font-size: 10px;
+      background: #F5F5F4;
+      border: 1.5px solid #D6D3D1;
+      padding: 1px 6px;
+      border-radius: 6px;
+      color: var(--border-ink);
+      font-family: var(--font-mono);
+    }
+
+    /* 8 Mascots Grid */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .char-card {
+      border: 2px solid #E7E5E4;
+      border-radius: 12px;
+      padding: 8px 6px;
+      text-align: center;
+      cursor: pointer;
+      background: #FAF9F6;
+      transition: all 0.14s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .char-card:hover {
+      border-color: var(--border-ink);
+      transform: translateY(-1.5px);
+    }
+
+    .char-card.active {
+      border-color: var(--border-ink);
+      background: #FEF08A;
+      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+    }
+
+    .char-preview-icon {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-ink);
+      border-radius: 9px;
+    }
+
+    .char-info {
+      text-align: left;
+      overflow: hidden;
+    }
+
+    .char-name {
+      font-size: 12.5px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .char-desc {
+      font-size: 10.5px;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .key-hint {
+      position: absolute;
+      top: 4px;
+      right: 5px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      color: #78716C;
+      opacity: 0.7;
+    }
+
+    /* Pill Selection Buttons */
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+
+    .pill-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .pill-btn {
+      padding: 7px 8px;
+      border-radius: 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+      background: #FAF9F6;
+      border: 2px solid #E7E5E4;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .pill-btn:hover {
+      border-color: var(--border-ink);
+      background: #FFFFFF;
+    }
+
+    .pill-btn.active {
+      background: var(--border-ink);
+      color: #FFFFFF;
+      border-color: var(--border-ink);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.18);
+    }
+
+    /* Center Stage Canvas */
+    .stage-canvas {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-cream);
+      background-image: 
+        linear-gradient(to right, rgba(30, 27, 24, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 27, 24, 0.055) 1px, transparent 1px);
+      background-size: 24px 24px;
+      overflow: hidden;
+    }
+
+    .stage-canvas.bg-dots {
+      background-image: radial-gradient(rgba(30, 27, 24, 0.15) 1.5px, transparent 1.5px);
+      background-size: 20px 20px;
+    }
+
+    .stage-canvas.bg-clean {
+      background-image: none;
+      background-color: #FFFFFF;
+    }
+
+    .stage-canvas.bg-night {
+      background-color: #18181B;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    }
+
+    /* Top Stage Shortcut Bar */
+    .stage-top-bar {
+      position: absolute;
+      top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      z-index: 10;
+      padding: 0 12px;
+    }
+
+    .kbd-pill {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid var(--border-ink);
+      border-radius: 8px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 1.5px 1.5px 0 var(--border-ink);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .kbd-pill:hover {
+      transform: translateY(-1px);
+      background: #FEF9C3;
+    }
+
+    .kbd-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: var(--border-ink);
+      color: #FFF;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .svg-stage {
+      width: 100%;
+      height: 100%;
+      max-width: 580px;
+      max-height: 520px;
+      cursor: pointer;
+    }
+
+    /* Stage Bottom Status Pill */
+    .status-pill {
+      position: absolute;
+      bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      padding: 6px 15px;
+      border-radius: 999px;
+      border: 2px solid var(--border-ink);
+      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+      font-size: 12px;
+      font-weight: 800;
+      z-index: 10;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #22C55E;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #22C55E;
+    }
+
+    /* Right Control Cards */
+    .control-card {
+      background: #FAF9F6;
+      border: 2px solid var(--border-ink);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+    }
+
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .slider-header {
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .slider-header span:last-child {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #9A3412;
+      background: #FFEDD5;
+      padding: 0 6px;
+      border-radius: 4px;
+      border: 1px solid #FDBA74;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 7px;
+      background: #E7E5E4;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-ink);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--pop-yellow);
+      cursor: pointer;
+      border: 2px solid var(--border-ink);
+      box-shadow: 1px 1px 0 var(--border-ink);
+      transition: transform 0.1s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    /* Swatch Row */
+    .swatch-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--border-ink);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+
+    /* Clean Code Inspection */
+    .code-box {
+      background: #1E1B18;
+      color: #FDE047;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      line-height: 1.45;
+      padding: 10px;
+      border-radius: 10px;
+      max-height: 140px;
+      overflow-y: auto;
+      border: 2px solid var(--border-ink);
+      white-space: pre-wrap;
+      word-break: break-all;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    /* Explode Labels Overlay */
+    .explode-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .explode-overlay.active {
+      opacity: 1;
+    }
+
+    .tag-bubble {
+      position: absolute;
+      background: var(--border-ink);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 7px;
+      transform: translate(-50%, -50%);
+      border: 1.5px solid #FFF;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+      white-space: nowrap;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--border-ink);
+      color: #FEF08A;
+      border: 2px solid #FFF;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.2, 0.9, 0.2, 1);
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Live Exported SVG Preview Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(24, 24, 27, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-cream);
+      border: 3px solid var(--border-ink);
+      border-radius: 18px;
+      box-shadow: 8px 8px 0 var(--border-ink);
+      width: 100%;
+      max-width: 540px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      background: #FFFFFF;
+      border-bottom: 2.5px solid var(--border-ink);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-preview-frame {
+      width: 100%;
+      height: 320px;
+      background: #FFFFFF;
+      border: 2px solid var(--border-ink);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background-image: radial-gradient(rgba(30, 27, 24, 0.12) 1.5px, transparent 1.5px);
+      background-size: 18px 18px;
+    }
+
+    .modal-note {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-align: center;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1080px) {
+      .workspace {
+        grid-template-columns: 290px 1fr;
+      }
+      .sidebar-right {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .workspace {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+      }
+      .stage-canvas {
+        min-height: 440px;
+      }
+      .sidebar-right {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-badge">⚡ MASCOT POP!</div>
+      <div class="brand-title">
+        Sticker & Rig Lab
+        <span class="subtag">Cozy 1:1 SVG Motion</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn btn-surprise" id="btnSurprise" title="Randomize Character, Move & Hat [R]">
+        <span>🎲</span> Surprise Me!
+      </button>
+      <button class="btn" id="btnSound" title="Toggle Synth SFX">
+        <span id="soundIcon">🔊</span> SFX
+      </button>
+      <button class="btn btn-yellow" id="btnExplode" title="Inspect SVG Layers [E]">
+        <span>🩻</span> X-Ray Layers
+      </button>
+      <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
+        <span>👁️</span> Preview Export
+      </button>
+      <button class="btn btn-mint" id="btnCopySvg" title="Copy Standalone Animated SVG Code">
+        <span>📋</span> Copy SVG
+      </button>
+      <button class="btn btn-orange" id="btnExport" title="Download Standalone Animated .SVG File">
+        <span>⬇️</span> Download .SVG
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Studio Workspace -->
+  <main class="workspace">
+
+    <!-- Left Sidebar: Buddies, Moves, Props & Faces -->
+    <aside class="sidebar">
+      <div>
+        <div class="section-title">
+          <span>1. Pick Your Buddy</span>
+          <span class="section-badge">KEYS 1-8</span>
+        </div>
+        <div class="char-grid" id="charGrid"></div>
+      </div>
+
+      <div>
+        <div class="section-title">
+          <span>2. Cozy Motion Loop</span>
+          <span class="section-badge">SOFT IK</span>
+        </div>
+        <div class="pill-grid" id="motionGrid">
+          <button class="pill-btn active" data-motion="bounce">☁️ Cozy Hop</button>
+          <button class="pill-btn" data-motion="sway">🎵 Chill Sway</button>
+          <button class="pill-btn" data-motion="walk">👟 Happy Stroll</button>
+          <button class="pill-btn" data-motion="float">✨ Dreamy Float</button>
+          <button class="pill-btn" data-motion="wiggle">🌸 Soft Wiggle</button>
+          <button class="pill-btn" data-motion="nod">🎧 Lo-Fi Nod</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">
+          <span>3. Vibe Expression</span>
+          <span class="section-badge">FACE RIG</span>
+        </div>
+        <div class="pill-grid-3" id="exprGrid">
+          <button class="pill-btn active" data-expr="happy">😊 Happy</button>
+          <button class="pill-btn" data-expr="star">🤩 Starry</button>
+          <button class="pill-btn" data-expr="wink">😉 Cheeky</button>
+          <button class="pill-btn" data-expr="open">😮 Shock</button>
+          <button class="pill-btn" data-expr="shades">😎 Cool</button>
+          <button class="pill-btn" data-expr="chill">😌 Zen</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">
+          <span>4. Headwear / Sticker Prop</span>
+          <span class="section-badge">HAT SLOT</span>
+        </div>
+        <div class="pill-grid-3" id="propGrid">
+          <button class="pill-btn active" data-prop="none">🚫 None</button>
+          <button class="pill-btn" data-prop="crown">👑 Crown</button>
+          <button class="pill-btn" data-prop="sprout">🌱 Sprout</button>
+          <button class="pill-btn" data-prop="halo">😇 Halo</button>
+          <button class="pill-btn" data-prop="beanie">🧢 Beanie</button>
+          <button class="pill-btn" data-prop="bow">🎀 Ribbon</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center Stage -->
+    <section class="stage-canvas" id="stageContainer">
+      <!-- Interactive Shortcut Pills -->
+      <div class="stage-top-bar">
+        <div class="kbd-pill" id="pillBoing">
+          <span class="kbd-tag">SPACE</span> Boing Jump!
+        </div>
+        <div class="kbd-pill" id="pillRandom">
+          <span class="kbd-tag">R</span> Randomize
+        </div>
+        <div class="kbd-pill" id="pillXray">
+          <span class="kbd-tag">E</span> X-Ray Rig
+        </div>
+      </div>
+
+      <svg id="stageSvg" class="svg-stage" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+        <!-- Floor Cast Shadow -->
+        <g id="geo-shadow">
+          <ellipse id="shadowEl" cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22" />
+        </g>
+
+        <!-- Main Character Hierarchy -->
+        <g id="geo-root">
+          <!-- 1. Legs placed behind torso with deep hip socket overlap (never detaches!) -->
+          <g id="geo-feet"></g>
+
+          <!-- 2. Main Geometric Silhouette -->
+          <g id="geo-body"></g>
+
+          <!-- 3. Headwear Prop (Anchored to top of head) -->
+          <g id="geo-prop"></g>
+
+          <!-- 4. Facial Features (Locked sockets + clamped pupil peek) -->
+          <g id="geo-face">
+            <g id="geo-cheeks"></g>
+            <g id="geo-eyes"></g>
+            <g id="geo-mouth"></g>
+          </g>
+
+          <!-- 5. Rubberhose Arms -->
+          <g id="geo-hands"></g>
+        </g>
+
+        <!-- Particle FX Layer -->
+        <g id="geo-particles"></g>
+      </svg>
+
+      <!-- Explode Layer Badges -->
+      <div class="explode-overlay" id="explodeOverlay"></div>
+
+      <!-- Bottom Status Pill -->
+      <div class="status-pill">
+        <span class="live-dot"></span>
+        <span id="statusText">Plus (加號仔) • ClickMascot or Press [Space] to Boing!</span>
+      </div>
+    </section>
+
+    <!-- Right Sidebar: Creator Sliders, Color Swatches & Baked SVG Code -->
+    <aside class="sidebar sidebar-right">
+      <div>
+        <div class="section-title">
+          <span>5. Cozy Feel & Squish</span>
+          <span class="section-badge">GENTLE</span>
+        </div>
+        <div class="control-card">
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>🍮 Soft Squish</span>
+              <span id="txtSquash">0.8x</span>
+            </div>
+            <input type="range" id="sliderSquash" min="0" max="1.5" step="0.1" value="0.8">
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>🍃 Chill Tempo</span>
+              <span id="txtSpeed">0.8x</span>
+            </div>
+            <input type="range" id="sliderSpeed" min="0.4" max="1.5" step="0.1" value="0.8">
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>☁️ Cushion Height</span>
+              <span id="txtHeight">12px</span>
+            </div>
+            <input type="range" id="sliderHeight" min="4" max="24" step="1" value="12">
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-header">
+              <span>👀 Eye Peek Range</span>
+              <span id="txtGaze">1.6px</span>
+            </div>
+            <input type="range" id="sliderGaze" min="0" max="2.5" step="0.1" value="1.6">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">
+          <span>6. Sticker Color & Backdrop</span>
+          <span class="section-badge">STYLE</span>
+        </div>
+        <div class="control-card">
+          <div class="Swatch-header" style="font-size:11.5px; font-weight:800; display:flex; justify-content:space-between;">
+            <span>Quick Pop Swatches</span>
+            <span id="txtTint" style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-sub);">Original</span>
+          </div>
+          <div class="swatch-row" id="swatchRow">
+            <div class="color-swatch" data-color="#FACC15" style="background:#FACC15;" title="Sunny Yellow"></div>
+            <div class="color-swatch" data-color="#FB923C" style="background:#FB923C;" title="Peach Orange"></div>
+            <div class="color-swatch" data-color="#FB7185" style="background:#FB7185;" title="Watermelon Pink"></div>
+            <div class="color-swatch" data-color="#6EE7B7" style="background:#6EE7B7;" title="Mint Gelato"></div>
+            <div class="color-swatch" data-color="#A5B4FC" style="background:#A5B4FC;" title="Periwinkle"></div>
+            <div class="color-swatch" data-color="#F472B6" style="background:#F472B6;" title="Bubblegum"></div>
+            <div class="color-swatch" data-color="#38BDF8" style="background:#38BDF8;" title="Sky Soda"></div>
+            <input type="color" id="pickerTint" value="#FACC15" style="width:26px; height:26px; border:2px solid var(--border-ink); border-radius:50%; cursor:pointer; padding:0; background:none;" title="Custom Hex Picker">
+          </div>
+          <div class="pill-grid" id="bgGrid" style="margin-top:4px;">
+            <button class="pill-btn active" data-bg="grid">📓 Grid</button>
+            <button class="pill-btn" data-bg="dots">⠿ Dots</button>
+            <button class="pill-btn" data-bg="clean">⬜ Clean</button>
+            <button class="pill-btn" data-bg="night">🌙 Night</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">
+          <span>1:1 Standalone SVG Code</span>
+          <span class="section-badge" style="background:#DCFCE7; border-color:#86EFAC;">SMIL + CSS</span>
+        </div>
+        <div class="code-box" id="codeBox">&lt;!-- 17-Step Morphing Animated SVG --&gt;</div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Live Standalone SVG Verification Modal -->
+  <div class="modal-backdrop" id="previewModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>✨ Standalone .SVG Live Verification</span>
+          <span class="section-badge" style="background:#DCFCE7;">1:1 EXACT MOTION</span>
+        </div>
+        <button class="btn" id="btnCloseModal" style="padding:4px 10px;">✕ Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview-frame" id="modalSvgHolder"></div>
+        <p class="modal-note">
+          This preview renders the <strong>exact standalone SVG file</strong> generated by the studio—with 17-frame SMIL path morphing for the rubberhose arms & legs, synchronized feet/hands, shadow breathing, and body motion!
+        </p>
+        <div style="display:flex; gap:10px; width:100%; justify-content:center;">
+          <button class="btn btn-mint" id="btnModalCopy">📋 Copy Standalone SVG</button>
+          <button class="btn btn-orange" id="btnModalDownload">⬇️ Download .SVG File</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastBox">✨ Copied Animated SVG to Clipboard!</div>
+
+  <script>
+    /* =====================================================================
+       1. 8 PURE GEOMETRIC BUDDIES (DEEP-SOCKETED ZERO-DETACHMENT RIG)
+       Every character has hipRoots tucked 16-24px INSIDE the lower body fill
+       so legs NEVER disconnect under any squash, stretch, or strut!
+       ===================================================================== */
+    const GEOMETRICS = [
+      {
+        id: 'plus',
+        name: 'Plus',
+        desc: '加號仔',
+        color: '#FACC15',
+        faceCenter: [200, 214],
+        headTopY: 138,
+        pivotY: 285,
+        renderBody: (c) => `
+          <path d="M 156 138 H 244 Q 256 138 256 150 V 174 H 280 Q 292 174 292 186 V 246 Q 292 258 280 258 H 256 V 282 Q 256 294 244 294 H 156 Q 144 294 144 282 V 258 H 120 Q 108 258 108 246 V 186 Q 108 174 120 174 H 144 V 150 Q 144 138 156 138 Z" 
+                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 162 148 H 220" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.65" />
+        `,
+        armRoots: { left: [114, 216], right: [286, 216] },
+        hipRoots: { left: [174, 276], right: [226, 276] }
+      },
+      {
+        id: 'circle',
+        name: 'Circle',
+        desc: '圓碌碌',
+        color: '#FB923C',
+        faceCenter: [200, 214],
+        headTopY: 140,
+        pivotY: 282,
+        renderBody: (c) => `
+          <circle cx="200" cy="215" r="74" fill="${c}" stroke="#1E1B18" stroke-width="5.5" />
+          <path d="M 165 156 Q 195 144 225 154" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
+        `,
+        armRoots: { left: [132, 215], right: [268, 215] },
+        hipRoots: { left: [174, 268], right: [226, 268] }
+      },
+      {
+        id: 'square',
+        name: 'Square',
+        desc: '方粒粒',
+        color: '#FBBF24',
+        faceCenter: [200, 216],
+        headTopY: 146,
+        pivotY: 284,
+        renderBody: (c) => `
+          <rect x="128" y="146" width="144" height="140" rx="30" fill="${c}" stroke="#1E1B18" stroke-width="5.5" />
+          <path d="M 155 158 H 225" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+        `,
+        armRoots: { left: [134, 216], right: [266, 216] },
+        hipRoots: { left: [170, 270], right: [230, 270] }
+      },
+      {
+        id: 'triangle',
+        name: 'Triangle',
+        desc: '三角飯',
+        color: '#FEF08A',
+        faceCenter: [200, 224],
+        headTopY: 138,
+        pivotY: 282,
+        renderBody: (c) => `
+          <path d="M 184 146 Q 200 126 216 146 L 280 256 Q 292 282 264 282 L 136 282 Q 108 282 120 256 Z" 
+                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+        `,
+        armRoots: { left: [148, 226], right: [252, 226] },
+        hipRoots: { left: [170, 268], right: [230, 268] }
+      },
+      {
+        id: 'star',
+        name: 'Star',
+        desc: '閃閃星',
+        color: '#FDE047',
+        faceCenter: [200, 218],
+        headTopY: 132,
+        pivotY: 280,
+        renderBody: (c) => `
+          <path d="M 200 130 
+                   C 208 130 220 168 228 174
+                   C 236 180 278 180 282 190
+                   C 286 200 254 226 250 236
+                   C 246 246 258 282 248 288
+                   C 238 294 212 272 200 272
+                   C 188 272 162 294 152 288
+                   C 142 282 154 246 150 236
+                   C 146 226 114 200 118 190
+                   C 122 180 164 180 172 174
+                   C 180 168 192 130 200 130 Z" 
+                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+        `,
+        armRoots: { left: [144, 212], right: [256, 212] },
+        hipRoots: { left: [172, 262], right: [228, 262] }
+      },
+      {
+        id: 'heart',
+        name: 'Heart',
+        desc: '心心仔',
+        color: '#FB7185',
+        faceCenter: [200, 216],
+        headTopY: 152,
+        pivotY: 280,
+        renderBody: (c) => `
+          <path d="M 200 168 
+                   C 182 132 118 136 118 192 
+                   C 118 242 174 282 200 286 
+                   C 226 282 282 242 282 192 
+                   C 282 136 218 132 200 168 Z" 
+                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 142 168 Q 156 155 174 162" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
+        `,
+        armRoots: { left: [132, 212], right: [268, 212] },
+        hipRoots: { left: [182, 262], right: [218, 262] }
+      },
+      {
+        id: 'capsule',
+        name: 'Bean',
+        desc: '膠囊仔',
+        color: '#6EE7B7',
+        faceCenter: [200, 212],
+        headTopY: 140,
+        pivotY: 286,
+        renderBody: (c) => `
+          <rect x="144" y="140" width="112" height="148" rx="56" fill="${c}" stroke="#1E1B18" stroke-width="5.5" />
+          <path d="M 172 154 Q 200 146 222 154" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.65" />
+        `,
+        armRoots: { left: [148, 215], right: [252, 215] },
+        hipRoots: { left: [176, 268], right: [224, 268] }
+      },
+      {
+        id: 'hexagon',
+        name: 'Hexa',
+        desc: '六角仔',
+        color: '#A5B4FC',
+        faceCenter: [200, 216],
+        headTopY: 140,
+        pivotY: 286,
+        renderBody: (c) => `
+          <path d="M 192 142 Q 200 137 208 142 L 264 174 Q 272 179 272 189 L 272 245 Q 272 255 264 260 L 208 292 Q 200 297 192 292 L 136 260 Q 128 255 128 245 L 128 189 Q 128 179 136 174 Z" 
+                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+        `,
+        armRoots: { left: [134, 216], right: [266, 216] },
+        hipRoots: { left: [174, 268], right: [226, 268] }
+      }
+    ];
+
+    /* =====================================================================
+       2. HEADWEAR STICKER PROPS
+       ===================================================================== */
+    function renderPropSvg(propType, topY) {
+      switch (propType) {
+        case 'crown':
+          return `
+            <g transform="translate(200, ${topY + 4})">
+              <polygon points="-24,0 -18,-22 -7,-9 0,-25 7,-9 18,-22 24,0" fill="#FACC15" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
+              <circle cx="0" cy="-25" r="3.5" fill="#FB7185" stroke="#1E1B18" stroke-width="2" />
+            </g>`;
+        case 'sprout':
+          return `
+            <g transform="translate(200, ${topY + 4})">
+              <path d="M 0,0 Q 0,-18 4,-24" stroke="#1E1B18" stroke-width="4.5" stroke-linecap="round" fill="none" />
+              <path d="M 2,-18 C -16,-28 -22,-10 -2,-12 Z" fill="#4ADE80" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" />
+              <path d="M 3,-20 C 18,-30 24,-12 4,-14 Z" fill="#4ADE80" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" />
+            </g>`;
+        case 'halo':
+          return `
+            <g transform="translate(200, ${topY - 14})">
+              <ellipse cx="0" cy="0" rx="28" ry="7" fill="none" stroke="#1E1B18" stroke-width="7.5" />
+              <ellipse cx="0" cy="0" rx="28" ry="7" fill="none" stroke="#FDE047" stroke-width="3.5" />
+            </g>`;
+        case 'beanie':
+          return `
+            <g transform="translate(200, ${topY + 8})">
+              <path d="M -34,0 C -34,-28 34,-28 34,0 Z" fill="#F43F5E" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
+              <rect x="-38" y="-5" width="76" height="12" rx="6" fill="#FFE4E6" stroke="#1E1B18" stroke-width="4" />
+              <circle cx="0" cy="-24" r="7" fill="#FFE4E6" stroke="#1E1B18" stroke-width="3.5" />
+            </g>`;
+        case 'bow':
+          return `
+            <g transform="translate(200, ${topY + 4})">
+              <path d="M 0,0 L -22,-12 L -20,8 Z" fill="#FB7185" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
+              <path d="M 0,0 L 22,-12 L 20,8 Z" fill="#FB7185" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
+              <circle cx="0" cy="-1" r="6" fill="#FFE4E6" stroke="#1E1B18" stroke-width="3.5" />
+            </g>`;
+        case 'none':
+        default:
+          return '';
+      }
+    }
+
+    /* =====================================================================
+       3. FACE EXPRESSION GENERATOR
+       ===================================================================== */
+    function renderFaceParts(expr, fx, fy) {
+      let eyesSvg = '';
+      let mouthSvg = '';
+
+      switch (expr) {
+        case 'star':
+          eyesSvg = `
+            <g id="socket-left">
+              <ellipse cx="${fx - 15}" cy="${fy}" rx="6" ry="7.5" fill="#1E1B18" />
+              <g id="pupil-left">
+                <polygon points="${fx - 15},${fy - 5} ${fx - 13.5},${fy - 1.5} ${fx - 10},${fy} ${fx - 13.5},${fy + 1.5} ${fx - 15},${fy + 5} ${fx - 16.5},${fy + 1.5} ${fx - 20},${fy} ${fx - 16.5},${fy - 1.5}" fill="#FDE047" />
+              </g>
+            </g>
+            <g id="socket-right">
+              <ellipse cx="${fx + 15}" cy="${fy}" rx="6" ry="7.5" fill="#1E1B18" />
+              <g id="pupil-right">
+                <polygon points="${fx + 15},${fy - 5} ${fx + 16.5},${fy - 1.5} ${fx + 20},${fy} ${fx + 16.5},${fy + 1.5} ${fx + 15},${fy + 5} ${fx + 13.5},${fy + 1.5} ${fx + 10},${fy} ${fx + 13.5},${fy - 1.5}" fill="#FDE047" />
+              </g>
+            </g>`;
+          mouthSvg = `<path d="M ${fx - 8} ${fy + 10} Q ${fx} ${fy + 20} ${fx + 8} ${fy + 10} Z" fill="#FB7185" stroke="#1E1B18" stroke-width="3" stroke-linejoin="round" />`;
+          break;
+
+        case 'wink':
+          eyesSvg = `
+            <g id="socket-left">
+              <ellipse cx="${fx - 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" />
+              <circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2}" r="1.8" fill="#FFFFFF" />
+            </g>
+            <path d="M ${fx + 8} ${fy + 2} Q ${fx + 15} ${fy - 5} ${fx + 22} ${fy + 2}" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" fill="none" />`;
+          mouthSvg = `<path d="M ${fx - 7} ${fy + 11} Q ${fx + 1} ${fy + 18} ${fx + 9} ${fy + 9}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
+          break;
+
+        case 'open':
+          eyesSvg = `
+            <g id="socket-left">
+              <ellipse cx="${fx - 15}" cy="${fy}" rx="5.2" ry="7.2" fill="#1E1B18" />
+              <circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2}" r="2" fill="#FFFFFF" />
+            </g>
+            <g id="socket-right">
+              <ellipse cx="${fx + 15}" cy="${fy}" rx="5.2" ry="7.2" fill="#1E1B18" />
+              <circle id="pupil-right" cx="${fx + 13.5}" cy="${fy - 2}" r="2" fill="#FFFFFF" />
+            </g>`;
+          mouthSvg = `<ellipse cx="${fx}" cy="${fy + 13}" rx="5.5" ry="7.5" fill="#1E1B18" />`;
+          break;
+
+        case 'shades':
+          eyesSvg = `
+            <g>
+              <path d="M ${fx - 28} ${fy - 6} H ${fx - 4} L ${fx - 6} ${fy + 5} H ${fx - 24} Z" fill="#1E1B18" />
+              <path d="M ${fx + 4} ${fy - 6} H ${fx + 28} L ${fx + 24} ${fy + 5} H ${fx + 6} Z" fill="#1E1B18" />
+              <line x1="${fx - 6}" y1="${fy - 4}" x2="${fx + 6}" y2="${fy - 4}" stroke="#1E1B18" stroke-width="3.5" />
+              <line x1="${fx - 22}" y1="${fy - 3}" x2="${fx - 14}" y2="${fy + 2}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+              <line x1="${fx + 10}" y1="${fy - 3}" x2="${fx + 18}" y2="${fy + 2}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+            </g>`;
+          mouthSvg = `<path d="M ${fx - 6} ${fy + 12} Q ${fx + 2} ${fy + 15} ${fx + 9} ${fy + 10}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
+          break;
+
+        case 'chill':
+          eyesSvg = `
+            <path d="M ${fx - 21} ${fy + 1} Q ${fx - 15} ${fy + 6} ${fx - 9} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />
+            <path d="M ${fx + 9} ${fy + 1} Q ${fx + 15} ${fy + 6} ${fx + 21} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
+          mouthSvg = `<path d="M ${fx - 5} ${fy + 11} Q ${fx} ${fy + 15} ${fx + 5} ${fy + 11}" stroke="#1E1B18" stroke-width="3" stroke-linecap="round" fill="none" />`;
+          break;
+
+        case 'happy':
+        default:
+          eyesSvg = `
+            <g id="socket-left">
+              <ellipse cx="${fx - 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" />
+              <circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2.2}" r="1.8" fill="#FFFFFF" />
+            </g>
+            <g id="socket-right">
+              <ellipse cx="${fx + 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" />
+              <circle id="pupil-right" cx="${fx + 13.5}" cy="${fy - 2.2}" r="1.8" fill="#FFFFFF" />
+            </g>`;
+          mouthSvg = `<path d="M ${fx - 7.5} ${fy + 10} Q ${fx} ${fy + 18} ${fx + 7.5} ${fy + 10}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
+          break;
+      }
+
+      const cheeksSvg = `
+        <ellipse cx="${fx - 26}" cy="${fy + 7}" rx="5.5" ry="3.2" fill="#F43F5E" opacity="0.45" />
+        <ellipse cx="${fx + 26}" cy="${fy + 7}" rx="5.5" ry="3.2" fill="#F43F5E" opacity="0.45" />
+      `;
+
+      return { eyesSvg, mouthSvg, cheeksSvg };
+    }
+
+    /* =====================================================================
+       4. STUDIO STATE & INTERACTIVE VARIABLES
+       ===================================================================== */
+    const state = {
+      charIdx: 0,
+      motion: 'bounce',
+      expr: 'happy',
+      prop: 'none',
+      bg: 'grid',
+      colorOverride: null,
+      isExploded: false,
+      soundEnabled: true,
+      time: 0,
+
+      // Cozy, Gentle Default Feel Sliders
+      gazeMax: 1.6,
+      squash: 0.8,
+      speed: 0.8,
+      hopHeight: 12,
+
+      // Gentle Interactive Impulse Boing
+      boingImpulse: 0,
+      particles: [],
+
+      pointer: {
+        targetX: 200,
+        targetY: 220,
+        currentX: 200,
+        currentY: 220
+      },
+
+      // Organic Blinking
+      blinkTimer: 0,
+      nextBlink: 3.2,
+      isBlinking: false
+    };
+
+    /* =====================================================================
+       5. PROCEDURAL WEB AUDIO SYNTHESIZER
+       ===================================================================== */
+    let audioCtx = null;
+    function playSynth(type = 'pop', baseFreq = 440) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        if (type === 'boing') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(280, now);
+          osc.frequency.exponentialRampToValueAtTime(620, now + 0.09);
+          osc.frequency.exponentialRampToValueAtTime(380, now + 0.28);
+          gain.gain.setValueAtTime(0.22, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.31);
+        } else if (type === 'magic') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.18);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.24);
+        } else {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(baseFreq, now);
+          osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.05);
+          osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.85, now + 0.16);
+          gain.gain.setValueAtTime(0.16, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.2);
+        }
+      } catch (e) {}
+    }
+
+    /* =====================================================================
+       6. PURE MATHEMATICAL COZY POSE SOLVER (SHARED BY 60FPS STAGE & 1:1 SVG BAKER!)
+       Evaluates any normalized cycle phase p in [0, 1) with smooth cosine easing
+       so every movement is relaxed, organic, and 100% identical in exported SVGs!
+       ===================================================================== */
+    function computePoseAtPhase(p, cur, motion, hopHeight, squashFactor, boingBoost = 0) {
+      const groundY = 364;
+      const rad = p * Math.PI * 2;
+      const s = Math.sin(rad);
+      const c = Math.cos(rad);
+      const s2 = Math.sin(rad * 2);
+      const c2 = Math.cos(rad * 2);
+      const H = hopHeight + boingBoost;
+
+      let bodyX = 0;
+      let bodyY = 0;
+      let scaleX = 1;
+      let scaleY = 1;
+      let rot = 0;
+
+      // Foot base positions in world coordinates (planted on groundY = 364 unless gently lifted)
+      const hlxBase = cur.hipRoots.left[0];
+      const hrxBase = cur.hipRoots.right[0];
+
+      let footLX = hlxBase - 5;
+      let footLY = groundY;
+      let footRX = hrxBase + 5;
+      let footRY = groundY;
+
+      let kneeBendOut = 5;
+      let handLX_off = -26, handLY_off = 18;
+      let handRX_off = 26, handRY_off = 18;
+
+      switch (motion) {
+        case 'sway': {
+          // Chill Sway: Relaxed side-to-side weight shift with soft pendulum arms
+          bodyX = s * 8.5;
+          bodyY = (1 - c2) * 0.5 * (H * 0.32);
+          rot = s * 3.2;
+
+          const sq = c2 * 0.028 * squashFactor;
+          scaleX = 1 + sq;
+          scaleY = 1 / scaleX;
+
+          kneeBendOut = 5 + (1 - c2) * 2.5;
+          // Delayed pendulum arms
+          handLY_off = 16 - Math.sin(rad - 0.35) * 10;
+          handRY_off = 16 + Math.sin(rad - 0.35) * 10;
+          handLX_off = -26 + c * 4;
+          handRX_off = 26 + c * 4;
+          break;
+        }
+
+        case 'walk': {
+          // Happy Stroll: Easygoing rhythmic walk with small, natural foot arcs
+          bodyY = -Math.abs(s) * (H * 0.42) + 2;
+          bodyX = s * 3.5;
+          rot = s * 2.4;
+
+          const sq = c2 * 0.025 * squashFactor;
+          scaleX = 1 + sq;
+          scaleY = 1 / scaleX;
+
+          const strideX = 10;
+          const liftH = Math.min(11, H * 0.65);
+
+          footLX = hlxBase - 4 + c * strideX;
+          footLY = groundY - Math.pow(Math.max(0, s), 1.3) * liftH;
+
+          footRX = hrxBase + 4 - c * strideX;
+          footRY = groundY - Math.pow(Math.max(0, -s), 1.3) * liftH;
+
+          kneeBendOut = 4;
+          handLY_off = 16 - c * 11;
+          handRY_off = 16 + c * 11;
+          handLX_off = -25 + s * 4;
+          handRX_off = 25 - s * 4;
+          break;
+        }
+
+        case 'float': {
+          // Dreamy Float: Zero-gravity cloud bobbing with slow breathing
+          bodyX = s * 4.5;
+          bodyY = -10 + c * (H * 0.55);
+          rot = s * 2.0;
+
+          const breath = s * 0.025 * squashFactor;
+          scaleX = 1 + breath;
+          scaleY = 1 + breath;
+
+          footLY = groundY - 8 + Math.sin(rad + 0.5) * 4.5;
+          footRY = groundY - 8 + Math.cos(rad + 0.5) * 4.5;
+          kneeBendOut = 4;
+
+          handLY_off = 10 + Math.sin(rad + 0.9) * 8;
+          handRY_off = 10 + Math.cos(rad + 0.9) * 8;
+          break;
+        }
+
+        case 'wiggle': {
+          // Soft Wiggle: Cute, subtle joyful shimmy without aggressive rotation
+          bodyX = s * 5.0;
+          bodyY = (1 - c2) * 0.5 * (H * 0.28);
+          rot = Math.sin(rad * 2) * 2.6;
+
+          const sq = c2 * 0.035 * squashFactor;
+          scaleX = 1 + sq;
+          scaleY = 1 / scaleX;
+
+          kneeBendOut = 5 + (1 - c2) * 2.5;
+          handLY_off = 10 + Math.sin(rad * 2 - 0.4) * 9;
+          handRY_off = 10 - Math.sin(rad * 2 - 0.4) * 9;
+          handLX_off = -27 - Math.cos(rad * 2) * 3;
+          handRX_off = 27 + Math.cos(rad * 2) * 3;
+          break;
+        }
+
+        case 'nod': {
+          // Lo-Fi Nod: Soft rhythmic beat-nodding like listening to chill beats
+          const beat = (1 - c) * 0.5; // Smooth 0 -> 1 -> 0 cosine wave
+          bodyY = beat * (H * 0.48);
+          rot = s * 1.6;
+
+          const sq = c * 0.042 * squashFactor;
+          scaleX = 1 - sq;
+          scaleY = 1 / scaleX;
+
+          kneeBendOut = 5 + beat * 4.5;
+          handLY_off = 16 + Math.sin(rad - 0.4) * 6;
+          handRY_off = 16 + Math.sin(rad - 0.4) * 6;
+          break;
+        }
+
+        case 'bounce':
+        default: {
+          // Cozy Hop: Smooth continuous sinusoidal cushion & gentle hop (no harsh snaps)
+          const liftWave = (1 - c) * 0.5; // Smoothly 0 at ground (p=0,1) and 1 at peak (p=0.5)
+          // At p=0, character gently cushions down (+3.5px), at p=0.5 rises smoothly (-H * 0.85)
+          bodyY = (1 - liftWave) * 3.5 - Math.pow(liftWave, 1.15) * (H * 0.88);
+
+          // Gentle volume-preserving squash & stretch (capped around 5-6%)
+          const sq = c * 0.052 * squashFactor;
+          scaleX = 1 + sq;
+          scaleY = 1 / scaleX;
+
+          // Feet stay planted during the ground cushion, then lift softly at the peak of the hop
+          const airLift = Math.max(0, liftWave - 0.35) / 0.65;
+          footLY = groundY - airLift * (H * 0.45);
+          footRY = groundY - airLift * (H * 0.45);
+
+          kneeBendOut = 5 + (1 - liftWave) * 4.5;
+
+          // Soft delayed follow-through on rubberhose arms
+          const delayedWave = Math.sin(rad - 0.55);
+          handLY_off = 15 + delayedWave * 9;
+          handRY_off = 15 + delayedWave * 9;
+          handLX_off = -26 - liftWave * 3;
+          handRX_off = 26 + liftWave * 3;
+          break;
+        }
+      }
+
+      // Compute Transformed Hip & Shoulder World Positions so IK connects seamlessly
+      const transformPt = (x, y) => {
+        const dx = (x - 200) * scaleX;
+        const dy = (y - cur.pivotY) * scaleY;
+        const r = (rot * Math.PI) / 180;
+        const rx = dx * Math.cos(r) - dy * Math.sin(r);
+        const ry = dx * Math.sin(r) + dy * Math.cos(r);
+        return [200 + bodyX + rx, cur.pivotY + bodyY + ry];
+      };
+
+      const hipL = transformPt(cur.hipRoots.left[0], cur.hipRoots.left[1]);
+      const hipR = transformPt(cur.hipRoots.right[0], cur.hipRoots.right[1]);
+      const armL = transformPt(cur.armRoots.left[0], cur.armRoots.left[1]);
+      const armR = transformPt(cur.armRoots.right[0], cur.armRoots.right[1]);
+
+      // Knee control points bend softly outward when compressed
+      const legCompL = Math.max(0, 86 - (footLY - hipL[1]));
+      const legCompR = Math.max(0, 86 - (footRY - hipR[1]));
+
+      const kneeLX = (hipL[0] + footLX) * 0.5 - (kneeBendOut + legCompL * 0.16);
+      const kneeLY = (hipL[1] + footLY) * 0.5;
+
+      const kneeRX = (hipR[0] + footRX) * 0.5 + (kneeBendOut + legCompR * 0.16);
+      const kneeRY = (hipR[1] + footRY) * 0.5;
+
+      // Hand endpoints and soft elbow curves
+      const handLX = armL[0] + handLX_off;
+      const handLY = armL[1] + handLY_off;
+      const elbowLX = armL[0] + handLX_off * 0.62;
+      const elbowLY = armL[1] + handLY_off * 0.35 + 6;
+
+      const handRX = armR[0] + handRX_off;
+      const handRY = armR[1] + handRY_off;
+      const elbowRX = armR[0] + handRX_off * 0.62;
+      const elbowRY = armR[1] + handRY_off * 0.35 + 6;
+
+      // Shadow scale & opacity
+      const liftDist = Math.max(0, -bodyY);
+      const shadowScale = Math.max(0.72, (1 - liftDist / 140) * scaleX);
+      const shadowOpacity = Math.max(0.11, 0.22 - liftDist / 260);
+
+      return {
+        bodyTransform: `translate(${(200 + bodyX).toFixed(2)}, ${(cur.pivotY + bodyY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200, ${-cur.pivotY})`,
+        shadowTransform: `translate(${(200 + bodyX * 0.65).toFixed(2)}, 374) scale(${shadowScale.toFixed(3)}) translate(-200, -374)`,
+        shadowOpacity: shadowOpacity.toFixed(2),
+        leftLegPath: `M ${hipL[0].toFixed(1)} ${hipL[1].toFixed(1)} Q ${kneeLX.toFixed(1)} ${kneeLY.toFixed(1)} ${footLX.toFixed(1)} ${footLY.toFixed(1)}`,
+        rightLegPath: `M ${hipR[0].toFixed(1)} ${hipR[1].toFixed(1)} Q ${kneeRX.toFixed(1)} ${kneeRY.toFixed(1)} ${footRX.toFixed(1)} ${footRY.toFixed(1)}`,
+        footLCenter: [footLX - 5, footLY],
+        footRCenter: [footRX + 5, footRY],
+        leftArmPath: `M ${armL[0].toFixed(1)} ${armL[1].toFixed(1)} Q ${elbowLX.toFixed(1)} ${elbowLY.toFixed(1)} ${handLX.toFixed(1)} ${handLY.toFixed(1)}`,
+        rightArmPath: `M ${armR[0].toFixed(1)} ${armR[1].toFixed(1)} Q ${elbowRX.toFixed(1)} ${elbowRY.toFixed(1)} ${handRX.toFixed(1)} ${handRY.toFixed(1)}`,
+        handLCenter: [handLX, handLY],
+        handRCenter: [handRX, handRY]
+      };
+    }
+
+    /* =====================================================================
+       7. DOM ELEMENTS & INITIALIZATION
+       ===================================================================== */
+    const charGrid = document.getElementById('charGrid');
+    const motionGrid = document.getElementById('motionGrid');
+    const exprGrid = document.getElementById('exprGrid');
+    const propGrid = document.getElementById('propGrid');
+    const bgGrid = document.getElementById('bgGrid');
+    const statusText = document.getElementById('statusText');
+    const explodeOverlay = document.getElementById('explodeOverlay');
+    const codeBox = document.getElementById('codeBox');
+    const stageContainer = document.getElementById('stageContainer');
+    const toastBox = document.getElementById('toastBox');
+
+    const geoRoot = document.getElementById('geo-root');
+    const geoBody = document.getElementById('geo-body');
+    const geoProp = document.getElementById('geo-prop');
+    const geoFace = document.getElementById('geo-face');
+    const geoEyes = document.getElementById('geo-eyes');
+    const geoMouth = document.getElementById('geo-mouth');
+    const geoCheeks = document.getElementById('geo-cheeks');
+    const geoHands = document.getElementById('geo-hands');
+    const geoFeet = document.getElementById('geo-feet');
+    const geoParticles = document.getElementById('geo-particles');
+    const shadowEl = document.getElementById('shadowEl');
+
+    function showToast(msg) {
+      toastBox.textContent = msg;
+      toastBox.classList.add('show');
+      setTimeout(() => toastBox.classList.remove('show'), 2200);
+    }
+
+    function initMascotCards() {
+      charGrid.innerHTML = '';
+      GEOMETRICS.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = `char-card ${idx === state.charIdx ? 'active' : ''}`;
+        card.innerHTML = `
+          <span class="key-hint">${idx + 1}</span>
+          <div class="char-preview-icon">
+            <svg viewBox="0 0 40 40" width="30" height="30">
+              <g transform="scale(0.18) translate(-90, -105)">
+                ${item.renderBody(item.color)}
+              </g>
+            </svg>
+          </div>
+          <div class="char-info">
+            <div class="char-name">${item.name}</div>
+            <div class="char-desc">${item.desc}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          selectMascot(idx);
+          playSynth('pop', 500);
+        });
+        charGrid.appendChild(card);
+      });
+    }
+
+    function selectMascot(idx) {
+      state.charIdx = idx;
+      document.querySelectorAll('.char-card').forEach((c, i) => {
+        c.classList.toggle('active', i === idx);
+      });
+      const cur = GEOMETRICS[idx];
+      document.getElementById('pickerTint').value = cur.color;
+      state.colorOverride = null;
+      document.getElementById('txtTint').textContent = 'Original';
+      statusText.textContent = `${cur.name} (${cur.desc}) • Click Mascot or Press [Space] to Boing!`;
+      renderStaticLayers();
+      updateBakedCodePreview();
+    }
+
+    function renderStaticLayers() {
+      const cur = GEOMETRICS[state.charIdx];
+      const color = state.colorOverride || cur.color;
+      const [fx, fy] = cur.faceCenter;
+
+      geoBody.innerHTML = cur.renderBody(color);
+      geoProp.innerHTML = renderPropSvg(state.prop, cur.headTopY);
+
+      const { eyesSvg, mouthSvg, cheeksSvg } = renderFaceParts(state.expr, fx, fy);
+      geoEyes.innerHTML = eyesSvg;
+      geoMouth.innerHTML = mouthSvg;
+      geoCheeks.innerHTML = cheeksSvg;
+    }
+
+    /* =====================================================================
+       8. INTERACTIVE BOING IMPULSE & PARTICLE BURST
+       ===================================================================== */
+    function triggerBoingImpulse() {
+      state.boingImpulse = 10;
+      playSynth('boing');
+
+      // Spawn celebratory floating particles
+      const colors = ['#FACC15', '#FB7185', '#34D399', '#60A5FA', '#A78BFA'];
+      for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8 + (Math.random() - 0.5) * 0.4;
+        const speed = 2.5 + Math.random() * 2.5;
+        state.particles.push({
+          x: 200 + (Math.random() - 0.5) * 40,
+          y: 200 + (Math.random() - 0.5) * 30,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.5,
+          life: 1.0,
+          color: colors[i % colors.length],
+          size: 5 + Math.random() * 4
+        });
+      }
+    }
+
+    /* =====================================================================
+       9. 60 FPS REAL-TIME ANIMATION LOOP
+       ===================================================================== */
+    function animate() {
+      // Relaxed, cozy master clock increment
+      state.time += 0.0072 * state.speed;
+      if (state.boingImpulse > 0.08) {
+        state.boingImpulse *= 0.91;
+      } else {
+        state.boingImpulse = 0;
+      }
+
+      const cur = GEOMETRICS[state.charIdx];
+      const [, fy] = cur.faceCenter;
+
+      // 1. Organic Blinking
+      state.blinkTimer += 0.016;
+      if (state.blinkTimer > state.nextBlink) {
+        state.isBlinking = true;
+        if (state.blinkTimer > state.nextBlink + 0.12) {
+          state.isBlinking = false;
+          state.blinkTimer = 0;
+          state.nextBlink = 2.6 + Math.random() * 2.6;
+        }
+      }
+
+      const socketL = document.getElementById('socket-left');
+      const socketR = document.getElementById('socket-right');
+      if (socketL) {
+        socketL.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
+      }
+      if (socketR) {
+        socketR.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
+      }
+
+      // 2. Clamped Pupil Tracking
+      state.pointer.currentX += (state.pointer.targetX - state.pointer.currentX) * 0.14;
+      state.pointer.currentY += (state.pointer.targetY - state.pointer.currentY) * 0.14;
+
+      const gazeDx = (state.pointer.currentX - 200) / 110;
+      const gazeDy = (state.pointer.currentY - fy) / 110;
+      const dist = Math.hypot(gazeDx, gazeDy);
+      const clampFactor = dist > 1 ? 1 / dist : 1;
+      const eyeX = (gazeDx * clampFactor * state.gazeMax).toFixed(2);
+      const eyeY = (gazeDy * clampFactor * (state.gazeMax * 0.85)).toFixed(2);
+
+      const pupilL = document.getElementById('pupil-left');
+      const pupilR = document.getElementById('pupil-right');
+      if (pupilL && !state.isExploded) pupilL.setAttribute('transform', `translate(${eyeX}, ${eyeY})`);
+      if (pupilR && !state.isExploded) pupilR.setAttribute('transform', `translate(${eyeX}, ${eyeY})`);
+
+      // 3. Evaluate Kinematic Pose
+      if (!state.isExploded) {
+        const phase = state.time % 1;
+        const pose = computePoseAtPhase(phase, cur, state.motion, state.hopHeight, state.squash, state.boingImpulse);
+
+        // Apply body transform to Body, Prop, and Face together so they move as one solid unit
+        geoBody.setAttribute('transform', pose.bodyTransform);
+        geoProp.setAttribute('transform', pose.bodyTransform);
+        geoFace.setAttribute('transform', pose.bodyTransform);
+
+        // Shadow
+        shadowEl.setAttribute('transform', pose.shadowTransform);
+        shadowEl.setAttribute('opacity', pose.shadowOpacity);
+
+        // World-Space IK Legs (Connected to transformed hip sockets inside body!)
+        geoFeet.innerHTML = `
+          <path d="${pose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" />
+          <ellipse cx="${pose.footLCenter[0].toFixed(1)}" cy="${pose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />
+          <path d="${pose.rightLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" />
+          <ellipse cx="${pose.footRCenter[0].toFixed(1)}" cy="${pose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />
+        `;
+
+        // World-Space Rubberhose Arms
+        geoHands.innerHTML = `
+          <path d="${pose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" />
+          <circle cx="${pose.handLCenter[0].toFixed(1)}" cy="${pose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />
+          <path d="${pose.rightArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" />
+          <circle cx="${pose.handRCenter[0].toFixed(1)}" cy="${pose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />
+        `;
+      } else {
+        // X-Ray Explode Mode
+        geoBody.setAttribute('transform', 'translate(0, 0)');
+        geoProp.setAttribute('transform', 'translate(0, -52)');
+        geoFace.setAttribute('transform', 'translate(0, -34)');
+        geoFeet.setAttribute('transform', 'translate(0, 42)');
+        shadowEl.setAttribute('transform', 'translate(0, 48)');
+      }
+
+      // 4. Update Burst Particles
+      if (state.particles.length > 0) {
+        let pHtml = '';
+        state.particles = state.particles.filter(pt => {
+          pt.x += pt.vx;
+          pt.y += pt.vy;
+          pt.vy += 0.12;
+          pt.life -= 0.03;
+          if (pt.life > 0) {
+            pHtml += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${(pt.size * pt.life).toFixed(1)}" fill="${pt.color}" stroke="#1E1B18" stroke-width="1.5" opacity="${pt.life.toFixed(2)}" />`;
+            return true;
+          }
+          return false;
+        });
+        geoParticles.innerHTML = pHtml;
+      } else if (geoParticles.innerHTML !== '') {
+        geoParticles.innerHTML = '';
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    /* =====================================================================
+       10. 100% EXACT 1:1 STANDALONE ANIMATED SVG BAKER (SMIL + CSS)
+       Samples the exact active motion loop across 17 evenly-spaced keyframe
+       steps and bakes both CSS transforms AND SVG <animate> path morphing
+       for the bending rubberhose arms, walking legs, hands, and feet!
+       ===================================================================== */
+    function generateBakedStandaloneSvg() {
+      const cur = GEOMETRICS[state.charIdx];
+      const color = state.colorOverride || cur.color;
+      const [fx, fy] = cur.faceCenter;
+      // Exact cycle duration matching the live cozy 60fps loop
+      const duration = (2.25 / state.speed).toFixed(2);
+
+      // 17 evenly spaced keyframe steps from 0% to 100% for silky-smooth 1:1 fidelity
+      const numSteps = 16;
+      let bodyKeyframes = '';
+      let shadowKeyframes = '';
+
+      const leftLegValues = [];
+      const rightLegValues = [];
+      const footLXValues = [];
+      const footLYValues = [];
+      const footRXValues = [];
+      const footRYValues = [];
+
+      const leftArmValues = [];
+      const rightArmValues = [];
+      const handLXValues = [];
+      const handLYValues = [];
+      const handRXValues = [];
+      const handRYValues = [];
+
+      for (let i = 0; i <= numSteps; i++) {
+        const p = i === numSteps ? 0 : i / numSteps;
+        const pct = ((i / numSteps) * 100).toFixed(2);
+        const pose = computePoseAtPhase(p, cur, state.motion, state.hopHeight, state.squash, 0);
+
+        bodyKeyframes += `        ${pct}% { transform: ${pose.bodyTransform}; }\n`;
+        shadowKeyframes += `        ${pct}% { transform: ${pose.shadowTransform}; opacity: ${pose.shadowOpacity}; }\n`;
+
+        leftLegValues.push(pose.leftLegPath);
+        rightLegValues.push(pose.rightLegPath);
+        footLXValues.push(pose.footLCenter[0].toFixed(1));
+        footLYValues.push(pose.footLCenter[1].toFixed(1));
+        footRXValues.push(pose.footRCenter[0].toFixed(1));
+        footRYValues.push(pose.footRCenter[1].toFixed(1));
+
+        leftArmValues.push(pose.leftArmPath);
+        rightArmValues.push(pose.rightArmPath);
+        handLXValues.push(pose.handLCenter[0].toFixed(1));
+        handLYValues.push(pose.handLCenter[1].toFixed(1));
+        handRXValues.push(pose.handRCenter[0].toFixed(1));
+        handRYValues.push(pose.handRCenter[1].toFixed(1));
+      }
+
+      const initPose = computePoseAtPhase(0, cur, state.motion, state.hopHeight, state.squash, 0);
+      const { eyesSvg, mouthSvg, cheeksSvg } = renderFaceParts(state.expr, fx, fy);
+      const propSvg = renderPropSvg(state.prop, cur.headTopY);
+
+      return `<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated by MASCOT POP! Sticker & Rig Studio | Character: ${cur.name} (${cur.desc}) | Motion: ${state.motion} (1:1 Exact Rig) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes mascotTorso {
+${bodyKeyframes}      }
+      @keyframes shadowSync {
+${shadowKeyframes}      }
+      @keyframes eyeBlink {
+        0%, 92%, 100% { transform: translate(0px, ${fy}px) scaleY(1) translate(0px, ${-fy}px); }
+        96% { transform: translate(0px, ${fy}px) scaleY(0.1) translate(0px, ${-fy}px); }
+      }
+      .mascot-torso-rig {
+        animation: mascotTorso ${duration}s linear infinite;
+      }
+      #mascot-shadow {
+        animation: shadowSync ${duration}s linear infinite;
+      }
+      #mascot-eyes {
+        animation: eyeBlink 3.8s infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Synchronized Floor Shadow -->
+  <g id="mascot-shadow">
+    <ellipse cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22" />
+  </g>
+
+  <!-- 1:1 World-Space Morphing IK Legs & Feet (Placed behind torso) -->
+  <g id="mascot-legs">
+    <path d="${initPose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none">
+      <animate attributeName="d" values="${leftLegValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </path>
+    <ellipse cx="${initPose.footLCenter[0].toFixed(1)}" cy="${initPose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18">
+      <animate attributeName="cx" values="${footLXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="${footLYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </ellipse>
+
+    <path d="${initPose.rightLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none">
+      <animate attributeName="d" values="${rightLegValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </path>
+    <ellipse cx="${initPose.footRCenter[0].toFixed(1)}" cy="${initPose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18">
+      <animate attributeName="cx" values="${footRXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="${footRYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </ellipse>
+  </g>
+
+  <!-- Animated Torso, Headwear Prop & Facial Features -->
+  <g id="mascot-torso" class="mascot-torso-rig">
+    <g id="mascot-body">
+      ${cur.renderBody(color).trim()}
+    </g>
+    <g id="mascot-prop">
+      ${propSvg.trim()}
+    </g>
+    <g id="mascot-face">
+      ${cheeksSvg.trim()}
+      <g id="mascot-eyes">
+        ${eyesSvg.trim()}
+      </g>
+      ${mouthSvg.trim()}
+    </g>
+  </g>
+
+  <!-- 1:1 World-Space Morphing Rubberhose Arms & Hands -->
+  <g id="mascot-arms">
+    <path d="${initPose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none">
+      <animate attributeName="d" values="${leftArmValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </path>
+    <circle cx="${initPose.handLCenter[0].toFixed(1)}" cy="${initPose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2">
+      <animate attributeName="cx" values="${handLXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="${handLYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </circle>
+
+    <path d="${initPose.rightArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none">
+      <animate attributeName="d" values="${rightArmValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </path>
+    <circle cx="${initPose.handRCenter[0].toFixed(1)}" cy="${initPose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2">
+      <animate attributeName="cx" values="${handRXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+      <animate attributeName="cy" values="${handRYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>`;
+    }
+
+    function updateBakedCodePreview() {
+      codeBox.textContent = generateBakedStandaloneSvg();
+    }
+
+    /* =====================================================================
+       11. X-RAY EXPLODE INSPECTOR & RANDOMIZER
+       ===================================================================== */
+    function toggleExplode() {
+      state.isExploded = !state.isExploded;
+      const btn = document.getElementById('btnExplode');
+      btn.style.background = state.isExploded ? '#FB923C' : '';
+      explodeOverlay.classList.toggle('active', state.isExploded);
+
+      if (!state.isExploded) {
+        geoFeet.removeAttribute('transform');
+        playSynth('pop', 420);
+      } else {
+        playSynth('magic');
+        const cur = GEOMETRICS[state.charIdx];
+        explodeOverlay.innerHTML = `
+          <div class="tag-bubble" style="left: 50%; top: 15%;">&lt;g id="mascot-prop"&gt; (Sticker Hat)</div>
+          <div class="tag-bubble" style="left: 50%; top: 28%;">&lt;g id="mascot-face"&gt; (Clamped Gaze Rig)</div>
+          <div class="tag-bubble" style="left: 20%; top: 48%;">&lt;g id="mascot-arms"&gt; (Rubberhose IK)</div>
+          <div class="tag-bubble" style="left: 80%; top: 50%;">&lt;g id="mascot-body"&gt; (${cur.desc})</div>
+          <div class="tag-bubble" style="left: 50%; top: 76%;">&lt;g id="mascot-legs"&gt; (Deep-Socket IK)</div>
+          <div class="tag-bubble" style="left: 50%; top: 91%;">&lt;g id="mascot-shadow"&gt; (Synced Shadow)</div>
+        `;
+      }
+    }
+
+    function randomizeEverything() {
+      playSynth('magic');
+      const randChar = Math.floor(Math.random() * GEOMETRICS.length);
+      const motions = ['bounce', 'sway', 'walk', 'float', 'wiggle', 'nod'];
+      const exprs = ['happy', 'star', 'wink', 'open', 'shades', 'chill'];
+      const props = ['none', 'crown', 'sprout', 'halo', 'beanie', 'bow'];
+
+      state.motion = motions[Math.floor(Math.random() * motions.length)];
+      state.expr = exprs[Math.floor(Math.random() * exprs.length)];
+      state.prop = props[Math.floor(Math.random() * props.length)];
+
+      // Sync UI active pills
+      motionGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.motion === state.motion));
+      exprGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.expr === state.expr));
+      propGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.prop === state.prop));
+
+      selectMascot(randChar);
+      triggerBoingImpulse();
+      showToast(`🎲 Rolled: ${GEOMETRICS[randChar].name} + ${state.motion.toUpperCase()}!`);
+    }
+
+    /* =====================================================================
+       12. EVENT LISTENERS & KEYBOARD SHORTCUTS
+       ===================================================================== */
+    motionGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill-btn');
+      if (!btn) return;
+      motionGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.motion = btn.dataset.motion;
+      playSynth('pop', 460);
+      updateBakedCodePreview();
+    });
+
+    exprGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill-btn');
+      if (!btn) return;
+      exprGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.expr = btn.dataset.expr;
+      renderStaticLayers();
+      playSynth('pop', 540);
+      updateBakedCodePreview();
+    });
+
+    propGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill-btn');
+      if (!btn) return;
+      propGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.prop = btn.dataset.prop;
+      renderStaticLayers();
+      playSynth('pop', 600);
+      updateBakedCodePreview();
+    });
+
+    bgGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill-btn');
+      if (!btn) return;
+      bgGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.bg = btn.dataset.bg;
+      stageContainer.className = `stage-canvas bg-${state.bg}`;
+    });
+
+    document.getElementById('swatchRow').addEventListener('click', (e) => {
+      const sw = e.target.closest('.color-swatch');
+      if (!sw) return;
+      state.colorOverride = sw.dataset.color;
+      document.getElementById('pickerTint').value = state.colorOverride;
+      document.getElementById('txtTint').textContent = state.colorOverride;
+      renderStaticLayers();
+      playSynth('pop', 520);
+      updateBakedCodePreview();
+    });
+
+    document.getElementById('pickerTint').addEventListener('input', (e) => {
+      state.colorOverride = e.target.value;
+      document.getElementById('txtTint').textContent = e.target.value;
+      renderStaticLayers();
+      updateBakedCodePreview();
+    });
+
+    // Sliders
+    document.getElementById('sliderSquash').addEventListener('input', (e) => {
+      state.squash = parseFloat(e.target.value);
+      document.getElementById('txtSquash').textContent = `${state.squash.toFixed(1)}x`;
+      updateBakedCodePreview();
+    });
+
+    document.getElementById('sliderSpeed').addEventListener('input', (e) => {
+      state.speed = parseFloat(e.target.value);
+      document.getElementById('txtSpeed').textContent = `${state.speed.toFixed(1)}x`;
+      updateBakedCodePreview();
+    });
+
+    document.getElementById('sliderHeight').addEventListener('input', (e) => {
+      state.hopHeight = parseInt(e.target.value);
+      document.getElementById('txtHeight').textContent = `${state.hopHeight}px`;
+      updateBakedCodePreview();
+    });
+
+    document.getElementById('sliderGaze').addEventListener('input', (e) => {
+      state.gazeMax = parseFloat(e.target.value);
+      document.getElementById('txtGaze').textContent = `${state.gazeMax.toFixed(1)}px`;
+    });
+
+    // Stage Pointer & Click Boing
+    // Copy, Preview & Download Baked SVG
+    function copySvgToClipboard() {
+      const svgText = generateBakedStandaloneSvg();
+      const tempArea = document.createElement('textarea');
+      tempArea.value = svgText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempArea);
+      playSynth('magic');
+      showToast('📋 Copied 1:1 Animated SVG to Clipboard!');
+    }
+
+    function downloadSvgFile() {
+      playSynth('magic');
+      const cur = GEOMETRICS[state.charIdx];
+      const svgText = generateBakedStandaloneSvg();
+      const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${cur.id}-${state.motion}-sticker.svg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(`⬇️ Downloaded ${cur.id}-${state.motion}-sticker.svg!`);
+    }
+
+    document.getElementById('btnCopySvg').addEventListener('click', copySvgToClipboard);
+    document.getElementById('btnExport').addEventListener('click', downloadSvgFile);
+    document.getElementById('btnModalCopy').addEventListener('click', copySvgToClipboard);
+    document.getElementById('btnModalDownload').addEventListener('click', downloadSvgFile);
+
+    // Live Export Preview Modal
+    const previewModal = document.getElementById('previewModal');
+    const modalSvgHolder = document.getElementById('modalSvgHolder');
+
+    document.getElementById('btnPreviewSvg').addEventListener('click', () => {
+      playSynth('pop', 560);
+      modalSvgHolder.innerHTML = generateBakedStandaloneSvg();
+      previewModal.classList.add('open');
+    });
+
+    document.getElementById('btnCloseModal').addEventListener('click', () => {
+      previewModal.classList.remove('open');
+      modalSvgHolder.innerHTML = '';
+    });
+
+    previewModal.addEventListener('click', (e) => {
+      if (e.target === previewModal) {
+        previewModal.classList.remove('open');
+        modalSvgHolder.innerHTML = '';
+      }
+    });
+
+    // Keyboard Shortcuts (1-8, Space, E, R)
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        triggerBoingImpulse();
+      } else if (e.key === 'r' || e.key === 'R') {
+        randomizeEverything();
+      } else if (e.key === 'e' || e.key === 'E') {
+        toggleExplode();
+      } else if (e.key >= '1' && e.key <= '8') {
+        const idx = parseInt(e.key) - 1;
+        selectMascot(idx);
+        playSynth('pop', 500);
+      }
+    });
+
+    // Boot Studio
+    initMascotCards();
+    selectMascot(0);
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
