@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MASCOT POP! ⚡ Sticker &amp; Rig Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
@@ -29,6 +29,12 @@
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
+    }
+
+    /* Ensure text inputs can be selected and typed into on mobile */
+    input, textarea {
+      user-select: auto;
+      -webkit-user-select: auto;
     }
 
     body {
@@ -134,6 +140,7 @@
       transition: all 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
       box-shadow: 2px 2px 0 var(--border-ink);
       white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .btn:hover {
@@ -218,6 +225,7 @@
       align-items: center;
       gap: 7px;
       position: relative;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .char-card:hover {
@@ -306,6 +314,7 @@
       justify-content: center;
       gap: 4px;
       white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .pill-btn:hover {
@@ -384,6 +393,7 @@
       box-shadow: 1.5px 1.5px 0 var(--border-ink);
       cursor: pointer;
       transition: transform 0.1s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .kbd-pill:hover {
@@ -410,6 +420,7 @@
 
     #geo-bubble {
       cursor: grab;
+      touch-action: none;
     }
 
     #geo-bubble:active {
@@ -431,6 +442,11 @@
       font-size: 11.5px;
       font-weight: 800;
       z-index: 10;
+      max-width: 90%;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .live-dot {
@@ -439,6 +455,7 @@
       background: #22C55E;
       border-radius: 50%;
       box-shadow: 0 0 5px #22C55E;
+      flex-shrink: 0;
     }
 
     /* Right Control Cards */
@@ -655,7 +672,7 @@
       align-items: center;
       justify-content: center;
       z-index: 150;
-      padding: 20px;
+      padding: 16px;
     }
 
     .modal-backdrop.open {
@@ -669,7 +686,8 @@
       box-shadow: 8px 8px 0 var(--border-ink);
       width: 100%;
       max-width: 540px;
-      overflow: hidden;
+      max-height: 90vh;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
@@ -681,6 +699,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 2;
     }
 
     .modal-title {
@@ -701,7 +722,7 @@
 
     .modal-preview-frame {
       width: 100%;
-      height: 320px;
+      height: 300px;
       background: #FFFFFF;
       border: 2px solid var(--border-ink);
       border-radius: 14px;
@@ -721,7 +742,8 @@
       line-height: 1.45;
     }
 
-    @media (max-width: 1080px) {
+    /* Tablet breakpoint */
+    @media (max-width: 1080px) and (min-width: 769px) {
       .workspace {
         grid-template-columns: 290px 1fr;
       }
@@ -730,17 +752,104 @@
       }
     }
 
+    /* =====================================================================
+       MOBILE / IPHONE OPTIMIZATION (Strictly Scoped)
+       ===================================================================== */
     @media (max-width: 768px) {
+      body {
+        height: auto;
+        min-height: 100dvh;
+        overflow-y: auto; /* Restores vertical scrolling on iPhone */
+        -webkit-overflow-scrolling: touch;
+      }
+
+      header {
+        height: auto;
+        padding: 8px 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .brand {
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      /* Horizontal scroll container for action buttons so none get clipped */
+      .top-actions {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .top-actions::-webkit-scrollbar {
+        display: none;
+      }
+
+      .btn {
+        height: 36px;
+        padding: 0 12px;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      .pill-btn {
+        padding: 7px 5px;
+        font-size: 11.5px;
+      }
+
       .workspace {
         display: flex;
         flex-direction: column;
         height: auto;
+        overflow: visible;
       }
-      .stage-canvas {
-        min-height: 440px;
-      }
+
+      .sidebar, 
       .sidebar-right {
         display: flex;
+        height: auto;
+        overflow-y: visible;
+        border-right: none;
+        border-left: none;
+        border-bottom: 2.5px solid var(--border-ink);
+        padding: 14px 12px;
+      }
+
+      .sidebar-right {
+        border-bottom: none;
+      }
+
+      .stage-canvas {
+        min-height: 420px;
+        order: -1; /* Shows the mascot canvas right under the header */
+        border-bottom: 2.5px solid var(--border-ink);
+        touch-action: pan-y; /* Allows vertical scrolling on canvas except on the draggable bubble */
+      }
+
+      .stage-top-bar {
+        position: relative;
+        top: 0;
+        margin-top: 10px;
+        margin-bottom: 4px;
+      }
+
+      .kbd-pill {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+
+      .status-pill {
+        position: relative;
+        bottom: 0;
+        margin: 10px 0 12px;
+      }
+
+      #geo-bubble {
+        touch-action: none; /* Keeps smooth dragging intact for the speech bubble */
       }
     }
   </style>
@@ -751,8 +860,8 @@
     <div class="brand">
       <div class="brand-badge">⚡ MASCOT POP!</div>
       <div class="brand-title">
-        Sticker &amp; Rig Lab
-        <span class="subtag">Cozy 1:1 SVG Motion</span>
+        Sticker Lab
+        <span class="subtag">1:1 Motion</span>
       </div>
     </div>
     <div class="top-actions">
@@ -764,7 +873,7 @@
           <span id="soundIcon">🔊</span> SFX
         </button>
         <button class="btn btn-yellow" id="btnExplode" title="Inspect SVG Layers [E]">
-          <span>🩻</span> X-Ray Layers
+          <span>🩻</span> X-Ray
         </button>
       </div>
 
@@ -772,7 +881,7 @@
 
       <div class="btn-group">
         <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
-          <span>👁️</span> Preview Export
+          <span>👁️</span> Preview
         </button>
         <button class="btn btn-mint" id="btnCopySvg" title="Copy Standalone Animated SVG Code">
           <span>📋</span> Copy SVG
@@ -784,7 +893,7 @@
     </div>
   </header>
 
-  <!-- Main Studio Workspace (Locked to 1 Screen) -->
+  <!-- Main Studio Workspace -->
   <main class="workspace">
     <!-- Left Sidebar: Buddies, Moves, Props & Faces -->
     <aside class="sidebar">
@@ -847,13 +956,13 @@
       <!-- Interactive Shortcut Pills -->
       <div class="stage-top-bar">
         <div class="kbd-pill" id="pillBoing">
-          <span class="kbd-tag">SPACE</span> Boing Jump!
+          <span class="kbd-tag">TAP / SPACE</span> Boing!
         </div>
         <div class="kbd-pill" id="pillRandom">
-          <span class="kbd-tag">R</span> Randomize
+          <span class="kbd-tag">R</span> Random
         </div>
         <div class="kbd-pill" id="pillXray">
-          <span class="kbd-tag">E</span> X-Ray Rig
+          <span class="kbd-tag">E</span> X-Ray
         </div>
       </div>
 
@@ -865,23 +974,18 @@
 
         <!-- Main Character Hierarchy -->
         <g id="geo-root">
-          <!-- 1. Legs placed behind torso with deep hip socket overlap (never detaches!) -->
           <g id="geo-feet"></g>
-          <!-- 2. Main Geometric Silhouette -->
           <g id="geo-body"></g>
-          <!-- 3. Headwear Prop (Anchored to top of head) -->
           <g id="geo-prop"></g>
-          <!-- 4. Facial Features (Locked sockets + clamped pupil peek) -->
           <g id="geo-face">
             <g id="geo-cheeks"></g>
             <g id="geo-eyes"></g>
             <g id="geo-mouth"></g>
           </g>
-          <!-- 5. Rubberhose Arms -->
           <g id="geo-hands"></g>
         </g>
 
-        <!-- Dynamic Orientation-Aware Dialog & Thought Bubble -->
+        <!-- Dynamic Dialog & Thought Bubble -->
         <g id="geo-bubble"></g>
 
         <!-- Particle FX Layer -->
@@ -894,13 +998,13 @@
       <!-- Bottom Status Pill -->
       <div class="status-pill">
         <span class="live-dot"></span>
-        <span id="statusText">Circle (圓碌碌) • Click Mascot or Press [Space] to Boing!</span>
+        <span id="statusText">Circle (圓碌碌) • Click Mascot to Boing!</span>
       </div>
     </section>
 
-    <!-- Right Sidebar (Compact, 1-Screen Optimized) -->
+    <!-- Right Sidebar -->
     <aside class="sidebar sidebar-right">
-      <!-- 5. Dialog & Bubble (Orientation-Aware Functionality) -->
+      <!-- 5. Dialog & Bubble -->
       <div>
         <div class="section-title">
           <span>5. Dialog &amp; Bubble</span>
@@ -931,7 +1035,6 @@
 
             <div class="tip-banner">💡 Tip: Drag bubble anywhere—tail &amp; puffs point dynamically!</div>
 
-            <!-- Compact 2-Column Bubble Sliders -->
             <div class="slider-grid-2">
               <div class="slider-row">
                 <div class="slider-header">
@@ -961,7 +1064,7 @@
         </div>
       </div>
 
-      <!-- 6. Cozy Feel & Squish (2x2 Compact Grid) -->
+      <!-- 6. Cozy Feel & Squish -->
       <div>
         <div class="section-title">
           <span>6. Cozy Feel &amp; Squish</span>
@@ -1052,19 +1155,18 @@
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title">
-          <span>✨ Standalone .SVG Live Verification</span>
-          <span class="section-badge" style="background:#DCFCE7;">1:1 EXACT MOTION</span>
+          <span>✨ Standalone .SVG Preview</span>
         </div>
         <button class="btn" id="btnCloseModal" style="padding:4px 10px;">✕ Close</button>
       </div>
       <div class="modal-body">
         <div class="modal-preview-frame" id="modalSvgHolder"></div>
         <p class="modal-note">
-          This preview renders the <strong>exact standalone SVG file</strong> generated by the studio—with 17-frame SMIL path morphing for rubberhose limbs, dynamic dialog bubbles, synchronized shadow breathing, and body motion!
+          Exact standalone SVG code generated by the studio—ready to copy or download!
         </p>
-        <div style="display:flex; gap:10px; width:100%; justify-content:center;">
-          <button class="btn btn-mint" id="btnModalCopy">📋 Copy Standalone SVG</button>
-          <button class="btn btn-orange" id="btnModalDownload">⬇️ Download .SVG File</button>
+        <div style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
+          <button class="btn btn-mint" id="btnModalCopy">📋 Copy SVG</button>
+          <button class="btn btn-orange" id="btnModalDownload">⬇️ Download .SVG</button>
         </div>
       </div>
     </div>
@@ -1324,7 +1426,7 @@
           eyesSvg = `
             <path d="M ${fx - 21} ${fy + 1} Q ${fx - 15} ${fy + 6} ${fx - 9} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />
             <path d="M ${fx + 9} ${fy + 1} Q ${fx + 15} ${fy + 6} ${fx + 21} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
-          mouthSvg = `<path d="M ${fx - 5} ${fy + 11} Q ${fx} ${fy + 15} ${fx + 5} ${fy + 11}" stroke="#1E1B18" stroke-width="3" stroke-linecap="round" fill="none" />`;
+          mouthSvg = `<path d="M ${fx - 5} ${fy + 11} Q ${fx} ${fy + 15} ${fx + 5} ${fy + 11}" stroke="#1E1B18" stroke-linecap="round" fill="none" />`;
           break;
 
         case 'happy':
@@ -1364,7 +1466,6 @@
       soundEnabled: true,
       time: 0,
 
-      // Dialog & Thought Bubble State (Orientation-Aware)
       bubbleType: 'speech',
       bubbleText: 'HELLO!',
       bubbleFont: 'modern',
@@ -1372,13 +1473,11 @@
       bubbleY: 95,
       bubbleScale: 1.0,
 
-      // Cozy, Gentle Default Feel Sliders
       gazeMax: 1.6,
       squash: 0.8,
       speed: 0.8,
       hopHeight: 12,
 
-      // Gentle Interactive Impulse Boing
       boingImpulse: 0,
       particles: [],
 
@@ -1389,7 +1488,6 @@
         currentY: 220
       },
 
-      // Organic Blinking
       blinkTimer: 0,
       nextBlink: 3.2,
       isBlinking: false
@@ -1451,7 +1549,7 @@
     }
 
     /* =====================================================================
-       6. DYNAMIC ORIENTATION-AWARE DIALOG BUBBLE & THINKING WINDOW
+       6. DYNAMIC ORIENTATION-AWARE DIALOG BUBBLE
        ===================================================================== */
     function clampBubblePosition() {
       const margin = 12;
@@ -1612,7 +1710,7 @@
     }
 
     /* =====================================================================
-       7. PURE MATHEMATICAL COZY POSE SOLVER (WITH UNIT-AWARE CSS OUTPUT)
+       7. MATHEMATICAL COZY POSE SOLVER
        ===================================================================== */
     function computePoseAtPhase(p, cur, motion, hopHeight, squashFactor, boingBoost = 0) {
       const groundY = 364;
@@ -1797,9 +1895,7 @@
       const shadowOpacity = Math.max(0.11, 0.22 - liftDist / 260);
 
       return {
-        // Unitless for live SVG transform attribute
         bodyTransform: `translate(${(200 + bodyX).toFixed(2)}, ${(cur.pivotY + bodyY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200, ${-cur.pivotY})`,
-        // Strict CSS units for standalone SVG @keyframes animation
         bodyTransformCSS: `translate(${(200 + bodyX).toFixed(2)}px, ${(cur.pivotY + bodyY).toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200px, ${-cur.pivotY}px)`,
         shadowTransform: `translate(${(200 + bodyX * 0.65).toFixed(2)}, 374) scale(${shadowScale.toFixed(3)}) translate(-200, -374)`,
         shadowTransformCSS: `translate(${(200 + bodyX * 0.65).toFixed(2)}px, 374px) scale(${shadowScale.toFixed(3)}) translate(-200px, -374px)`,
@@ -1888,7 +1984,7 @@
       document.getElementById('pickerTint').value = cur.color;
       state.colorOverride = null;
       document.getElementById('txtTint').textContent = 'Original';
-      statusText.textContent = `${cur.name} (${cur.desc}) • Click Mascot or Press [Space] to Boing!`;
+      statusText.textContent = `${cur.name} (${cur.desc}) • Click to Boing!`;
       renderStaticLayers();
       renderBubble();
       updateBakedCodePreview();
@@ -1932,23 +2028,19 @@
     }
 
     /* =====================================================================
-       10. DELTA-TIME 60FPS SYNCHRONIZED ANIMATION LOOP
-       Locks live animation speed perfectly to the exported SVG duration
+       10. 60FPS SYNCHRONIZED ANIMATION LOOP
        ===================================================================== */
     let lastTime = performance.now();
     
     function animate(now) {
-      // Prevent wild jumps if user switches tabs
       const dt = Math.min((now - lastTime) / 1000, 0.1); 
       lastTime = now;
       
-      // Match live cycle strictly to the baked duration formula
       const cycleDuration = 2.25 / state.speed; 
       state.time += dt / cycleDuration;
       
-      // Frame-independent decay for boing impulse
       if (state.boingImpulse > 0.01) {
-        state.boingImpulse *= Math.pow(0.003, dt); // ~0.91^60 at 60fps
+        state.boingImpulse *= Math.pow(0.003, dt);
       } else {
         state.boingImpulse = 0;
       }
@@ -1976,7 +2068,7 @@
         socketR.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
       }
 
-      // 2. Clamped Pupil Tracking
+      // 2. Gaze Tracking
       state.pointer.currentX += (state.pointer.targetX - state.pointer.currentX) * 8 * dt;
       state.pointer.currentY += (state.pointer.targetY - state.pointer.currentY) * 8 * dt;
 
@@ -2048,7 +2140,7 @@
     }
 
     /* =====================================================================
-       11. DRAGGING THE BUBBLE ON STAGE
+       11. DRAGGING THE BUBBLE ON STAGE (TOUCH & MOUSE COMPATIBLE)
        ===================================================================== */
     let isDraggingBubble = false;
     let dragOffset = { x: 0, y: 0 };
@@ -2088,7 +2180,7 @@
     });
 
     /* =====================================================================
-       12. 100% EXACT 1:1 STANDALONE ANIMATED SVG BAKER (STRICT CSS UNITS)
+       12. 100% STANDALONE ANIMATED SVG EXPORT GENERATOR
        ===================================================================== */
     function generateBakedStandaloneSvg() {
       const cur = GEOMETRICS[state.charIdx];
@@ -2119,7 +2211,6 @@
         const pct = ((i / numSteps) * 100).toFixed(2);
         const pose = computePoseAtPhase(p, cur, state.motion, state.hopHeight, state.squash, 0);
 
-        // Strict CSS units: px and deg ensure the keyframes are valid in standalone SVG
         bodyKeyframes += `        ${pct}% { transform: ${pose.bodyTransformCSS}; }\n`;
         shadowKeyframes += `        ${pct}% { transform: ${pose.shadowTransformCSS}; opacity: ${pose.shadowOpacity}; }\n`;
 
@@ -2154,7 +2245,7 @@
       }
 
       return `<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated by MASCOT POP! Sticker & Rig Studio | Character: ${cur.name} (${cur.desc}) | Motion: ${state.motion} (1:1 Exact Rig) -->
+<!-- Generated by MASCOT POP! Sticker & Rig Studio | Character: ${cur.name} (${cur.desc}) | Motion: ${state.motion} -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" width="100%" height="100%">
   <defs>
     <style>
@@ -2184,12 +2275,10 @@ ${shadowKeyframes}      }
     </style>
   </defs>
 
-  <!-- Synchronized Floor Shadow -->
   <g id="mascot-shadow">
     <ellipse cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22" />
   </g>
 
-  <!-- 1:1 World-Space Morphing IK Legs & Feet (Placed behind torso) -->
   <g id="mascot-legs">
     <path d="${initPose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none">
       <animate attributeName="d" values="${leftLegValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
@@ -2208,7 +2297,6 @@ ${shadowKeyframes}      }
     </ellipse>
   </g>
 
-  <!-- Animated Torso, Headwear Prop & Facial Features -->
   <g id="mascot-torso" class="mascot-torso-rig">
     <g id="mascot-body">
       ${cur.renderBody(color).trim()}
@@ -2225,7 +2313,6 @@ ${shadowKeyframes}      }
     </g>
   </g>
 
-  <!-- 1:1 World-Space Morphing Rubberhose Arms & Hands -->
   <g id="mascot-arms">
     <path d="${initPose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none">
       <animate attributeName="d" values="${leftArmValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
@@ -2304,7 +2391,7 @@ ${shadowKeyframes}      }
     }
 
     /* =====================================================================
-       14. EVENT LISTENERS & KEYBOARD SHORTCUTS
+       14. EVENT LISTENERS
        ===================================================================== */
     motionGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('.pill-btn');
@@ -2338,7 +2425,6 @@ ${shadowKeyframes}      }
       updateBakedCodePreview();
     });
 
-    // Bubble Type & Font Grid
     document.getElementById('bubbleTypeGrid').addEventListener('click', (e) => {
       const btn = e.target.closest('.pill-btn');
       if (!btn) return;
@@ -2412,7 +2498,6 @@ ${shadowKeyframes}      }
       updateBakedCodePreview();
     });
 
-    // Sliders
     document.getElementById('sliderSquash').addEventListener('input', (e) => {
       state.squash = parseFloat(e.target.value);
       document.getElementById('txtSquash').textContent = `${state.squash.toFixed(1)}x`;
@@ -2436,7 +2521,6 @@ ${shadowKeyframes}      }
       document.getElementById('txtGaze').textContent = `${state.gazeMax.toFixed(1)}px`;
     });
 
-    // Stage Pointer Tracking & Boing
     stageSvg.addEventListener('pointermove', (e) => {
       const pt = getSvgPoint(e);
       state.pointer.targetX = pt.x;
@@ -2460,7 +2544,6 @@ ${shadowKeyframes}      }
       showToast(state.soundEnabled ? '🔊 SFX Enabled' : '🔇 SFX Muted');
     });
 
-    // Copy & Download Baked SVG
     function copySvgToClipboard() {
       const svgText = generateBakedStandaloneSvg();
       const tempArea = document.createElement('textarea');
@@ -2470,7 +2553,7 @@ ${shadowKeyframes}      }
       document.execCommand('copy');
       document.body.removeChild(tempArea);
       playSynth('magic');
-      showToast('📋 Copied 1:1 Animated SVG to Clipboard!');
+      showToast('📋 Copied Animated SVG!');
     }
 
     function downloadSvgFile() {
@@ -2494,7 +2577,6 @@ ${shadowKeyframes}      }
     document.getElementById('btnModalCopy').addEventListener('click', copySvgToClipboard);
     document.getElementById('btnModalDownload').addEventListener('click', downloadSvgFile);
 
-    // Live Export Preview Modal
     const previewModal = document.getElementById('previewModal');
     const modalSvgHolder = document.getElementById('modalSvgHolder');
 
@@ -2516,7 +2598,6 @@ ${shadowKeyframes}      }
       }
     });
 
-    // Keyboard Shortcuts (1-8, Space, E, R)
     window.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (e.code === 'Space') {
