@@ -667,7 +667,7 @@
       opacity: 1;
     }
 
-    /* Live Exported SVG Preview Modal */
+    /* Preview Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -885,8 +885,8 @@
         <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
           <span>👁️</span> Preview
         </button>
-        <button class="btn btn-mint" id="btnExportGif" title="Download Animated GIF File">
-          <span>🎞️</span> Export .GIF
+        <button class="btn btn-mint" id="btnExportGif" title="Export Sticker to WhatsApp">
+          <span>🎞️</span> Export Sticker
         </button>
         <button class="btn btn-orange" id="btnExportSvg" title="Download Standalone Animated .SVG File">
           <span>⬇️</span> Export .SVG
@@ -987,7 +987,7 @@
 
       <div class="status-pill">
         <span class="live-dot"></span>
-        <span id="statusText">Circle (圓碌碌) • Click Mascot to Boing!</span>
+        <span id="statusText">Circle (圓碌碌) • Click to Boing!</span>
       </div>
     </section>
 
@@ -1134,22 +1134,45 @@
     </aside>
   </main>
 
+  <!-- Standalone SVG Preview Modal -->
   <div class="modal-backdrop" id="previewModal">
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title">
-          <span>✨ Standalone Preview</span>
+          <span>✨ Standalone SVG Preview</span>
         </div>
         <button class="btn" id="btnCloseModal" style="padding:4px 10px;">✕ Close</button>
       </div>
       <div class="modal-body">
         <div class="modal-preview-frame" id="modalSvgHolder"></div>
-        <p class="modal-note">
-          Exact visual output—ready to copy or download!
-        </p>
+        <p class="modal-note">Exact visual output—ready to copy or download!</p>
         <div style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
           <button class="btn btn-mint" id="btnModalCopy">📋 Copy SVG Code</button>
           <button class="btn btn-orange" id="btnModalDownload">⬇️ Download .SVG</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Sticker / GIF Modal -->
+  <div class="modal-backdrop" id="gifModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>⚡ Animated Sticker Ready!</span>
+        </div>
+        <button class="btn" id="btnCloseGifModal" style="padding:4px 10px;">✕ Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview-frame" style="padding:10px; background:#FFFFFF;">
+          <img id="gifModalImg" src="" alt="Mascot Sticker" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:10px; cursor:pointer;">
+        </div>
+        <p class="modal-note" id="gifModalNote">
+          📱 <strong>Tap &amp; hold the image</strong> to <strong>Copy</strong> or <strong>Save to Photos</strong> for WhatsApp!
+        </p>
+        <div style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
+          <button class="btn btn-mint" id="btnShareGif" style="display:none;">📤 Share to WhatsApp</button>
+          <button class="btn btn-orange" id="btnDownloadGifModal">⬇️ Save File</button>
         </div>
       </div>
     </div>
@@ -1348,7 +1371,6 @@
       if (state.bubbleType === 'none') return null;
       clampBubblePosition();
       
-      // Used secure fallbacks so GIFs render cleanly without font issues!
       const fontMap = {
         cute: "'Fredoka', 'Comic Sans MS', cursive, sans-serif",
         comic: "'Nunito', 'Arial Black', sans-serif",
@@ -1485,7 +1507,6 @@
       }
     }
 
-    // Extracted out frame render so we can loop it instantly for GIF recording!
     function renderFrameAt(t) {
       const cur = GEOMETRICS[state.charIdx];
       const socketL = document.getElementById('socket-left'), socketR = document.getElementById('socket-right');
@@ -1501,7 +1522,7 @@
 
     let lastTime = performance.now();
     function animate(now) {
-      if (isExportingGif) { requestAnimationFrame(animate); return; } // Pause live update while encoding GIF
+      if (isExportingGif) { requestAnimationFrame(animate); return; }
 
       const dt = Math.min((now - lastTime) / 1000, 0.1); lastTime = now;
       state.time += dt / (2.25 / state.speed);
@@ -1518,7 +1539,6 @@
       if (!state.isExploded) {
         renderFrameAt(state.time);
         
-        // Dynamic pupil blink logic
         const fy = cur.faceCenter[1];
         const socketL = document.getElementById('socket-left'), socketR = document.getElementById('socket-right');
         if (socketL) socketL.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
@@ -1568,9 +1588,6 @@
     const endDrag = () => { if (isDraggingBubble) { isDraggingBubble = false; stageContainer.classList.remove('dragging-bubble'); } };
     window.addEventListener('pointerup', endDrag); window.addEventListener('touchend', endDrag);
 
-    // ==========================================
-    // 100% PERFECT STANDALONE SVG CODE GENERATOR (Fixed Backgrounds & Fonts)
-    // ==========================================
     function generateBakedStandaloneSvg() {
       const cur = GEOMETRICS[state.charIdx], color = state.colorOverride || cur.color, [fx, fy] = cur.faceCenter, duration = (2.25 / state.speed).toFixed(2);
       let bodyK = '', shadowK = '', lL = [], rL = [], fLX = [], fLY = [], fRX = [], fRY = [], aL = [], aR = [], hLX = [], hLY = [], hRX = [], hRY = [];
@@ -1585,7 +1602,6 @@
       let bubbleSvgMarkup = ''; const bD = generateBubbleMarkup();
       if (bD) bubbleSvgMarkup = `\n  <g id="mascot-bubble" transform="translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})">\n    ${bD.shapeMarkup.trim()}\n    <text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${bD.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${bD.escapedText}</text>\n  </g>`;
 
-      // EXACT Studio Background injection
       let bgMarkup = '';
       if (state.bg === 'night') {
         bgMarkup = `<rect width="100%" height="100%" fill="#18181B" />`;
@@ -1661,41 +1677,55 @@
       selectMascot(r); triggerBoingImpulse();
     }
 
-    // ==========================================
-    // ANIMATED GIF EXPORT ENGINE
-    // ==========================================
+    // Modal elements for GIF / Sticker sharing
+    const gifModal = document.getElementById('gifModal');
+    const gifModalImg = document.getElementById('gifModalImg');
+    const btnShareGif = document.getElementById('btnShareGif');
+    const btnDownloadGifModal = document.getElementById('btnDownloadGifModal');
+    let currentGifBlob = null;
+    let currentGifUrl = '';
+    let currentGifFilename = '';
+
+    function dataURItoBlob(dataURI) {
+      const byteString = atob(dataURI.split(',')[1]);
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], {type: mimeString});
+    }
+
+    // Export GIF with Native iOS Share & Long-Press Pop-up
     async function exportAnimatedGif() {
-      if (typeof gifshot === 'undefined') { showToast('❌ GIF Encoder not loaded! Ensure you are connected to the internet.'); return; }
+      if (typeof gifshot === 'undefined') { showToast('❌ Encoder not loaded! Ensure internet connection.'); return; }
       if (state.isExploded) toggleExplode();
-      showToast('⏳ Generating GIF... Please wait (0%)');
+      showToast('⏳ Rendering Sticker... (0%)');
       isExportingGif = true;
 
       const canvas = document.createElement('canvas'); canvas.width = 400; canvas.height = 460;
       const ctx = canvas.getContext('2d');
       const fps = 20, cycleDuration = 2.25 / state.speed, numFrames = Math.round(cycleDuration * fps);
       const frames = []; const originalTime = state.time;
-
       const bgColor = (state.bg === 'night') ? '#18181B' : (state.bg === 'clean' ? '#FFFFFF' : '#FAF7F0');
 
       for (let i = 0; i < numFrames; i++) {
         renderFrameAt(i / numFrames);
         let svgData = new XMLSerializer().serializeToString(stageSvg);
-        // Clear particles from GIF export to keep loop clean
         svgData = svgData.replace(/<g id="geo-particles">.*?<\/g>/, '<g id="geo-particles"></g>'); 
         if (!svgData.includes('xmlns=')) svgData = svgData.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
 
         const img = await new Promise((resolve) => {
-          const i = new Image(); i.onload = () => resolve(i); i.src = URL.createObjectURL(new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'}));
+          const im = new Image(); im.onload = () => resolve(im); im.src = URL.createObjectURL(new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'}));
         });
 
-        // Match EXACT Stage Canvas Background
         ctx.fillStyle = bgColor; ctx.fillRect(0, 0, 400, 460);
         if (state.bg === 'dots') {
           ctx.fillStyle = '#1E1B18'; ctx.globalAlpha = 0.15;
           for(let x=0; x<400; x+=20) { for(let y=0; y<460; y+=20) { ctx.beginPath(); ctx.arc(x+10, y+10, 1.5, 0, Math.PI*2); ctx.fill(); } }
           ctx.globalAlpha = 1.0;
         }
-        
         ctx.drawImage(img, 0, 0);
         frames.push(canvas.toDataURL('image/png'));
       }
@@ -1704,15 +1734,56 @@
 
       gifshot.createGIF({
         gifWidth: 400, gifHeight: 460, images: frames, interval: 1 / fps, numWorkers: 2,
-        progressCallback: (pct) => toastBox.textContent = `⏳ Generating GIF... (${Math.round(pct * 100)}%)`
+        progressCallback: (pct) => toastBox.textContent = `⏳ Rendering Sticker... (${Math.round(pct * 100)}%)`
       }, (obj) => {
         if (!obj.error) {
-          const a = document.createElement('a'); a.href = obj.image; a.download = `${GEOMETRICS[state.charIdx].id}-${state.motion}.gif`;
-          document.body.appendChild(a); a.click(); document.body.removeChild(a);
-          showToast('✅ GIF Exported Successfully!'); playSynth('magic');
-        } else showToast('❌ Failed to generate GIF.');
+          currentGifUrl = obj.image;
+          currentGifBlob = dataURItoBlob(obj.image);
+          currentGifFilename = `${GEOMETRICS[state.charIdx].id}-${state.motion}.gif`;
+          
+          gifModalImg.src = currentGifUrl;
+          gifModal.classList.add('open');
+          playSynth('magic');
+          showToast('✨ Sticker Ready!');
+
+          const testFile = new File([currentGifBlob], currentGifFilename, { type: 'image/gif' });
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: [testFile] })) {
+            btnShareGif.style.display = 'inline-flex';
+            btnShareGif.onclick = async () => {
+              try {
+                await navigator.share({
+                  files: [testFile],
+                  title: 'Mascot Sticker'
+                });
+              } catch (e) {}
+            };
+          } else {
+            btnShareGif.style.display = 'none';
+          }
+        } else {
+          showToast('❌ Failed to render.');
+        }
       });
     }
+
+    btnDownloadGifModal.addEventListener('click', () => {
+      if (!currentGifUrl) return;
+      const a = document.createElement('a'); a.href = currentGifUrl; a.download = currentGifFilename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      showToast('⬇️ Saved GIF!');
+    });
+
+    document.getElementById('btnCloseGifModal').addEventListener('click', () => {
+      gifModal.classList.remove('open');
+      gifModalImg.src = '';
+    });
+
+    gifModal.addEventListener('click', (e) => {
+      if (e.target === gifModal) {
+        gifModal.classList.remove('open');
+        gifModalImg.src = '';
+      }
+    });
 
     // UI Event Listeners
     motionGrid.addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; motionGrid.querySelectorAll('.pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.motion=b.dataset.motion; playSynth('pop', 460); updateBakedCodePreview(); });
