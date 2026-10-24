@@ -10,9 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   
-  <!-- APNG Encoding Engines -->
-  <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/upng-js@2.1.0/UPNG.min.js"></script>
+  <!-- GIF Encoding Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.3.2/gifshot.min.js"></script>
 
   <style>
     :root {
@@ -366,7 +365,7 @@
       background-color: #FFFFFF;
     }
 
-    /* The new Transparent background (Checkered Pattern for preview) */
+    /* Transparent background preview */
     .stage-canvas.bg-transparent {
       background-color: #FFFFFF;
       background-image: 
@@ -673,7 +672,7 @@
       opacity: 1;
     }
 
-    /* Preview Modals */
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -892,12 +891,10 @@
 
       <div class="action-divider"></div>
 
+      <!-- Simplified Export Buttons -->
       <div class="btn-group">
-        <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
-          <span>👁️</span> Preview
-        </button>
-        <button class="btn btn-mint" id="btnExportApng" title="Export Animated PNG to WhatsApp">
-          <span>🎞️</span> Export APNG
+        <button class="btn btn-mint" id="btnExportGif" title="Export Animated GIF">
+          <span>🎞️</span> Export .GIF
         </button>
         <button class="btn btn-orange" id="btnExportSvg" title="Download Standalone Animated .SVG File">
           <span>⬇️</span> Export .SVG
@@ -1145,45 +1142,25 @@
     </aside>
   </main>
 
-  <!-- Standalone SVG Preview Modal -->
-  <div class="modal-backdrop" id="previewModal">
+  <!-- GIF Modal -->
+  <div class="modal-backdrop" id="gifModal">
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title">
-          <span>✨ Standalone SVG Preview</span>
+          <span>⚡ Animated GIF Ready!</span>
         </div>
-        <button class="btn" id="btnCloseModal" style="padding:4px 10px;">✕ Close</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-preview-frame" id="modalSvgHolder"></div>
-        <p class="modal-note">Exact visual output—ready to copy or download!</p>
-        <div style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
-          <button class="btn btn-mint" id="btnModalCopy">📋 Copy SVG Code</button>
-          <button class="btn btn-orange" id="btnModalDownload">⬇️ Download .SVG</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WhatsApp Sticker / APNG Modal -->
-  <div class="modal-backdrop" id="apngModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title">
-          <span>⚡ Animated Sticker Ready!</span>
-        </div>
-        <button class="btn" id="btnCloseApngModal" style="padding:4px 10px;">✕ Close</button>
+        <button class="btn" id="btnCloseGifModal" style="padding:4px 10px;">✕ Close</button>
       </div>
       <div class="modal-body">
         <div class="modal-preview-frame" style="padding:10px; background:#FFFFFF; background-image: linear-gradient(45deg, #F0F0F0 25%, transparent 25%), linear-gradient(-45deg, #F0F0F0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #F0F0F0 75%), linear-gradient(-45deg, transparent 75%, #F0F0F0 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
-          <img id="apngModalImg" src="" alt="Mascot Sticker" style="max-width:100%; max-height:100%; object-fit:contain; cursor:pointer;">
+          <img id="gifModalImg" src="" alt="Mascot Sticker" style="max-width:100%; max-height:100%; object-fit:contain; cursor:pointer;">
         </div>
-        <p class="modal-note" id="apngModalNote">
-          📱 <strong>Tap &amp; hold the image</strong> to <strong>Copy</strong> or <strong>Save to Photos</strong> for WhatsApp!
+        <p class="modal-note" id="gifModalNote">
+          📱 <strong>Tap &amp; hold the image</strong> to <strong>Copy</strong> or <strong>Save to Photos</strong>!
         </p>
         <div style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
-          <button class="btn btn-mint" id="btnShareApng" style="display:none;">📤 Share to WhatsApp</button>
-          <button class="btn btn-orange" id="btnDownloadApngModal">⬇️ Save File</button>
+          <button class="btn btn-mint" id="btnShareGif" style="display:none;">📤 Share GIF</button>
+          <button class="btn btn-orange" id="btnDownloadGifModal">⬇️ Save File</button>
         </div>
       </div>
     </div>
@@ -1317,7 +1294,7 @@
     }
 
     const state = {
-      charIdx: 0, motion: 'bounce', expr: 'happy', prop: 'none', bg: 'transparent',
+      charIdx: 0, motion: 'bounce', expr: 'happy', prop: 'none', bg: 'dots',
       colorOverride: null, isExploded: false, soundEnabled: true, time: 0,
       bubbleType: 'speech', bubbleText: 'HELLO!', bubbleFont: 'modern',
       bubbleX: 285, bubbleY: 95, bubbleScale: 1.0,
@@ -1329,7 +1306,7 @@
 
     const STAGE_W = 400, STAGE_H = 460;
     const BUBBLE_BASE_HALF_W = 68, BUBBLE_BASE_HALF_H = 32;
-    let isExportingApng = false;
+    let isExportingGif = false;
 
     let audioCtx = null;
     function playSynth(type = 'pop', baseFreq = 440) {
@@ -1533,7 +1510,7 @@
 
     let lastTime = performance.now();
     function animate(now) {
-      if (isExportingApng) { requestAnimationFrame(animate); return; }
+      if (isExportingGif) { requestAnimationFrame(animate); return; }
 
       const dt = Math.min((now - lastTime) / 1000, 0.1); lastTime = now;
       state.time += dt / (2.25 / state.speed);
@@ -1694,30 +1671,33 @@
       selectMascot(r); triggerBoingImpulse();
     }
 
-    // Modal elements for APNG sharing
-    const apngModal = document.getElementById('apngModal');
-    const apngModalImg = document.getElementById('apngModalImg');
-    const btnShareApng = document.getElementById('btnShareApng');
-    const btnDownloadApngModal = document.getElementById('btnDownloadApngModal');
-    let currentApngBlob = null;
-    let currentApngUrl = '';
-    let currentApngFilename = '';
+    const gifModal = document.getElementById('gifModal');
+    const gifModalImg = document.getElementById('gifModalImg');
+    const btnShareGif = document.getElementById('btnShareGif');
+    const btnDownloadGifModal = document.getElementById('btnDownloadGifModal');
+    let currentGifBlob = null, currentGifUrl = '', currentGifFilename = '';
 
-    // Advanced 24fps True-Color APNG Export Engine using UPNG.js
-    async function exportAnimatedApng() {
-      if (typeof UPNG === 'undefined') { showToast('❌ Encoder not loaded! Ensure internet connection.'); return; }
+    function dataURItoBlob(dataURI) {
+      const byteString = atob(dataURI.split(',')[1]);
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+      return new Blob([ab], {type: mimeString});
+    }
+
+    async function exportAnimatedGif() {
+      if (typeof gifshot === 'undefined') { showToast('❌ Encoder not loaded! Ensure internet connection.'); return; }
       if (state.isExploded) toggleExplode();
       
-      // Stop rendering loop temporarily
-      isExportingApng = true;
-      showToast('⏳ Generating frames... Please wait');
+      isExportingGif = true;
+      showToast('⏳ Rendering GIF... Please wait');
 
       const canvas = document.createElement('canvas'); canvas.width = 400; canvas.height = 460;
       const ctx = canvas.getContext('2d');
-      const fps = 24, cycleDuration = 2.25 / state.speed, numFrames = Math.round(cycleDuration * fps);
-      const framesData = []; const delays = []; const originalTime = state.time;
-      
-      // Frame rendering phase
+      const fps = 20, cycleDuration = 2.25 / state.speed, numFrames = Math.round(cycleDuration * fps);
+      const frames = []; const originalTime = state.time;
+
       for (let i = 0; i < numFrames; i++) {
         renderFrameAt(i / numFrames);
         let svgData = new XMLSerializer().serializeToString(stageSvg);
@@ -1728,7 +1708,7 @@
           const im = new Image(); im.onload = () => resolve(im); im.src = URL.createObjectURL(new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'}));
         });
 
-        ctx.clearRect(0, 0, 400, 460); // Critical for transparency
+        ctx.clearRect(0, 0, 400, 460);
         if (state.bg !== 'transparent') {
           ctx.fillStyle = (state.bg === 'clean') ? '#FFFFFF' : '#FAF7F0';
           ctx.fillRect(0, 0, 400, 460);
@@ -1745,65 +1725,59 @@
         }
         
         ctx.drawImage(img, 0, 0);
-        framesData.push(ctx.getImageData(0, 0, 400, 460).data.buffer);
-        delays.push(Math.round(1000 / fps));
+        frames.push(canvas.toDataURL('image/png'));
       }
 
       state.time = originalTime; 
-      isExportingApng = false; 
-      showToast('⏳ Compressing APNG (This takes a few seconds)...');
+      isExportingGif = false; 
 
-      // Encoding phase (Briefly delays so UI toast can update before heavy processing)
-      setTimeout(() => {
-        try {
-          // cnum 0 forces True Color lossless APNG with 100% smooth Alpha transparency
-          const apngBuffer = UPNG.encode(framesData, 400, 460, 0, delays);
-          currentApngBlob = new Blob([apngBuffer], { type: 'image/png' });
-          currentApngFilename = `${GEOMETRICS[state.charIdx].id}-${state.motion}.png`;
-          currentApngUrl = URL.createObjectURL(currentApngBlob);
+      gifshot.createGIF({
+        gifWidth: 400, gifHeight: 460, images: frames, interval: 1 / fps, numWorkers: 2,
+        progressCallback: (pct) => toastBox.textContent = `⏳ Rendering GIF... (${Math.round(pct * 100)}%)`
+      }, (obj) => {
+        if (!obj.error) {
+          currentGifUrl = obj.image;
+          currentGifBlob = dataURItoBlob(obj.image);
+          currentGifFilename = `${GEOMETRICS[state.charIdx].id}-${state.motion}.gif`;
           
-          apngModalImg.src = currentApngUrl;
-          apngModal.classList.add('open');
+          gifModalImg.src = currentGifUrl;
+          gifModal.classList.add('open');
           playSynth('magic');
-          showToast('✨ APNG Sticker Ready!');
+          showToast('✨ GIF Sticker Ready!');
 
-          // Check if iOS Share Sheet API is available
-          const testFile = new File([currentApngBlob], currentApngFilename, { type: 'image/png' });
+          const testFile = new File([currentGifBlob], currentGifFilename, { type: 'image/gif' });
           if (navigator.share && navigator.canShare && navigator.canShare({ files: [testFile] })) {
-            btnShareApng.style.display = 'inline-flex';
-            btnShareApng.onclick = async () => {
+            btnShareGif.style.display = 'inline-flex';
+            btnShareGif.onclick = async () => {
               try {
-                await navigator.share({
-                  files: [testFile],
-                  title: 'Mascot Sticker'
-                });
+                await navigator.share({ files: [testFile], title: 'Mascot Sticker' });
               } catch (e) {}
             };
           } else {
-            btnShareApng.style.display = 'none';
+            btnShareGif.style.display = 'none';
           }
-        } catch (e) {
-          showToast('❌ Failed to render APNG.');
+        } else {
+          showToast('❌ Failed to render GIF.');
         }
-      }, 50);
+      });
     }
 
-    btnDownloadApngModal.addEventListener('click', () => {
-      if (!currentApngUrl) return;
-      const a = document.createElement('a'); a.href = currentApngUrl; a.download = currentApngFilename;
+    btnDownloadGifModal.addEventListener('click', () => {
+      if (!currentGifUrl) return;
+      const a = document.createElement('a'); a.href = currentGifUrl; a.download = currentGifFilename;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      showToast('⬇️ Saved APNG Sticker!');
+      showToast('⬇️ Saved GIF!');
     });
 
-    document.getElementById('btnCloseApngModal').addEventListener('click', () => {
-      apngModal.classList.remove('open');
-      apngModalImg.src = '';
+    document.getElementById('btnCloseGifModal').addEventListener('click', () => {
+      gifModal.classList.remove('open');
+      gifModalImg.src = '';
     });
 
-    apngModal.addEventListener('click', (e) => {
-      if (e.target === apngModal) {
-        apngModal.classList.remove('open');
-        apngModalImg.src = '';
+    gifModal.addEventListener('click', (e) => {
+      if (e.target === gifModal) {
+        gifModal.classList.remove('open');
+        gifModalImg.src = '';
       }
     });
 
@@ -1831,18 +1805,10 @@
     document.getElementById('pillBoing').addEventListener('click', triggerBoingImpulse); document.getElementById('pillRandom').addEventListener('click', randomizeEverything); document.getElementById('pillXray').addEventListener('click', toggleExplode); document.getElementById('btnSurprise').addEventListener('click', randomizeEverything); document.getElementById('btnExplode').addEventListener('click', toggleExplode);
     document.getElementById('btnSound').addEventListener('click', () => { state.soundEnabled = !state.soundEnabled; document.getElementById('soundIcon').textContent = state.soundEnabled ? '🔊' : '🔇'; showToast(state.soundEnabled ? '🔊 SFX Enabled' : '🔇 SFX Muted'); });
 
-    function copySvgToClipboard() { const t = document.createElement('textarea'); t.value = generateBakedStandaloneSvg(); document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); playSynth('magic'); showToast('📋 Copied Code!'); }
     function downloadSvgFile() { playSynth('magic'); const cur=GEOMETRICS[state.charIdx]; const blob=new Blob([generateBakedStandaloneSvg()], {type:'image/svg+xml;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`${cur.id}-${state.motion}-sticker.svg`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showToast('⬇️ Downloaded .svg!'); }
 
-    document.getElementById('btnExportApng').addEventListener('click', exportAnimatedApng);
+    document.getElementById('btnExportGif').addEventListener('click', exportAnimatedGif);
     document.getElementById('btnExportSvg').addEventListener('click', downloadSvgFile);
-    document.getElementById('btnModalCopy').addEventListener('click', copySvgToClipboard);
-    document.getElementById('btnModalDownload').addEventListener('click', downloadSvgFile);
-
-    const previewModal = document.getElementById('previewModal'), modalSvgHolder = document.getElementById('modalSvgHolder');
-    document.getElementById('btnPreviewSvg').addEventListener('click', () => { playSynth('pop', 560); modalSvgHolder.innerHTML = generateBakedStandaloneSvg(); previewModal.classList.add('open'); });
-    document.getElementById('btnCloseModal').addEventListener('click', () => { previewModal.classList.remove('open'); modalSvgHolder.innerHTML = ''; });
-    previewModal.addEventListener('click', (e) => { if (e.target === previewModal) { previewModal.classList.remove('open'); modalSvgHolder.innerHTML = ''; } });
 
     window.addEventListener('keydown', (e) => { if (e.target.tagName === 'INPUT') return; if (e.code === 'Space') { e.preventDefault(); triggerBoingImpulse(); } else if (e.key === 'r' || e.key === 'R') randomizeEverything(); else if (e.key === 'e' || e.key === 'E') toggleExplode(); else if (e.key >= '1' && e.key <= '8') { selectMascot(parseInt(e.key) - 1); playSynth('pop', 500); } });
 
