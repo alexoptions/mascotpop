@@ -4,9 +4,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MASCOT POP! ⚡ Sticker &amp; Rig Studio</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- GIF Encoding Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.3.2/gifshot.min.js"></script>
+
   <style>
     :root {
       --bg-cream: #FAF7F0;
@@ -31,7 +37,6 @@
       -webkit-user-select: none;
     }
 
-    /* Ensure text inputs can be selected and typed into on mobile */
     input, textarea {
       user-select: auto;
       -webkit-user-select: auto;
@@ -752,14 +757,12 @@
       }
     }
 
-    /* =====================================================================
-       MOBILE / IPHONE OPTIMIZATION (Strictly Scoped)
-       ===================================================================== */
+    /* Mobile Responsive Optimizations */
     @media (max-width: 768px) {
       body {
         height: auto;
         min-height: 100dvh;
-        overflow-y: auto; /* Restores vertical scrolling on iPhone */
+        overflow-y: auto; 
         -webkit-overflow-scrolling: touch;
       }
 
@@ -776,7 +779,6 @@
         width: 100%;
       }
 
-      /* Horizontal scroll container for action buttons so none get clipped */
       .top-actions {
         width: 100%;
         overflow-x: auto;
@@ -785,6 +787,7 @@
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
       }
+      
       .top-actions::-webkit-scrollbar {
         display: none;
       }
@@ -825,9 +828,9 @@
 
       .stage-canvas {
         min-height: 420px;
-        order: -1; /* Shows the mascot canvas right under the header */
+        order: -1; 
         border-bottom: 2.5px solid var(--border-ink);
-        touch-action: pan-y; /* Allows vertical scrolling on canvas except on the draggable bubble */
+        touch-action: pan-y; 
       }
 
       .stage-top-bar {
@@ -849,13 +852,12 @@
       }
 
       #geo-bubble {
-        touch-action: none; /* Keeps smooth dragging intact for the speech bubble */
+        touch-action: none; 
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header with Structured Action Groups -->
   <header>
     <div class="brand">
       <div class="brand-badge">⚡ MASCOT POP!</div>
@@ -883,19 +885,17 @@
         <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
           <span>👁️</span> Preview
         </button>
-        <button class="btn btn-mint" id="btnCopySvg" title="Copy Standalone Animated SVG Code">
-          <span>📋</span> Copy SVG
+        <button class="btn btn-mint" id="btnExportGif" title="Download Animated GIF File">
+          <span>🎞️</span> Export .GIF
         </button>
-        <button class="btn btn-orange" id="btnExport" title="Download Standalone Animated .SVG File">
-          <span>⬇️</span> Download .SVG
+        <button class="btn btn-orange" id="btnExportSvg" title="Download Standalone Animated .SVG File">
+          <span>⬇️</span> Export .SVG
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Studio Workspace -->
   <main class="workspace">
-    <!-- Left Sidebar: Buddies, Moves, Props & Faces -->
     <aside class="sidebar">
       <div>
         <div class="section-title">
@@ -951,9 +951,7 @@
       </div>
     </aside>
 
-    <!-- Center Stage -->
     <section class="stage-canvas bg-dots" id="stageContainer">
-      <!-- Interactive Shortcut Pills -->
       <div class="stage-top-bar">
         <div class="kbd-pill" id="pillBoing">
           <span class="kbd-tag">TAP / SPACE</span> Boing!
@@ -967,12 +965,9 @@
       </div>
 
       <svg id="stageSvg" class="svg-stage" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
-        <!-- Floor Cast Shadow -->
         <g id="geo-shadow">
           <ellipse id="shadowEl" cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22"></ellipse>
         </g>
-
-        <!-- Main Character Hierarchy -->
         <g id="geo-root">
           <g id="geo-feet"></g>
           <g id="geo-body"></g>
@@ -984,27 +979,19 @@
           </g>
           <g id="geo-hands"></g>
         </g>
-
-        <!-- Dynamic Dialog & Thought Bubble -->
         <g id="geo-bubble"></g>
-
-        <!-- Particle FX Layer -->
         <g id="geo-particles"></g>
       </svg>
 
-      <!-- Explode Layer Badges -->
       <div class="explode-overlay" id="explodeOverlay"></div>
 
-      <!-- Bottom Status Pill -->
       <div class="status-pill">
         <span class="live-dot"></span>
         <span id="statusText">Circle (圓碌碌) • Click Mascot to Boing!</span>
       </div>
     </section>
 
-    <!-- Right Sidebar -->
     <aside class="sidebar sidebar-right">
-      <!-- 5. Dialog & Bubble -->
       <div>
         <div class="section-title">
           <span>5. Dialog &amp; Bubble</span>
@@ -1064,7 +1051,6 @@
         </div>
       </div>
 
-      <!-- 6. Cozy Feel & Squish -->
       <div>
         <div class="section-title">
           <span>6. Cozy Feel &amp; Squish</span>
@@ -1107,7 +1093,6 @@
         </div>
       </div>
 
-      <!-- 7. Sticker Color & Backdrop -->
       <div>
         <div class="section-title">
           <span>7. Sticker Color &amp; Backdrop</span>
@@ -1137,7 +1122,6 @@
         </div>
       </div>
 
-      <!-- Collapsible 1:1 Standalone SVG Code Drawer -->
       <div>
         <details class="code-details" id="codeDetails">
           <summary>
@@ -1150,60 +1134,44 @@
     </aside>
   </main>
 
-  <!-- Live Standalone SVG Verification Modal -->
   <div class="modal-backdrop" id="previewModal">
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title">
-          <span>✨ Standalone .SVG Preview</span>
+          <span>✨ Standalone Preview</span>
         </div>
         <button class="btn" id="btnCloseModal" style="padding:4px 10px;">✕ Close</button>
       </div>
       <div class="modal-body">
         <div class="modal-preview-frame" id="modalSvgHolder"></div>
         <p class="modal-note">
-          Exact standalone SVG code generated by the studio—ready to copy or download!
+          Exact visual output—ready to copy or download!
         </p>
         <div style="display:flex; gap:10px; width:100%; justify-content:center; flex-wrap:wrap;">
-          <button class="btn btn-mint" id="btnModalCopy">📋 Copy SVG</button>
+          <button class="btn btn-mint" id="btnModalCopy">📋 Copy SVG Code</button>
           <button class="btn btn-orange" id="btnModalDownload">⬇️ Download .SVG</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toastBox">⬇️ Downloaded sticker.svg!</div>
+  <div class="toast" id="toastBox">⬇️ Downloaded sticker!</div>
 
   <script>
-    /* =====================================================================
-       1. 8 PURE GEOMETRIC BUDDIES (DEEP-SOCKETED ZERO-DETACHMENT RIG)
-       ===================================================================== */
     const GEOMETRICS = [
       {
-        id: 'plus',
-        name: 'Plus',
-        desc: '加號仔',
-        color: '#FACC15',
-        faceCenter: [200, 214],
-        headTopY: 138,
-        pivotY: 285,
+        id: 'plus', name: 'Plus', desc: '加號仔', color: '#FACC15',
+        faceCenter: [200, 214], headTopY: 138, pivotY: 285,
         renderBody: (c) => `
-          <path d="M 156 138 H 244 Q 256 138 256 150 V 174 H 280 Q 292 174 292 186 V 246 Q 292 258 280 258 H 256 V 282 Q 256 294 244 294 H 156 Q 144 294 144 282 V 258 H 120 Q 108 258 108 246 V 186 Q 108 174 120 174 H 144 V 150 Q 144 138 156 138 Z"
-                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 156 138 H 244 Q 256 138 256 150 V 174 H 280 Q 292 174 292 186 V 246 Q 292 258 280 258 H 256 V 282 Q 256 294 244 294 H 156 Q 144 294 144 282 V 258 H 120 Q 108 258 108 246 V 186 Q 108 174 120 174 H 144 V 150 Q 144 138 156 138 Z" fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
           <path d="M 162 148 H 220" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.65" />
         `,
         armRoots: { left: [114, 216], right: [286, 216] },
         hipRoots: { left: [174, 276], right: [226, 276] }
       },
       {
-        id: 'circle',
-        name: 'Circle',
-        desc: '圓碌碌',
-        color: '#FB923C',
-        faceCenter: [200, 214],
-        headTopY: 140,
-        pivotY: 282,
+        id: 'circle', name: 'Circle', desc: '圓碌碌', color: '#FB923C',
+        faceCenter: [200, 214], headTopY: 140, pivotY: 282,
         renderBody: (c) => `
           <circle cx="200" cy="215" r="74" fill="${c}" stroke="#1E1B18" stroke-width="5.5" />
           <path d="M 165 156 Q 195 144 225 154" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
@@ -1212,13 +1180,8 @@
         hipRoots: { left: [174, 268], right: [226, 268] }
       },
       {
-        id: 'square',
-        name: 'Square',
-        desc: '方粒粒',
-        color: '#FBBF24',
-        faceCenter: [200, 216],
-        headTopY: 146,
-        pivotY: 284,
+        id: 'square', name: 'Square', desc: '方粒粒', color: '#FBBF24',
+        faceCenter: [200, 216], headTopY: 146, pivotY: 284,
         renderBody: (c) => `
           <rect x="128" y="146" width="144" height="140" rx="30" fill="${c}" stroke="#1E1B18" stroke-width="5.5" />
           <path d="M 155 158 H 225" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.6" />
@@ -1227,73 +1190,36 @@
         hipRoots: { left: [170, 270], right: [230, 270] }
       },
       {
-        id: 'triangle',
-        name: 'Triangle',
-        desc: '三角飯',
-        color: '#FEF08A',
-        faceCenter: [200, 224],
-        headTopY: 138,
-        pivotY: 282,
+        id: 'triangle', name: 'Triangle', desc: '三角飯', color: '#FEF08A',
+        faceCenter: [200, 224], headTopY: 138, pivotY: 282,
         renderBody: (c) => `
-          <path d="M 184 146 Q 200 126 216 146 L 280 256 Q 292 282 264 282 L 136 282 Q 108 282 120 256 Z"
-                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 184 146 Q 200 126 216 146 L 280 256 Q 292 282 264 282 L 136 282 Q 108 282 120 256 Z" fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
         `,
         armRoots: { left: [148, 226], right: [252, 226] },
         hipRoots: { left: [170, 268], right: [230, 268] }
       },
       {
-        id: 'star',
-        name: 'Star',
-        desc: '閃閃星',
-        color: '#FDE047',
-        faceCenter: [200, 218],
-        headTopY: 132,
-        pivotY: 280,
+        id: 'star', name: 'Star', desc: '閃閃星', color: '#FDE047',
+        faceCenter: [200, 218], headTopY: 132, pivotY: 280,
         renderBody: (c) => `
-          <path d="M 200 130
-                   C 208 130 220 168 228 174
-                   C 236 180 278 180 282 190
-                   C 286 200 254 226 250 236
-                   C 246 246 258 282 248 288
-                   C 238 294 212 272 200 272
-                   C 188 272 162 294 152 288
-                   C 142 282 154 246 150 236
-                   C 146 226 114 200 118 190
-                   C 122 180 164 180 172 174
-                   C 180 168 192 130 200 130 Z"
-                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 200 130 C 208 130 220 168 228 174 C 236 180 278 180 282 190 C 286 200 254 226 250 236 C 246 246 258 282 248 288 C 238 294 212 272 200 272 C 188 272 162 294 152 288 C 142 282 154 246 150 236 C 146 226 114 200 118 190 C 122 180 164 180 172 174 C 180 168 192 130 200 130 Z" fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
         `,
         armRoots: { left: [144, 212], right: [256, 212] },
         hipRoots: { left: [172, 262], right: [228, 262] }
       },
       {
-        id: 'heart',
-        name: 'Heart',
-        desc: '心心仔',
-        color: '#FB7185',
-        faceCenter: [200, 216],
-        headTopY: 152,
-        pivotY: 280,
+        id: 'heart', name: 'Heart', desc: '心心仔', color: '#FB7185',
+        faceCenter: [200, 216], headTopY: 152, pivotY: 280,
         renderBody: (c) => `
-          <path d="M 200 168
-                   C 182 132 118 136 118 192
-                   C 118 242 174 282 200 286
-                   C 226 282 282 242 282 192
-                   C 282 136 218 132 200 168 Z"
-                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 200 168 C 182 132 118 136 118 192 C 118 242 174 282 200 286 C 226 282 282 242 282 192 C 282 136 218 132 200 168 Z" fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
           <path d="M 142 168 Q 156 155 174 162" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
         `,
         armRoots: { left: [132, 212], right: [268, 212] },
         hipRoots: { left: [182, 262], right: [218, 262] }
       },
       {
-        id: 'capsule',
-        name: 'Bean',
-        desc: '膠囊仔',
-        color: '#6EE7B7',
-        faceCenter: [200, 212],
-        headTopY: 140,
-        pivotY: 286,
+        id: 'capsule', name: 'Bean', desc: '膠囊仔', color: '#6EE7B7',
+        faceCenter: [200, 212], headTopY: 140, pivotY: 286,
         renderBody: (c) => `
           <rect x="144" y="140" width="112" height="148" rx="56" fill="${c}" stroke="#1E1B18" stroke-width="5.5" />
           <path d="M 172 154 Q 200 146 222 154" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.65" />
@@ -1302,277 +1228,108 @@
         hipRoots: { left: [176, 268], right: [224, 268] }
       },
       {
-        id: 'hexagon',
-        name: 'Hexa',
-        desc: '六角仔',
-        color: '#A5B4FC',
-        faceCenter: [200, 216],
-        headTopY: 140,
-        pivotY: 286,
+        id: 'hexagon', name: 'Hexa', desc: '六角仔', color: '#A5B4FC',
+        faceCenter: [200, 216], headTopY: 140, pivotY: 286,
         renderBody: (c) => `
-          <path d="M 192 142 Q 200 137 208 142 L 264 174 Q 272 179 272 189 L 272 245 Q 272 255 264 260 L 208 292 Q 200 297 192 292 L 136 260 Q 128 255 128 245 L 128 189 Q 128 179 136 174 Z"
-                fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 192 142 Q 200 137 208 142 L 264 174 Q 272 179 272 189 L 272 245 Q 272 255 264 260 L 208 292 Q 200 297 192 292 L 136 260 Q 128 255 128 245 L 128 189 Q 128 179 136 174 Z" fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
         `,
         armRoots: { left: [134, 216], right: [266, 216] },
         hipRoots: { left: [174, 268], right: [226, 268] }
       }
     ];
 
-    /* =====================================================================
-       2. HEADWEAR STICKER PROPS
-       ===================================================================== */
     function renderPropSvg(propType, topY) {
       switch (propType) {
-        case 'crown':
-          return `
-            <g transform="translate(200, ${topY + 4})">
-              <polygon points="-24,0 -18,-22 -7,-9 0,-25 7,-9 18,-22 24,0" fill="#FACC15" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
-              <circle cx="0" cy="-25" r="3.5" fill="#FB7185" stroke="#1E1B18" stroke-width="2" />
-            </g>`;
-        case 'sprout':
-          return `
-            <g transform="translate(200, ${topY + 4})">
-              <path d="M 0,0 Q 0,-18 4,-24" stroke="#1E1B18" stroke-width="4.5" stroke-linecap="round" fill="none" />
-              <path d="M 2,-18 C -16,-28 -22,-10 -2,-12 Z" fill="#4ADE80" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" />
-              <path d="M 3,-20 C 18,-30 24,-12 4,-14 Z" fill="#4ADE80" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" />
-            </g>`;
-        case 'halo':
-          return `
-            <g transform="translate(200, ${topY - 14})">
-              <ellipse cx="0" cy="0" rx="28" ry="7" fill="none" stroke="#1E1B18" stroke-width="7.5" />
-              <ellipse cx="0" cy="0" rx="28" ry="7" fill="none" stroke="#FDE047" stroke-width="3.5" />
-            </g>`;
-        case 'beanie':
-          return `
-            <g transform="translate(200, ${topY + 8})">
-              <path d="M -34,0 C -34,-28 34,-28 34,0 Z" fill="#F43F5E" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
-              <rect x="-38" y="-5" width="76" height="12" rx="6" fill="#FFE4E6" stroke="#1E1B18" stroke-width="4" />
-              <circle cx="0" cy="-24" r="7" fill="#FFE4E6" stroke="#1E1B18" stroke-width="3.5" />
-            </g>`;
-        case 'bow':
-          return `
-            <g transform="translate(200, ${topY + 4})">
-              <path d="M 0,0 L -22,-12 L -20,8 Z" fill="#FB7185" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
-              <path d="M 0,0 L 22,-12 L 20,8 Z" fill="#FB7185" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" />
-              <circle cx="0" cy="-1" r="6" fill="#FFE4E6" stroke="#1E1B18" stroke-width="3.5" />
-            </g>`;
-        case 'none':
-        default:
-          return '';
+        case 'crown': return `<g transform="translate(200, ${topY + 4})"><polygon points="-24,0 -18,-22 -7,-9 0,-25 7,-9 18,-22 24,0" fill="#FACC15" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" /><circle cx="0" cy="-25" r="3.5" fill="#FB7185" stroke="#1E1B18" stroke-width="2" /></g>`;
+        case 'sprout': return `<g transform="translate(200, ${topY + 4})"><path d="M 0,0 Q 0,-18 4,-24" stroke="#1E1B18" stroke-width="4.5" stroke-linecap="round" fill="none" /><path d="M 2,-18 C -16,-28 -22,-10 -2,-12 Z" fill="#4ADE80" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" /><path d="M 3,-20 C 18,-30 24,-12 4,-14 Z" fill="#4ADE80" stroke="#1E1B18" stroke-width="3.5" stroke-linejoin="round" /></g>`;
+        case 'halo': return `<g transform="translate(200, ${topY - 14})"><ellipse cx="0" cy="0" rx="28" ry="7" fill="none" stroke="#1E1B18" stroke-width="7.5" /><ellipse cx="0" cy="0" rx="28" ry="7" fill="none" stroke="#FDE047" stroke-width="3.5" /></g>`;
+        case 'beanie': return `<g transform="translate(200, ${topY + 8})"><path d="M -34,0 C -34,-28 34,-28 34,0 Z" fill="#F43F5E" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" /><rect x="-38" y="-5" width="76" height="12" rx="6" fill="#FFE4E6" stroke="#1E1B18" stroke-width="4" /><circle cx="0" cy="-24" r="7" fill="#FFE4E6" stroke="#1E1B18" stroke-width="3.5" /></g>`;
+        case 'bow': return `<g transform="translate(200, ${topY + 4})"><path d="M 0,0 L -22,-12 L -20,8 Z" fill="#FB7185" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" /><path d="M 0,0 L 22,-12 L 20,8 Z" fill="#FB7185" stroke="#1E1B18" stroke-width="4" stroke-linejoin="round" /><circle cx="0" cy="-1" r="6" fill="#FFE4E6" stroke="#1E1B18" stroke-width="3.5" /></g>`;
+        case 'none': default: return '';
       }
     }
 
-    /* =====================================================================
-       3. FACE EXPRESSION GENERATOR
-       ===================================================================== */
     function renderFaceParts(expr, fx, fy) {
-      let eyesSvg = '';
-      let mouthSvg = '';
-
+      let eyesSvg = ''; let mouthSvg = '';
       switch (expr) {
         case 'star':
-          eyesSvg = `
-            <g id="socket-left">
-              <ellipse cx="${fx - 15}" cy="${fy}" rx="6" ry="7.5" fill="#1E1B18" />
-              <g id="pupil-left">
-                <polygon points="${fx - 15},${fy - 5} ${fx - 13.5},${fy - 1.5} ${fx - 10},${fy} ${fx - 13.5},${fy + 1.5} ${fx - 15},${fy + 5} ${fx - 16.5},${fy + 1.5} ${fx - 20},${fy} ${fx - 16.5},${fy - 1.5}" fill="#FDE047" />
-              </g>
-            </g>
-            <g id="socket-right">
-              <ellipse cx="${fx + 15}" cy="${fy}" rx="6" ry="7.5" fill="#1E1B18" />
-              <g id="pupil-right">
-                <polygon points="${fx + 15},${fy - 5} ${fx + 16.5},${fy - 1.5} ${fx + 20},${fy} ${fx + 16.5},${fy + 1.5} ${fx + 15},${fy + 5} ${fx + 13.5},${fy + 1.5} ${fx + 10},${fy} ${fx + 13.5},${fy - 1.5}" fill="#FDE047" />
-              </g>
-            </g>`;
+          eyesSvg = `<g id="socket-left"><ellipse cx="${fx - 15}" cy="${fy}" rx="6" ry="7.5" fill="#1E1B18" /><g id="pupil-left"><polygon points="${fx - 15},${fy - 5} ${fx - 13.5},${fy - 1.5} ${fx - 10},${fy} ${fx - 13.5},${fy + 1.5} ${fx - 15},${fy + 5} ${fx - 16.5},${fy + 1.5} ${fx - 20},${fy} ${fx - 16.5},${fy - 1.5}" fill="#FDE047" /></g></g><g id="socket-right"><ellipse cx="${fx + 15}" cy="${fy}" rx="6" ry="7.5" fill="#1E1B18" /><g id="pupil-right"><polygon points="${fx + 15},${fy - 5} ${fx + 16.5},${fy - 1.5} ${fx + 20},${fy} ${fx + 16.5},${fy + 1.5} ${fx + 15},${fy + 5} ${fx + 13.5},${fy + 1.5} ${fx + 10},${fy} ${fx + 13.5},${fy - 1.5}" fill="#FDE047" /></g></g>`;
           mouthSvg = `<path d="M ${fx - 8} ${fy + 10} Q ${fx} ${fy + 20} ${fx + 8} ${fy + 10} Z" fill="#FB7185" stroke="#1E1B18" stroke-width="3" stroke-linejoin="round" />`;
           break;
-
         case 'wink':
-          eyesSvg = `
-            <g id="socket-left">
-              <ellipse cx="${fx - 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" />
-              <circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2}" r="1.8" fill="#FFFFFF" />
-            </g>
-            <path d="M ${fx + 8} ${fy + 2} Q ${fx + 15} ${fy - 5} ${fx + 22} ${fy + 2}" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" fill="none" />`;
+          eyesSvg = `<g id="socket-left"><ellipse cx="${fx - 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" /><circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2}" r="1.8" fill="#FFFFFF" /></g><path d="M ${fx + 8} ${fy + 2} Q ${fx + 15} ${fy - 5} ${fx + 22} ${fy + 2}" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" fill="none" />`;
           mouthSvg = `<path d="M ${fx - 7} ${fy + 11} Q ${fx + 1} ${fy + 18} ${fx + 9} ${fy + 9}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
           break;
-
         case 'open':
-          eyesSvg = `
-            <g id="socket-left">
-              <ellipse cx="${fx - 15}" cy="${fy}" rx="5.2" ry="7.2" fill="#1E1B18" />
-              <circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2}" r="2" fill="#FFFFFF" />
-            </g>
-            <g id="socket-right">
-              <ellipse cx="${fx + 15}" cy="${fy}" rx="5.2" ry="7.2" fill="#1E1B18" />
-              <circle id="pupil-right" cx="${fx + 13.5}" cy="${fy - 2}" r="2" fill="#FFFFFF" />
-            </g>`;
+          eyesSvg = `<g id="socket-left"><ellipse cx="${fx - 15}" cy="${fy}" rx="5.2" ry="7.2" fill="#1E1B18" /><circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2}" r="2" fill="#FFFFFF" /></g><g id="socket-right"><ellipse cx="${fx + 15}" cy="${fy}" rx="5.2" ry="7.2" fill="#1E1B18" /><circle id="pupil-right" cx="${fx + 13.5}" cy="${fy - 2}" r="2" fill="#FFFFFF" /></g>`;
           mouthSvg = `<ellipse cx="${fx}" cy="${fy + 13}" rx="5.5" ry="7.5" fill="#1E1B18" />`;
           break;
-
         case 'shades':
-          eyesSvg = `
-            <g>
-              <path d="M ${fx - 28} ${fy - 6} H ${fx - 4} L ${fx - 6} ${fy + 5} H ${fx - 24} Z" fill="#1E1B18" />
-              <path d="M ${fx + 4} ${fy - 6} H ${fx + 28} L ${fx + 24} ${fy + 5} H ${fx + 6} Z" fill="#1E1B18" />
-              <line x1="${fx - 6}" y1="${fy - 4}" x2="${fx + 6}" y2="${fy - 4}" stroke="#1E1B18" stroke-width="3.5" />
-              <line x1="${fx - 22}" y1="${fy - 3}" x2="${fx - 14}" y2="${fy + 2}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
-              <line x1="${fx + 10}" y1="${fy - 3}" x2="${fx + 18}" y2="${fy + 2}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
-            </g>`;
+          eyesSvg = `<g><path d="M ${fx - 28} ${fy - 6} H ${fx - 4} L ${fx - 6} ${fy + 5} H ${fx - 24} Z" fill="#1E1B18" /><path d="M ${fx + 4} ${fy - 6} H ${fx + 28} L ${fx + 24} ${fy + 5} H ${fx + 6} Z" fill="#1E1B18" /><line x1="${fx - 6}" y1="${fy - 4}" x2="${fx + 6}" y2="${fy - 4}" stroke="#1E1B18" stroke-width="3.5" /><line x1="${fx - 22}" y1="${fy - 3}" x2="${fx - 14}" y2="${fy + 2}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" /><line x1="${fx + 10}" y1="${fy - 3}" x2="${fx + 18}" y2="${fy + 2}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" /></g>`;
           mouthSvg = `<path d="M ${fx - 6} ${fy + 12} Q ${fx + 2} ${fy + 15} ${fx + 9} ${fy + 10}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
           break;
-
         case 'chill':
-          eyesSvg = `
-            <path d="M ${fx - 21} ${fy + 1} Q ${fx - 15} ${fy + 6} ${fx - 9} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />
-            <path d="M ${fx + 9} ${fy + 1} Q ${fx + 15} ${fy + 6} ${fx + 21} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
+          eyesSvg = `<path d="M ${fx - 21} ${fy + 1} Q ${fx - 15} ${fy + 6} ${fx - 9} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" /><path d="M ${fx + 9} ${fy + 1} Q ${fx + 15} ${fy + 6} ${fx + 21} ${fy + 1}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
           mouthSvg = `<path d="M ${fx - 5} ${fy + 11} Q ${fx} ${fy + 15} ${fx + 5} ${fy + 11}" stroke="#1E1B18" stroke-linecap="round" fill="none" />`;
           break;
-
         case 'happy':
         default:
-          eyesSvg = `
-            <g id="socket-left">
-              <ellipse cx="${fx - 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" />
-              <circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2.2}" r="1.8" fill="#FFFFFF" />
-            </g>
-            <g id="socket-right">
-              <ellipse cx="${fx + 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" />
-              <circle id="pupil-right" cx="${fx + 13.5}" cy="${fy - 2.2}" r="1.8" fill="#FFFFFF" />
-            </g>`;
+          eyesSvg = `<g id="socket-left"><ellipse cx="${fx - 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" /><circle id="pupil-left" cx="${fx - 16.5}" cy="${fy - 2.2}" r="1.8" fill="#FFFFFF" /></g><g id="socket-right"><ellipse cx="${fx + 15}" cy="${fy}" rx="4.8" ry="6.8" fill="#1E1B18" /><circle id="pupil-right" cx="${fx + 13.5}" cy="${fy - 2.2}" r="1.8" fill="#FFFFFF" /></g>`;
           mouthSvg = `<path d="M ${fx - 7.5} ${fy + 10} Q ${fx} ${fy + 18} ${fx + 7.5} ${fy + 10}" stroke="#1E1B18" stroke-width="3.2" stroke-linecap="round" fill="none" />`;
           break;
       }
-
-      const cheeksSvg = `
-        <ellipse cx="${fx - 26}" cy="${fy + 7}" rx="5.5" ry="3.2" fill="#F43F5E" opacity="0.45" />
-        <ellipse cx="${fx + 26}" cy="${fy + 7}" rx="5.5" ry="3.2" fill="#F43F5E" opacity="0.45" />
-      `;
-
+      const cheeksSvg = `<ellipse cx="${fx - 26}" cy="${fy + 7}" rx="5.5" ry="3.2" fill="#F43F5E" opacity="0.45" /><ellipse cx="${fx + 26}" cy="${fy + 7}" rx="5.5" ry="3.2" fill="#F43F5E" opacity="0.45" />`;
       return { eyesSvg, mouthSvg, cheeksSvg };
     }
 
-    /* =====================================================================
-       4. STUDIO STATE & INTERACTIVE VARIABLES
-       ===================================================================== */
     const state = {
-      charIdx: 0,
-      motion: 'bounce',
-      expr: 'happy',
-      prop: 'none',
-      bg: 'dots',
-      colorOverride: null,
-      isExploded: false,
-      soundEnabled: true,
-      time: 0,
-
-      bubbleType: 'speech',
-      bubbleText: 'HELLO!',
-      bubbleFont: 'modern',
-      bubbleX: 285,
-      bubbleY: 95,
-      bubbleScale: 1.0,
-
-      gazeMax: 1.6,
-      squash: 0.8,
-      speed: 0.8,
-      hopHeight: 12,
-
-      boingImpulse: 0,
-      particles: [],
-
-      pointer: {
-        targetX: 200,
-        targetY: 220,
-        currentX: 200,
-        currentY: 220
-      },
-
-      blinkTimer: 0,
-      nextBlink: 3.2,
-      isBlinking: false
+      charIdx: 0, motion: 'bounce', expr: 'happy', prop: 'none', bg: 'dots',
+      colorOverride: null, isExploded: false, soundEnabled: true, time: 0,
+      bubbleType: 'speech', bubbleText: 'HELLO!', bubbleFont: 'modern',
+      bubbleX: 285, bubbleY: 95, bubbleScale: 1.0,
+      gazeMax: 1.6, squash: 0.8, speed: 0.8, hopHeight: 12,
+      boingImpulse: 0, particles: [],
+      pointer: { targetX: 200, targetY: 220, currentX: 200, currentY: 220 },
+      blinkTimer: 0, nextBlink: 3.2, isBlinking: false
     };
 
-    const STAGE_W = 400;
-    const STAGE_H = 460;
-    const BUBBLE_BASE_HALF_W = 68;
-    const BUBBLE_BASE_HALF_H = 32;
+    const STAGE_W = 400, STAGE_H = 460;
+    const BUBBLE_BASE_HALF_W = 68, BUBBLE_BASE_HALF_H = 32;
+    let isExportingGif = false;
 
-    /* =====================================================================
-       5. PROCEDURAL WEB AUDIO SYNTHESIZER
-       ===================================================================== */
     let audioCtx = null;
     function playSynth(type = 'pop', baseFreq = 440) {
       if (!state.soundEnabled) return;
       try {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
-
         const now = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-
         if (type === 'boing') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(280, now);
-          osc.frequency.exponentialRampToValueAtTime(620, now + 0.09);
-          osc.frequency.exponentialRampToValueAtTime(380, now + 0.28);
-          gain.gain.setValueAtTime(0.22, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start(now);
-          osc.stop(now + 0.31);
+          osc.type = 'sine'; osc.frequency.setValueAtTime(280, now); osc.frequency.exponentialRampToValueAtTime(620, now + 0.09); osc.frequency.exponentialRampToValueAtTime(380, now + 0.28);
+          gain.gain.setValueAtTime(0.22, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.31);
         } else if (type === 'magic') {
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(440, now);
-          osc.frequency.exponentialRampToValueAtTime(880, now + 0.18);
-          gain.gain.setValueAtTime(0.18, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start(now);
-          osc.stop(now + 0.24);
+          osc.type = 'triangle'; osc.frequency.setValueAtTime(440, now); osc.frequency.exponentialRampToValueAtTime(880, now + 0.18);
+          gain.gain.setValueAtTime(0.18, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.24);
         } else {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(baseFreq, now);
-          osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.05);
-          osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.85, now + 0.16);
-          gain.gain.setValueAtTime(0.16, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start(now);
-          osc.stop(now + 0.2);
+          osc.type = 'sine'; osc.frequency.setValueAtTime(baseFreq, now); osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.4, now + 0.05); osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.85, now + 0.16);
+          gain.gain.setValueAtTime(0.16, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now + 0.2);
         }
       } catch (e) {}
     }
 
-    /* =====================================================================
-       6. DYNAMIC ORIENTATION-AWARE DIALOG BUBBLE
-       ===================================================================== */
     function clampBubblePosition() {
-      const margin = 12;
       const halfW = BUBBLE_BASE_HALF_W * state.bubbleScale;
       const halfH = BUBBLE_BASE_HALF_H * state.bubbleScale;
       const tailPad = 22 * state.bubbleScale;
+      const minX = Math.ceil(halfW + 12), maxX = Math.floor(STAGE_W - halfW - 12);
+      const minY = Math.ceil(halfH + 12), maxY = Math.floor(STAGE_H - halfH - tailPad - 12);
 
-      const minX = Math.ceil(halfW + margin);
-      const maxX = Math.floor(STAGE_W - halfW - margin);
-      const minY = Math.ceil(halfH + margin);
-      const maxY = Math.floor(STAGE_H - halfH - tailPad - margin);
-
-      sliderBubbleX.min = minX;
-      sliderBubbleX.max = maxX;
-      sliderBubbleY.min = minY;
-      sliderBubbleY.max = maxY;
-
+      sliderBubbleX.min = minX; sliderBubbleX.max = maxX; sliderBubbleY.min = minY; sliderBubbleY.max = maxY;
       state.bubbleX = Math.max(minX, Math.min(maxX, Math.round(state.bubbleX)));
       state.bubbleY = Math.max(minY, Math.min(maxY, Math.round(state.bubbleY)));
-
-      sliderBubbleX.value = state.bubbleX;
-      sliderBubbleY.value = state.bubbleY;
-      sliderBubbleScale.value = state.bubbleScale;
+      sliderBubbleX.value = state.bubbleX; sliderBubbleY.value = state.bubbleY; sliderBubbleScale.value = state.bubbleScale;
 
       document.getElementById('txtBubbleX').textContent = state.bubbleX;
       document.getElementById('txtBubbleY').textContent = state.bubbleY;
@@ -1580,1045 +1337,423 @@
     }
 
     function buildUnifiedSpeechPath(w, h, r, tailTipX, tailTipY) {
-      const hw = w / 2;
-      const hh = h / 2;
-      const pointDown = tailTipY >= 0;
-
+      const hw = w/2, hh = h/2, pointDown = tailTipY >= 0;
       const baseCenter = Math.max(-hw + r + 14, Math.min(hw - r - 14, tailTipX * 0.38));
-      const baseLeft = baseCenter - 10;
-      const baseRight = baseCenter + 10;
-
-      if (pointDown) {
-        return [
-          `M ${-hw + r} ${-hh}`,
-          `H ${hw - r}`,
-          `A ${r} ${r} 0 0 1 ${hw} ${-hh + r}`,
-          `V ${hh - r}`,
-          `A ${r} ${r} 0 0 1 ${hw - r} ${hh}`,
-          `H ${baseRight}`,
-          `L ${tailTipX.toFixed(1)} ${tailTipY.toFixed(1)}`,
-          `L ${baseLeft} ${hh}`,
-          `H ${-hw + r}`,
-          `A ${r} ${r} 0 0 1 ${-hw} ${hh - r}`,
-          `V ${-hh + r}`,
-          `A ${r} ${r} 0 0 1 ${-hw + r} ${-hh}`,
-          `Z`
-        ].join(' ');
-      } else {
-        return [
-          `M ${-hw + r} ${-hh}`,
-          `H ${baseLeft}`,
-          `L ${tailTipX.toFixed(1)} ${tailTipY.toFixed(1)}`,
-          `L ${baseRight} ${-hh}`,
-          `H ${hw - r}`,
-          `A ${r} ${r} 0 0 1 ${hw} ${-hh + r}`,
-          `V ${hh - r}`,
-          `A ${r} ${r} 0 0 1 ${hw - r} ${hh}`,
-          `H ${-hw + r}`,
-          `A ${r} ${r} 0 0 1 ${-hw} ${hh - r}`,
-          `V ${-hh + r}`,
-          `A ${r} ${r} 0 0 1 ${-hw + r} ${-hh}`,
-          `Z`
-        ].join(' ');
-      }
+      const baseLeft = baseCenter - 10, baseRight = baseCenter + 10;
+      if (pointDown) return `M ${-hw + r} ${-hh} H ${hw - r} A ${r} ${r} 0 0 1 ${hw} ${-hh + r} V ${hh - r} A ${r} ${r} 0 0 1 ${hw - r} ${hh} H ${baseRight} L ${tailTipX.toFixed(1)} ${tailTipY.toFixed(1)} L ${baseLeft} ${hh} H ${-hw + r} A ${r} ${r} 0 0 1 ${-hw} ${hh - r} V ${-hh + r} A ${r} ${r} 0 0 1 ${-hw + r} ${-hh} Z`;
+      else return `M ${-hw + r} ${-hh} H ${baseLeft} L ${tailTipX.toFixed(1)} ${tailTipY.toFixed(1)} L ${baseRight} ${-hh} H ${hw - r} A ${r} ${r} 0 0 1 ${hw} ${-hh + r} V ${hh - r} A ${r} ${r} 0 0 1 ${hw - r} ${hh} H ${-hw + r} A ${r} ${r} 0 0 1 ${-hw} ${hh - r} V ${-hh + r} A ${r} ${r} 0 0 1 ${-hw + r} ${-hh} Z`;
     }
 
     function generateBubbleMarkup() {
       if (state.bubbleType === 'none') return null;
-
       clampBubblePosition();
-
+      
+      // Used secure fallbacks so GIFs render cleanly without font issues!
       const fontMap = {
-        cute: "'Fredoka', cursive, sans-serif",
-        comic: "'Nunito', sans-serif",
-        modern: "'Plus Jakarta Sans', system-ui, sans-serif"
+        cute: "'Fredoka', 'Comic Sans MS', cursive, sans-serif",
+        comic: "'Nunito', 'Arial Black', sans-serif",
+        modern: "'Plus Jakarta Sans', Arial, system-ui, sans-serif"
       };
       const fontFamily = fontMap[state.bubbleFont] || fontMap.modern;
 
-      const boxW = BUBBLE_BASE_HALF_W * 2;
-      const boxH = BUBBLE_BASE_HALF_H * 2;
-      const cornerR = 16;
-
+      const boxW = BUBBLE_BASE_HALF_W * 2, boxH = BUBBLE_BASE_HALF_H * 2;
       const cur = GEOMETRICS[state.charIdx];
-      const [fx, fy] = cur.faceCenter;
-      const targetX = (fx - state.bubbleX) / state.bubbleScale;
-      const targetY = (fy - state.bubbleY) / state.bubbleScale;
-
+      const targetX = (cur.faceCenter[0] - state.bubbleX) / state.bubbleScale;
+      const targetY = (cur.faceCenter[1] - state.bubbleY) / state.bubbleScale;
       const dist = Math.hypot(targetX, targetY) || 1;
-      const maxReach = 58;
-      const reach = Math.min(dist * 0.52, maxReach);
-      let tipX = (targetX / dist) * reach;
-      let tipY = (targetY / dist) * reach;
+      const reach = Math.min(dist * 0.52, 58);
+      let tipX = (targetX / dist) * reach, tipY = (targetY / dist) * reach;
 
       if (tipY >= 0 && tipY < BUBBLE_BASE_HALF_H + 14) tipY = BUBBLE_BASE_HALF_H + 18;
       if (tipY < 0 && tipY > -BUBBLE_BASE_HALF_H - 14) tipY = -BUBBLE_BASE_HALF_H - 18;
 
       let shapeMarkup = '';
       if (state.bubbleType === 'speech') {
-        const unifiedPath = buildUnifiedSpeechPath(boxW, boxH, cornerR, tipX, tipY);
-        shapeMarkup = `<path d="${unifiedPath}" fill="#FFFFFF" stroke="#1E1B18" stroke-width="4.5" stroke-linejoin="round" />`;
+        shapeMarkup = `<path d="${buildUnifiedSpeechPath(boxW, boxH, 16, tipX, tipY)}" fill="#FFFFFF" stroke="#1E1B18" stroke-width="4.5" stroke-linejoin="round" />`;
       } else {
-        const puff1X = (tipX * 0.62).toFixed(1);
-        const puff1Y = (tipY * 0.68).toFixed(1);
-        const puff2X = (tipX * 0.90).toFixed(1);
-        const puff2Y = (tipY * 0.92).toFixed(1);
-        shapeMarkup = `
-          <rect x="${-BUBBLE_BASE_HALF_W}" y="${-BUBBLE_BASE_HALF_H}" width="${boxW}" height="${boxH}" rx="26" fill="#FFFFFF" stroke="#1E1B18" stroke-width="4.5" />
-          <circle cx="${puff1X}" cy="${puff1Y}" r="7" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.5" />
-          <circle cx="${puff2X}" cy="${puff2Y}" r="4" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3" />
-        `;
+        shapeMarkup = `<rect x="${-BUBBLE_BASE_HALF_W}" y="${-BUBBLE_BASE_HALF_H}" width="${boxW}" height="${boxH}" rx="26" fill="#FFFFFF" stroke="#1E1B18" stroke-width="4.5" /><circle cx="${(tipX*0.62).toFixed(1)}" cy="${(tipY*0.68).toFixed(1)}" r="7" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.5" /><circle cx="${(tipX*0.9).toFixed(1)}" cy="${(tipY*0.92).toFixed(1)}" r="4" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3" />`;
       }
-
-      const escapedText = (state.bubbleText || ' ')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-
-      return { shapeMarkup, fontFamily, escapedText };
+      return { shapeMarkup, fontFamily, escapedText: (state.bubbleText || ' ').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') };
     }
 
     function renderBubble() {
       const controlsWrap = document.getElementById('bubbleControlsWrap');
       if (state.bubbleType === 'none') {
-        geoBubble.innerHTML = '';
-        geoBubble.style.display = 'none';
-        if (controlsWrap) {
-          controlsWrap.style.opacity = '0.4';
-          controlsWrap.style.pointerEvents = 'none';
-        }
+        geoBubble.innerHTML = ''; geoBubble.style.display = 'none';
+        if (controlsWrap) { controlsWrap.style.opacity = '0.4'; controlsWrap.style.pointerEvents = 'none'; }
         return;
       }
-
       geoBubble.style.display = 'block';
-      if (controlsWrap) {
-        controlsWrap.style.opacity = '1';
-        controlsWrap.style.pointerEvents = 'auto';
-      }
+      if (controlsWrap) { controlsWrap.style.opacity = '1'; controlsWrap.style.pointerEvents = 'auto'; }
 
-      const bubbleData = generateBubbleMarkup();
-      if (!bubbleData) return;
-
-      geoBubble.setAttribute(
-        'transform',
-        `translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})`
-      );
-
-      geoBubble.innerHTML = `
-        ${bubbleData.shapeMarkup}
-        <text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${bubbleData.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${bubbleData.escapedText}</text>
-      `;
+      const d = generateBubbleMarkup();
+      if (!d) return;
+      geoBubble.setAttribute('transform', `translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})`);
+      geoBubble.innerHTML = `${d.shapeMarkup}<text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${d.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${d.escapedText}</text>`;
     }
 
-    /* =====================================================================
-       7. MATHEMATICAL COZY POSE SOLVER
-       ===================================================================== */
     function computePoseAtPhase(p, cur, motion, hopHeight, squashFactor, boingBoost = 0) {
-      const groundY = 364;
-      const rad = p * Math.PI * 2;
-      const s = Math.sin(rad);
-      const c = Math.cos(rad);
-      const s2 = Math.sin(rad * 2);
-      const c2 = Math.cos(rad * 2);
+      const groundY = 364; const rad = p * Math.PI * 2; const s = Math.sin(rad), c = Math.cos(rad), c2 = Math.cos(rad * 2);
       const H = hopHeight + boingBoost;
-
-      let bodyX = 0;
-      let bodyY = 0;
-      let scaleX = 1;
-      let scaleY = 1;
-      let rot = 0;
-
-      const hlxBase = cur.hipRoots.left[0];
-      const hrxBase = cur.hipRoots.right[0];
-
-      let footLX = hlxBase - 5;
-      let footLY = groundY;
-      let footRX = hrxBase + 5;
-      let footRY = groundY;
-
-      let kneeBendOut = 5;
-      let handLX_off = -26, handLY_off = 18;
-      let handRX_off = 26, handRY_off = 18;
+      let bodyX = 0, bodyY = 0, scaleX = 1, scaleY = 1, rot = 0;
+      let footLX = cur.hipRoots.left[0] - 5, footLY = groundY, footRX = cur.hipRoots.right[0] + 5, footRY = groundY;
+      let kneeBendOut = 5, handLX_off = -26, handLY_off = 18, handRX_off = 26, handRY_off = 18;
 
       switch (motion) {
-        case 'sway': {
-          bodyX = s * 8.5;
-          bodyY = (1 - c2) * 0.5 * (H * 0.32);
-          rot = s * 3.2;
-
-          const sq = c2 * 0.028 * squashFactor;
-          scaleX = 1 + sq;
-          scaleY = 1 / scaleX;
-
-          kneeBendOut = 5 + (1 - c2) * 2.5;
-          handLY_off = 16 - Math.sin(rad - 0.35) * 10;
-          handRY_off = 16 + Math.sin(rad - 0.35) * 10;
-          handLX_off = -26 + c * 4;
-          handRX_off = 26 + c * 4;
-          break;
-        }
-
-        case 'walk': {
-          bodyY = -Math.abs(s) * (H * 0.42) + 2;
-          bodyX = s * 3.5;
-          rot = s * 2.4;
-
-          const sq = c2 * 0.025 * squashFactor;
-          scaleX = 1 + sq;
-          scaleY = 1 / scaleX;
-
-          const strideX = 10;
-          const liftH = Math.min(11, H * 0.65);
-
-          footLX = hlxBase - 4 + c * strideX;
-          footLY = groundY - Math.pow(Math.max(0, s), 1.3) * liftH;
-
-          footRX = hrxBase + 4 - c * strideX;
-          footRY = groundY - Math.pow(Math.max(0, -s), 1.3) * liftH;
-
-          kneeBendOut = 4;
-          handLY_off = 16 - c * 11;
-          handRY_off = 16 + c * 11;
-          handLX_off = -25 + s * 4;
-          handRX_off = 25 - s * 4;
-          break;
-        }
-
-        case 'float': {
-          bodyX = s * 4.5;
-          bodyY = -10 + c * (H * 0.55);
-          rot = s * 2.0;
-
-          const breath = s * 0.025 * squashFactor;
-          scaleX = 1 + breath;
-          scaleY = 1 + breath;
-
-          footLY = groundY - 8 + Math.sin(rad + 0.5) * 4.5;
-          footRY = groundY - 8 + Math.cos(rad + 0.5) * 4.5;
-          kneeBendOut = 4;
-
-          handLY_off = 10 + Math.sin(rad + 0.9) * 8;
-          handRY_off = 10 + Math.cos(rad + 0.9) * 8;
-          break;
-        }
-
-        case 'wiggle': {
-          bodyX = s * 5.0;
-          bodyY = (1 - c2) * 0.5 * (H * 0.28);
-          rot = Math.sin(rad * 2) * 2.6;
-
-          const sq = c2 * 0.035 * squashFactor;
-          scaleX = 1 + sq;
-          scaleY = 1 / scaleX;
-
-          kneeBendOut = 5 + (1 - c2) * 2.5;
-          handLY_off = 10 + Math.sin(rad * 2 - 0.4) * 9;
-          handRY_off = 10 - Math.sin(rad * 2 - 0.4) * 9;
-          handLX_off = -27 - Math.cos(rad * 2) * 3;
-          handRX_off = 27 + Math.cos(rad * 2) * 3;
-          break;
-        }
-
-        case 'nod': {
-          const beat = (1 - c) * 0.5;
-          bodyY = beat * (H * 0.48);
-          rot = s * 1.6;
-
-          const sq = c * 0.042 * squashFactor;
-          scaleX = 1 - sq;
-          scaleY = 1 / scaleX;
-
-          kneeBendOut = 5 + beat * 4.5;
-          handLY_off = 16 + Math.sin(rad - 0.4) * 6;
-          handRY_off = 16 + Math.sin(rad - 0.4) * 6;
-          break;
-        }
-
-        case 'bounce':
-        default: {
-          const liftWave = (1 - c) * 0.5;
-          bodyY = (1 - liftWave) * 3.5 - Math.pow(liftWave, 1.15) * (H * 0.88);
-
-          const sq = c * 0.052 * squashFactor;
-          scaleX = 1 + sq;
-          scaleY = 1 / scaleX;
-
-          const airLift = Math.max(0, liftWave - 0.35) / 0.65;
-          footLY = groundY - airLift * (H * 0.45);
-          footRY = groundY - airLift * (H * 0.45);
-
-          kneeBendOut = 5 + (1 - liftWave) * 4.5;
-
-          const delayedWave = Math.sin(rad - 0.55);
-          handLY_off = 15 + delayedWave * 9;
-          handRY_off = 15 + delayedWave * 9;
-          handLX_off = -26 - liftWave * 3;
-          handRX_off = 26 + liftWave * 3;
-          break;
-        }
+        case 'sway': bodyX = s*8.5; bodyY = (1-c2)*0.5*(H*0.32); rot = s*3.2; scaleX = 1 + c2*0.028*squashFactor; scaleY = 1/scaleX; kneeBendOut = 5+(1-c2)*2.5; handLY_off = 16-Math.sin(rad-0.35)*10; handRY_off = 16+Math.sin(rad-0.35)*10; handLX_off = -26+c*4; handRX_off = 26+c*4; break;
+        case 'walk': bodyY = -Math.abs(s)*(H*0.42)+2; bodyX = s*3.5; rot = s*2.4; scaleX = 1+c2*0.025*squashFactor; scaleY = 1/scaleX; footLX = cur.hipRoots.left[0]-4+c*10; footLY = groundY-Math.pow(Math.max(0,s),1.3)*Math.min(11,H*0.65); footRX = cur.hipRoots.right[0]+4-c*10; footRY = groundY-Math.pow(Math.max(0,-s),1.3)*Math.min(11,H*0.65); kneeBendOut = 4; handLY_off = 16-c*11; handRY_off = 16+c*11; handLX_off = -25+s*4; handRX_off = 25-s*4; break;
+        case 'float': bodyX = s*4.5; bodyY = -10+c*(H*0.55); rot = s*2.0; scaleX = 1+s*0.025*squashFactor; scaleY = scaleX; footLY = groundY-8+Math.sin(rad+0.5)*4.5; footRY = groundY-8+Math.cos(rad+0.5)*4.5; kneeBendOut=4; handLY_off = 10+Math.sin(rad+0.9)*8; handRY_off = 10+Math.cos(rad+0.9)*8; break;
+        case 'wiggle': bodyX = s*5.0; bodyY = (1-c2)*0.5*(H*0.28); rot = Math.sin(rad*2)*2.6; scaleX = 1+c2*0.035*squashFactor; scaleY = 1/scaleX; kneeBendOut = 5+(1-c2)*2.5; handLY_off = 10+Math.sin(rad*2-0.4)*9; handRY_off = 10-Math.sin(rad*2-0.4)*9; handLX_off = -27-Math.cos(rad*2)*3; handRX_off = 27+Math.cos(rad*2)*3; break;
+        case 'nod': bodyY = (1-c)*0.5*(H*0.48); rot = s*1.6; scaleX = 1-c*0.042*squashFactor; scaleY = 1/scaleX; kneeBendOut = 5+(1-c)*0.5*4.5; handLY_off = 16+Math.sin(rad-0.4)*6; handRY_off = 16+Math.sin(rad-0.4)*6; break;
+        case 'bounce': default: bodyY = (1-(1-c)*0.5)*3.5 - Math.pow((1-c)*0.5,1.15)*(H*0.88); scaleX = 1+c*0.052*squashFactor; scaleY = 1/scaleX; const aL = Math.max(0,(1-c)*0.5-0.35)/0.65; footLY = groundY-aL*(H*0.45); footRY = groundY-aL*(H*0.45); kneeBendOut = 5+(1-(1-c)*0.5)*4.5; handLY_off = 15+Math.sin(rad-0.55)*9; handRY_off = 15+Math.sin(rad-0.55)*9; handLX_off = -26-(1-c)*0.5*3; handRX_off = 26+(1-c)*0.5*3; break;
       }
 
-      const transformPt = (x, y) => {
-        const dx = (x - 200) * scaleX;
-        const dy = (y - cur.pivotY) * scaleY;
-        const r = (rot * Math.PI) / 180;
-        const rx = dx * Math.cos(r) - dy * Math.sin(r);
-        const ry = dx * Math.sin(r) + dy * Math.cos(r);
-        return [200 + bodyX + rx, cur.pivotY + bodyY + ry];
+      const tp = (x, y) => {
+        const dx = (x - 200)*scaleX, dy = (y - cur.pivotY)*scaleY, r = rot*Math.PI/180;
+        return [200+bodyX+dx*Math.cos(r)-dy*Math.sin(r), cur.pivotY+bodyY+dx*Math.sin(r)+dy*Math.cos(r)];
       };
 
-      const hipL = transformPt(cur.hipRoots.left[0], cur.hipRoots.left[1]);
-      const hipR = transformPt(cur.hipRoots.right[0], cur.hipRoots.right[1]);
-      const armL = transformPt(cur.armRoots.left[0], cur.armRoots.left[1]);
-      const armR = transformPt(cur.armRoots.right[0], cur.armRoots.right[1]);
+      const hL = tp(cur.hipRoots.left[0], cur.hipRoots.left[1]), hR = tp(cur.hipRoots.right[0], cur.hipRoots.right[1]);
+      const aL = tp(cur.armRoots.left[0], cur.armRoots.left[1]), aR = tp(cur.armRoots.right[0], cur.armRoots.right[1]);
 
-      const legCompL = Math.max(0, 86 - (footLY - hipL[1]));
-      const legCompR = Math.max(0, 86 - (footRY - hipR[1]));
-
-      const kneeLX = (hipL[0] + footLX) * 0.5 - (kneeBendOut + legCompL * 0.16);
-      const kneeLY = (hipL[1] + footLY) * 0.5;
-
-      const kneeRX = (hipR[0] + footRX) * 0.5 + (kneeBendOut + legCompR * 0.16);
-      const kneeRY = (hipR[1] + footRY) * 0.5;
-
-      const handLX = armL[0] + handLX_off;
-      const handLY = armL[1] + handLY_off;
-      const elbowLX = armL[0] + handLX_off * 0.62;
-      const elbowLY = armL[1] + handLY_off * 0.35 + 6;
-
-      const handRX = armR[0] + handRX_off;
-      const handRY = armR[1] + handRY_off;
-      const elbowRX = armR[0] + handRX_off * 0.62;
-      const elbowRY = armR[1] + handRY_off * 0.35 + 6;
-
-      const liftDist = Math.max(0, -bodyY);
-      const shadowScale = Math.max(0.72, (1 - liftDist / 140) * scaleX);
-      const shadowOpacity = Math.max(0.11, 0.22 - liftDist / 260);
-
+      const cL = Math.max(0, 86 - (footLY - hL[1])), cR = Math.max(0, 86 - (footRY - hR[1]));
+      const handLX = aL[0]+handLX_off, handLY = aL[1]+handLY_off, elbowLX = aL[0]+handLX_off*0.62, elbowLY = aL[1]+handLY_off*0.35+6;
+      const handRX = aR[0]+handRX_off, handRY = aR[1]+handRY_off, elbowRX = aR[0]+handRX_off*0.62, elbowRY = aR[1]+handRY_off*0.35+6;
+      
+      const sS = Math.max(0.72, (1 - Math.max(0,-bodyY)/140)*scaleX);
       return {
-        bodyTransform: `translate(${(200 + bodyX).toFixed(2)}, ${(cur.pivotY + bodyY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200, ${-cur.pivotY})`,
-        bodyTransformCSS: `translate(${(200 + bodyX).toFixed(2)}px, ${(cur.pivotY + bodyY).toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200px, ${-cur.pivotY}px)`,
-        shadowTransform: `translate(${(200 + bodyX * 0.65).toFixed(2)}, 374) scale(${shadowScale.toFixed(3)}) translate(-200, -374)`,
-        shadowTransformCSS: `translate(${(200 + bodyX * 0.65).toFixed(2)}px, 374px) scale(${shadowScale.toFixed(3)}) translate(-200px, -374px)`,
-        shadowOpacity: shadowOpacity.toFixed(2),
-        leftLegPath: `M ${hipL[0].toFixed(1)} ${hipL[1].toFixed(1)} Q ${kneeLX.toFixed(1)} ${kneeLY.toFixed(1)} ${footLX.toFixed(1)} ${footLY.toFixed(1)}`,
-        rightLegPath: `M ${hipR[0].toFixed(1)} ${hipR[1].toFixed(1)} Q ${kneeRX.toFixed(1)} ${kneeRY.toFixed(1)} ${footRX.toFixed(1)} ${footRY.toFixed(1)}`,
-        footLCenter: [footLX - 5, footLY],
-        footRCenter: [footRX + 5, footRY],
-        leftArmPath: `M ${armL[0].toFixed(1)} ${armL[1].toFixed(1)} Q ${elbowLX.toFixed(1)} ${elbowLY.toFixed(1)} ${handLX.toFixed(1)} ${handLY.toFixed(1)}`,
-        rightArmPath: `M ${armR[0].toFixed(1)} ${armR[1].toFixed(1)} Q ${elbowRX.toFixed(1)} ${elbowRY.toFixed(1)} ${handRX.toFixed(1)} ${handRY.toFixed(1)}`,
-        handLCenter: [handLX, handLY],
-        handRCenter: [handRX, handRY]
+        bodyTransform: `translate(${(200+bodyX).toFixed(2)}, ${(cur.pivotY+bodyY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200, ${-cur.pivotY})`,
+        bodyTransformCSS: `translate(${(200+bodyX).toFixed(2)}px, ${(cur.pivotY+bodyY).toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200px, ${-cur.pivotY}px)`,
+        shadowTransform: `translate(${(200+bodyX*0.65).toFixed(2)}, 374) scale(${sS.toFixed(3)}) translate(-200, -374)`,
+        shadowTransformCSS: `translate(${(200+bodyX*0.65).toFixed(2)}px, 374px) scale(${sS.toFixed(3)}) translate(-200px, -374px)`,
+        shadowOpacity: Math.max(0.11, 0.22 - Math.max(0,-bodyY)/260).toFixed(2),
+        leftLegPath: `M ${hL[0].toFixed(1)} ${hL[1].toFixed(1)} Q ${((hL[0]+footLX)*0.5-(kneeBendOut+cL*0.16)).toFixed(1)} ${((hL[1]+footLY)*0.5).toFixed(1)} ${footLX.toFixed(1)} ${footLY.toFixed(1)}`,
+        rightLegPath: `M ${hR[0].toFixed(1)} ${hR[1].toFixed(1)} Q ${((hR[0]+footRX)*0.5+(kneeBendOut+cR*0.16)).toFixed(1)} ${((hR[1]+footRY)*0.5).toFixed(1)} ${footRX.toFixed(1)} ${footRY.toFixed(1)}`,
+        footLCenter: [footLX - 5, footLY], footRCenter: [footRX + 5, footRY],
+        leftArmPath: `M ${aL[0].toFixed(1)} ${aL[1].toFixed(1)} Q ${elbowLX.toFixed(1)} ${elbowLY.toFixed(1)} ${handLX.toFixed(1)} ${handLY.toFixed(1)}`,
+        rightArmPath: `M ${aR[0].toFixed(1)} ${aR[1].toFixed(1)} Q ${elbowRX.toFixed(1)} ${elbowRY.toFixed(1)} ${handRX.toFixed(1)} ${handRY.toFixed(1)}`,
+        handLCenter: [handLX, handLY], handRCenter: [handRX, handRY]
       };
     }
 
-    /* =====================================================================
-       8. DOM ELEMENTS & INITIALIZATION
-       ===================================================================== */
     const charGrid = document.getElementById('charGrid');
-    const motionGrid = document.getElementById('motionGrid');
-    const exprGrid = document.getElementById('exprGrid');
-    const propGrid = document.getElementById('propGrid');
-    const bgGrid = document.getElementById('bgGrid');
-    const statusText = document.getElementById('statusText');
-    const explodeOverlay = document.getElementById('explodeOverlay');
-    const codeBox = document.getElementById('codeBox');
-    const stageContainer = document.getElementById('stageContainer');
-    const stageSvg = document.getElementById('stageSvg');
-    const toastBox = document.getElementById('toastBox');
+    const motionGrid = document.getElementById('motionGrid'), exprGrid = document.getElementById('exprGrid');
+    const propGrid = document.getElementById('propGrid'), bgGrid = document.getElementById('bgGrid');
+    const statusText = document.getElementById('statusText'), explodeOverlay = document.getElementById('explodeOverlay');
+    const codeBox = document.getElementById('codeBox'), stageContainer = document.getElementById('stageContainer');
+    const stageSvg = document.getElementById('stageSvg'), toastBox = document.getElementById('toastBox');
+    const geoBody = document.getElementById('geo-body'), geoProp = document.getElementById('geo-prop'), geoFace = document.getElementById('geo-face');
+    const geoEyes = document.getElementById('geo-eyes'), geoMouth = document.getElementById('geo-mouth'), geoCheeks = document.getElementById('geo-cheeks');
+    const geoHands = document.getElementById('geo-hands'), geoFeet = document.getElementById('geo-feet');
+    const geoBubble = document.getElementById('geo-bubble'), geoParticles = document.getElementById('geo-particles'), shadowEl = document.getElementById('shadowEl');
+    const sliderBubbleX = document.getElementById('sliderBubbleX'), sliderBubbleY = document.getElementById('sliderBubbleY'), sliderBubbleScale = document.getElementById('sliderBubbleScale');
 
-    const geoBody = document.getElementById('geo-body');
-    const geoProp = document.getElementById('geo-prop');
-    const geoFace = document.getElementById('geo-face');
-    const geoEyes = document.getElementById('geo-eyes');
-    const geoMouth = document.getElementById('geo-mouth');
-    const geoCheeks = document.getElementById('geo-cheeks');
-    const geoHands = document.getElementById('geo-hands');
-    const geoFeet = document.getElementById('geo-feet');
-    const geoBubble = document.getElementById('geo-bubble');
-    const geoParticles = document.getElementById('geo-particles');
-    const shadowEl = document.getElementById('shadowEl');
-
-    const sliderBubbleX = document.getElementById('sliderBubbleX');
-    const sliderBubbleY = document.getElementById('sliderBubbleY');
-    const sliderBubbleScale = document.getElementById('sliderBubbleScale');
-
-    function showToast(msg) {
-      toastBox.textContent = msg;
-      toastBox.classList.add('show');
-      setTimeout(() => toastBox.classList.remove('show'), 2200);
-    }
+    function showToast(msg) { toastBox.textContent = msg; toastBox.classList.add('show'); setTimeout(() => toastBox.classList.remove('show'), 2200); }
 
     function initMascotCards() {
       charGrid.innerHTML = '';
       GEOMETRICS.forEach((item, idx) => {
         const card = document.createElement('div');
         card.className = `char-card ${idx === state.charIdx ? 'active' : ''}`;
-        card.innerHTML = `
-          <span class="key-hint">${idx + 1}</span>
-          <div class="char-preview-icon">
-            <svg viewBox="0 0 40 40" width="28" height="28">
-              <g transform="scale(0.18) translate(-90, -105)">
-                ${item.renderBody(item.color)}
-              </g>
-            </svg>
-          </div>
-          <div class="char-info">
-            <div class="char-name">${item.name}</div>
-            <div class="char-desc">${item.desc}</div>
-          </div>
-        `;
-        card.addEventListener('click', () => {
-          selectMascot(idx);
-          playSynth('pop', 500);
-        });
+        card.innerHTML = `<span class="key-hint">${idx + 1}</span><div class="char-preview-icon"><svg viewBox="0 0 40 40" width="28" height="28"><g transform="scale(0.18) translate(-90, -105)">${item.renderBody(item.color)}</g></svg></div><div class="char-info"><div class="char-name">${item.name}</div><div class="char-desc">${item.desc}</div></div>`;
+        card.addEventListener('click', () => { selectMascot(idx); playSynth('pop', 500); });
         charGrid.appendChild(card);
       });
     }
 
     function selectMascot(idx) {
       state.charIdx = idx;
-      document.querySelectorAll('.char-card').forEach((c, i) => {
-        c.classList.toggle('active', i === idx);
-      });
-      const cur = GEOMETRICS[idx];
-      document.getElementById('pickerTint').value = cur.color;
-      state.colorOverride = null;
-      document.getElementById('txtTint').textContent = 'Original';
-      statusText.textContent = `${cur.name} (${cur.desc}) • Click to Boing!`;
-      renderStaticLayers();
-      renderBubble();
-      updateBakedCodePreview();
+      document.querySelectorAll('.char-card').forEach((c, i) => c.classList.toggle('active', i === idx));
+      document.getElementById('pickerTint').value = GEOMETRICS[idx].color; state.colorOverride = null; document.getElementById('txtTint').textContent = 'Original';
+      statusText.textContent = `${GEOMETRICS[idx].name} (${GEOMETRICS[idx].desc}) • Click to Boing!`;
+      renderStaticLayers(); renderBubble(); updateBakedCodePreview();
     }
 
     function renderStaticLayers() {
-      const cur = GEOMETRICS[state.charIdx];
-      const color = state.colorOverride || cur.color;
-      const [fx, fy] = cur.faceCenter;
-
-      geoBody.innerHTML = cur.renderBody(color);
-      geoProp.innerHTML = renderPropSvg(state.prop, cur.headTopY);
-
-      const { eyesSvg, mouthSvg, cheeksSvg } = renderFaceParts(state.expr, fx, fy);
-      geoEyes.innerHTML = eyesSvg;
-      geoMouth.innerHTML = mouthSvg;
-      geoCheeks.innerHTML = cheeksSvg;
+      const cur = GEOMETRICS[state.charIdx], color = state.colorOverride || cur.color;
+      geoBody.innerHTML = cur.renderBody(color); geoProp.innerHTML = renderPropSvg(state.prop, cur.headTopY);
+      const parts = renderFaceParts(state.expr, cur.faceCenter[0], cur.faceCenter[1]);
+      geoEyes.innerHTML = parts.eyesSvg; geoMouth.innerHTML = parts.mouthSvg; geoCheeks.innerHTML = parts.cheeksSvg;
     }
 
-    /* =====================================================================
-       9. INTERACTIVE BOING IMPULSE & PARTICLE BURST
-       ===================================================================== */
     function triggerBoingImpulse() {
-      state.boingImpulse = 10;
-      playSynth('boing');
-
+      state.boingImpulse = 10; playSynth('boing');
       const colors = ['#FACC15', '#FB7185', '#34D399', '#60A5FA', '#A78BFA'];
       for (let i = 0; i < 8; i++) {
-        const angle = (Math.PI * 2 * i) / 8 + (Math.random() - 0.5) * 0.4;
-        const speed = 2.5 + Math.random() * 2.5;
-        state.particles.push({
-          x: 200 + (Math.random() - 0.5) * 40,
-          y: 200 + (Math.random() - 0.5) * 30,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1.5,
-          life: 1.0,
-          color: colors[i % colors.length],
-          size: 5 + Math.random() * 4
-        });
+        const angle = (Math.PI*2*i)/8 + (Math.random()-0.5)*0.4, speed = 2.5 + Math.random()*2.5;
+        state.particles.push({ x: 200+(Math.random()-0.5)*40, y: 200+(Math.random()-0.5)*30, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed-1.5, life: 1.0, color: colors[i%colors.length], size: 5+Math.random()*4 });
       }
     }
 
-    /* =====================================================================
-       10. 60FPS SYNCHRONIZED ANIMATION LOOP
-       ===================================================================== */
+    // Extracted out frame render so we can loop it instantly for GIF recording!
+    function renderFrameAt(t) {
+      const cur = GEOMETRICS[state.charIdx];
+      const socketL = document.getElementById('socket-left'), socketR = document.getElementById('socket-right');
+      if (socketL) socketL.setAttribute('transform', '');
+      if (socketR) socketR.setAttribute('transform', '');
+
+      const pose = computePoseAtPhase(t % 1, cur, state.motion, state.hopHeight, state.squash, state.boingImpulse);
+      geoBody.setAttribute('transform', pose.bodyTransform); geoProp.setAttribute('transform', pose.bodyTransform); geoFace.setAttribute('transform', pose.bodyTransform);
+      shadowEl.setAttribute('transform', pose.shadowTransform); shadowEl.setAttribute('opacity', pose.shadowOpacity);
+      geoFeet.innerHTML = `<path d="${pose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" /><ellipse cx="${pose.footLCenter[0].toFixed(1)}" cy="${pose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" /><path d="${pose.rightLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" /><ellipse cx="${pose.footRCenter[0].toFixed(1)}" cy="${pose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />`;
+      geoHands.innerHTML = `<path d="${pose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" /><circle cx="${pose.handLCenter[0].toFixed(1)}" cy="${pose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" /><path d="${pose.rightArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" /><circle cx="${pose.handRCenter[0].toFixed(1)}" cy="${pose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />`;
+    }
+
     let lastTime = performance.now();
-    
     function animate(now) {
-      const dt = Math.min((now - lastTime) / 1000, 0.1); 
-      lastTime = now;
+      if (isExportingGif) { requestAnimationFrame(animate); return; } // Pause live update while encoding GIF
+
+      const dt = Math.min((now - lastTime) / 1000, 0.1); lastTime = now;
+      state.time += dt / (2.25 / state.speed);
       
-      const cycleDuration = 2.25 / state.speed; 
-      state.time += dt / cycleDuration;
-      
-      if (state.boingImpulse > 0.01) {
-        state.boingImpulse *= Math.pow(0.003, dt);
-      } else {
-        state.boingImpulse = 0;
-      }
+      if (state.boingImpulse > 0.01) state.boingImpulse *= Math.pow(0.003, dt); else state.boingImpulse = 0;
 
       const cur = GEOMETRICS[state.charIdx];
-      const [, fy] = cur.faceCenter;
-
-      // 1. Organic Blinking
       state.blinkTimer += dt;
       if (state.blinkTimer > state.nextBlink) {
         state.isBlinking = true;
-        if (state.blinkTimer > state.nextBlink + 0.12) {
-          state.isBlinking = false;
-          state.blinkTimer = 0;
-          state.nextBlink = 2.6 + Math.random() * 2.6;
-        }
+        if (state.blinkTimer > state.nextBlink + 0.12) { state.isBlinking = false; state.blinkTimer = 0; state.nextBlink = 2.6 + Math.random() * 2.6; }
       }
-
-      const socketL = document.getElementById('socket-left');
-      const socketR = document.getElementById('socket-right');
-      if (socketL) {
-        socketL.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
-      }
-      if (socketR) {
-        socketR.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
-      }
-
-      // 2. Gaze Tracking
-      state.pointer.currentX += (state.pointer.targetX - state.pointer.currentX) * 8 * dt;
-      state.pointer.currentY += (state.pointer.targetY - state.pointer.currentY) * 8 * dt;
-
-      const gazeDx = (state.pointer.currentX - 200) / 110;
-      const gazeDy = (state.pointer.currentY - fy) / 110;
-      const dist = Math.hypot(gazeDx, gazeDy);
-      const clampFactor = dist > 1 ? 1 / dist : 1;
-      const eyeX = (gazeDx * clampFactor * state.gazeMax).toFixed(2);
-      const eyeY = (gazeDy * clampFactor * (state.gazeMax * 0.85)).toFixed(2);
-
-      const pupilL = document.getElementById('pupil-left');
-      const pupilR = document.getElementById('pupil-right');
-      if (pupilL && !state.isExploded) pupilL.setAttribute('transform', `translate(${eyeX}, ${eyeY})`);
-      if (pupilR && !state.isExploded) pupilR.setAttribute('transform', `translate(${eyeX}, ${eyeY})`);
-
-      // 3. Evaluate Kinematic Pose
+      
       if (!state.isExploded) {
-        const phase = state.time % 1;
-        const pose = computePoseAtPhase(phase, cur, state.motion, state.hopHeight, state.squash, state.boingImpulse);
+        renderFrameAt(state.time);
+        
+        // Dynamic pupil blink logic
+        const fy = cur.faceCenter[1];
+        const socketL = document.getElementById('socket-left'), socketR = document.getElementById('socket-right');
+        if (socketL) socketL.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
+        if (socketR) socketR.setAttribute('transform', `translate(0, ${fy}) scale(1, ${state.isBlinking ? 0.1 : 1}) translate(0, ${-fy})`);
 
-        geoBody.setAttribute('transform', pose.bodyTransform);
-        geoProp.setAttribute('transform', pose.bodyTransform);
-        geoFace.setAttribute('transform', pose.bodyTransform);
-
-        shadowEl.setAttribute('transform', pose.shadowTransform);
-        shadowEl.setAttribute('opacity', pose.shadowOpacity);
-
-        geoFeet.innerHTML = `
-          <path d="${pose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" />
-          <ellipse cx="${pose.footLCenter[0].toFixed(1)}" cy="${pose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />
-          <path d="${pose.rightLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" />
-          <ellipse cx="${pose.footRCenter[0].toFixed(1)}" cy="${pose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />
-        `;
-
-        geoHands.innerHTML = `
-          <path d="${pose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" />
-          <circle cx="${pose.handLCenter[0].toFixed(1)}" cy="${pose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />
-          <path d="${pose.rightArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" />
-          <circle cx="${pose.handRCenter[0].toFixed(1)}" cy="${pose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />
-        `;
+        state.pointer.currentX += (state.pointer.targetX - state.pointer.currentX) * 8 * dt; state.pointer.currentY += (state.pointer.targetY - state.pointer.currentY) * 8 * dt;
+        const clamp = Math.min(1, 1 / Math.hypot((state.pointer.currentX - 200)/110, (state.pointer.currentY - fy)/110));
+        const eX = (((state.pointer.currentX - 200)/110) * clamp * state.gazeMax).toFixed(2), eY = (((state.pointer.currentY - fy)/110) * clamp * (state.gazeMax*0.85)).toFixed(2);
+        const pL = document.getElementById('pupil-left'), pR = document.getElementById('pupil-right');
+        if (pL) pL.setAttribute('transform', `translate(${eX}, ${eY})`); if (pR) pR.setAttribute('transform', `translate(${eX}, ${eY})`);
       } else {
-        geoBody.setAttribute('transform', 'translate(0, 0)');
-        geoProp.setAttribute('transform', 'translate(0, -52)');
-        geoFace.setAttribute('transform', 'translate(0, -34)');
-        geoFeet.setAttribute('transform', 'translate(0, 42)');
-        shadowEl.setAttribute('transform', 'translate(0, 48)');
+        geoBody.setAttribute('transform', 'translate(0, 0)'); geoProp.setAttribute('transform', 'translate(0, -52)'); geoFace.setAttribute('transform', 'translate(0, -34)'); geoFeet.setAttribute('transform', 'translate(0, 42)'); shadowEl.setAttribute('transform', 'translate(0, 48)');
       }
 
-      // 4. Update Burst Particles
       if (state.particles.length > 0) {
         let pHtml = '';
         state.particles = state.particles.filter(pt => {
-          pt.x += pt.vx * (dt * 60);
-          pt.y += pt.vy * (dt * 60);
-          pt.vy += 0.12 * (dt * 60);
-          pt.life -= 0.03 * (dt * 60);
-          if (pt.life > 0) {
-            pHtml += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${(pt.size * pt.life).toFixed(1)}" fill="${pt.color}" stroke="#1E1B18" stroke-width="1.5" opacity="${pt.life.toFixed(2)}" />`;
-            return true;
-          }
-          return false;
+          pt.x += pt.vx * (dt*60); pt.y += pt.vy * (dt*60); pt.vy += 0.12 * (dt*60); pt.life -= 0.03 * (dt*60);
+          if (pt.life > 0) { pHtml += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${(pt.size*pt.life).toFixed(1)}" fill="${pt.color}" stroke="#1E1B18" stroke-width="1.5" opacity="${pt.life.toFixed(2)}" />`; return true; } return false;
         });
         geoParticles.innerHTML = pHtml;
-      } else if (geoParticles.innerHTML !== '') {
-        geoParticles.innerHTML = '';
-      }
-
+      } else if (geoParticles.innerHTML !== '') { geoParticles.innerHTML = ''; }
+      
       requestAnimationFrame(animate);
     }
 
-    /* =====================================================================
-       11. DRAGGING THE BUBBLE ON STAGE (TOUCH & MOUSE COMPATIBLE)
-       ===================================================================== */
-    let isDraggingBubble = false;
-    let dragOffset = { x: 0, y: 0 };
-
-    function getSvgPoint(evt) {
-      const pt = stageSvg.createSVGPoint();
-      pt.x = evt.clientX;
-      pt.y = evt.clientY;
-      return pt.matrixTransform(stageSvg.getScreenCTM().inverse());
-    }
-
-    geoBubble.addEventListener('pointerdown', (e) => {
+    let isDraggingBubble = false, dragOffset = { x: 0, y: 0 };
+    function getSvgPoint(evt) { const pt = stageSvg.createSVGPoint(); pt.x = evt.clientX || evt.touches[0].clientX; pt.y = evt.clientY || evt.touches[0].clientY; return pt.matrixTransform(stageSvg.getScreenCTM().inverse()); }
+    
+    const startDrag = (e) => {
       if (state.bubbleType === 'none') return;
-      isDraggingBubble = true;
-      stageContainer.classList.add('dragging-bubble');
-      const pt = getSvgPoint(e);
-      dragOffset.x = pt.x - state.bubbleX;
-      dragOffset.y = pt.y - state.bubbleY;
-      geoBubble.setPointerCapture(e.pointerId);
-      e.stopPropagation();
-    });
+      isDraggingBubble = true; stageContainer.classList.add('dragging-bubble');
+      const pt = getSvgPoint(e); dragOffset.x = pt.x - state.bubbleX; dragOffset.y = pt.y - state.bubbleY;
+      if (e.pointerId) geoBubble.setPointerCapture(e.pointerId); e.stopPropagation();
+    };
+    geoBubble.addEventListener('pointerdown', startDrag);
+    geoBubble.addEventListener('touchstart', (e) => { e.preventDefault(); startDrag(e); }, {passive: false});
 
-    window.addEventListener('pointermove', (e) => {
+    const moveDrag = (e) => {
       if (!isDraggingBubble) return;
-      const pt = getSvgPoint(e);
-      state.bubbleX = pt.x - dragOffset.x;
-      state.bubbleY = pt.y - dragOffset.y;
-      renderBubble();
-      updateBakedCodePreview();
-    });
+      const pt = getSvgPoint(e); state.bubbleX = pt.x - dragOffset.x; state.bubbleY = pt.y - dragOffset.y;
+      renderBubble(); updateBakedCodePreview();
+    };
+    window.addEventListener('pointermove', moveDrag);
+    window.addEventListener('touchmove', moveDrag, {passive: false});
 
-    window.addEventListener('pointerup', () => {
-      if (isDraggingBubble) {
-        isDraggingBubble = false;
-        stageContainer.classList.remove('dragging-bubble');
-      }
-    });
+    const endDrag = () => { if (isDraggingBubble) { isDraggingBubble = false; stageContainer.classList.remove('dragging-bubble'); } };
+    window.addEventListener('pointerup', endDrag); window.addEventListener('touchend', endDrag);
 
-    /* =====================================================================
-       12. 100% STANDALONE ANIMATED SVG EXPORT GENERATOR
-       ===================================================================== */
+    // ==========================================
+    // 100% PERFECT STANDALONE SVG CODE GENERATOR (Fixed Backgrounds & Fonts)
+    // ==========================================
     function generateBakedStandaloneSvg() {
-      const cur = GEOMETRICS[state.charIdx];
-      const color = state.colorOverride || cur.color;
-      const [fx, fy] = cur.faceCenter;
-      const duration = (2.25 / state.speed).toFixed(2);
-
-      const numSteps = 16;
-      let bodyKeyframes = '';
-      let shadowKeyframes = '';
-
-      const leftLegValues = [];
-      const rightLegValues = [];
-      const footLXValues = [];
-      const footLYValues = [];
-      const footRXValues = [];
-      const footRYValues = [];
-
-      const leftArmValues = [];
-      const rightArmValues = [];
-      const handLXValues = [];
-      const handLYValues = [];
-      const handRXValues = [];
-      const handRYValues = [];
-
-      for (let i = 0; i <= numSteps; i++) {
-        const p = i === numSteps ? 0 : i / numSteps;
-        const pct = ((i / numSteps) * 100).toFixed(2);
-        const pose = computePoseAtPhase(p, cur, state.motion, state.hopHeight, state.squash, 0);
-
-        bodyKeyframes += `        ${pct}% { transform: ${pose.bodyTransformCSS}; }\n`;
-        shadowKeyframes += `        ${pct}% { transform: ${pose.shadowTransformCSS}; opacity: ${pose.shadowOpacity}; }\n`;
-
-        leftLegValues.push(pose.leftLegPath);
-        rightLegValues.push(pose.rightLegPath);
-        footLXValues.push(pose.footLCenter[0].toFixed(1));
-        footLYValues.push(pose.footLCenter[1].toFixed(1));
-        footRXValues.push(pose.footRCenter[0].toFixed(1));
-        footRYValues.push(pose.footRCenter[1].toFixed(1));
-
-        leftArmValues.push(pose.leftArmPath);
-        rightArmValues.push(pose.rightArmPath);
-        handLXValues.push(pose.handLCenter[0].toFixed(1));
-        handLYValues.push(pose.handLCenter[1].toFixed(1));
-        handRXValues.push(pose.handRCenter[0].toFixed(1));
-        handRYValues.push(pose.handRCenter[1].toFixed(1));
+      const cur = GEOMETRICS[state.charIdx], color = state.colorOverride || cur.color, [fx, fy] = cur.faceCenter, duration = (2.25 / state.speed).toFixed(2);
+      let bodyK = '', shadowK = '', lL = [], rL = [], fLX = [], fLY = [], fRX = [], fRY = [], aL = [], aR = [], hLX = [], hLY = [], hRX = [], hRY = [];
+      for (let i = 0; i <= 16; i++) {
+        const pose = computePoseAtPhase(i === 16 ? 0 : i/16, cur, state.motion, state.hopHeight, state.squash, 0);
+        bodyK += `        ${((i/16)*100).toFixed(2)}% { transform: ${pose.bodyTransformCSS}; }\n`;
+        shadowK += `        ${((i/16)*100).toFixed(2)}% { transform: ${pose.shadowTransformCSS}; opacity: ${pose.shadowOpacity}; }\n`;
+        lL.push(pose.leftLegPath); rL.push(pose.rightLegPath); fLX.push(pose.footLCenter[0].toFixed(1)); fLY.push(pose.footLCenter[1].toFixed(1)); fRX.push(pose.footRCenter[0].toFixed(1)); fRY.push(pose.footRCenter[1].toFixed(1));
+        aL.push(pose.leftArmPath); aR.push(pose.rightArmPath); hLX.push(pose.handLCenter[0].toFixed(1)); hLY.push(pose.handLCenter[1].toFixed(1)); hRX.push(pose.handRCenter[0].toFixed(1)); hRY.push(pose.handRCenter[1].toFixed(1));
       }
+      const initPose = computePoseAtPhase(0, cur, state.motion, state.hopHeight, state.squash, 0), parts = renderFaceParts(state.expr, fx, fy);
+      let bubbleSvgMarkup = ''; const bD = generateBubbleMarkup();
+      if (bD) bubbleSvgMarkup = `\n  <g id="mascot-bubble" transform="translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})">\n    ${bD.shapeMarkup.trim()}\n    <text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${bD.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${bD.escapedText}</text>\n  </g>`;
 
-      const initPose = computePoseAtPhase(0, cur, state.motion, state.hopHeight, state.squash, 0);
-      const { eyesSvg, mouthSvg, cheeksSvg } = renderFaceParts(state.expr, fx, fy);
-      const propSvg = renderPropSvg(state.prop, cur.headTopY);
-
-      let bubbleSvgMarkup = '';
-      const bubbleData = generateBubbleMarkup();
-      if (bubbleData) {
-        bubbleSvgMarkup = `
-  <!-- 1:1 Dynamic Orientation-Aware Bubble -->
-  <g id="mascot-bubble" transform="translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})">
-    ${bubbleData.shapeMarkup.trim()}
-    <text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${bubbleData.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${bubbleData.escapedText}</text>
-  </g>`;
+      // EXACT Studio Background injection
+      let bgMarkup = '';
+      if (state.bg === 'night') {
+        bgMarkup = `<rect width="100%" height="100%" fill="#18181B" />`;
+      } else if (state.bg === 'clean') {
+        bgMarkup = `<rect width="100%" height="100%" fill="#FFFFFF" />`;
+      } else {
+        bgMarkup = `<rect width="100%" height="100%" fill="#FAF7F0" />`;
+        if (state.bg === 'dots') bgMarkup += `\n  <rect width="100%" height="100%" fill="url(#dotPattern)" />`;
       }
 
       return `<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated by MASCOT POP! Sticker & Rig Studio | Character: ${cur.name} (${cur.desc}) | Motion: ${state.motion} -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" width="100%" height="100%">
   <defs>
     <style>
-      @keyframes mascotTorso {
-${bodyKeyframes}      }
-      @keyframes shadowSync {
-${shadowKeyframes}      }
-      @keyframes eyeBlink {
-        0%, 92%, 100% { transform: translate(0px, ${fy}px) scaleY(1) translate(0px, ${-fy}px); }
-        96% { transform: translate(0px, ${fy}px) scaleY(0.1) translate(0px, ${-fy}px); }
-      }
-      .mascot-torso-rig {
-        transform-origin: 0px 0px;
-        transform-box: view-box;
-        animation: mascotTorso ${duration}s linear infinite;
-      }
-      #mascot-shadow {
-        transform-origin: 0px 0px;
-        transform-box: view-box;
-        animation: shadowSync ${duration}s linear infinite;
-      }
-      #mascot-eyes {
-        transform-origin: 0px 0px;
-        transform-box: view-box;
-        animation: eyeBlink 3.8s infinite;
-      }
+      @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&amp;family=Nunito:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap');
+      @keyframes mascotTorso {\n${bodyK}      }
+      @keyframes shadowSync {\n${shadowK}      }
+      @keyframes eyeBlink { 0%, 92%, 100% { transform: translate(0px, ${fy}px) scaleY(1) translate(0px, ${-fy}px); } 96% { transform: translate(0px, ${fy}px) scaleY(0.1) translate(0px, ${-fy}px); } }
+      .mascot-torso-rig { transform-origin: 0px 0px; transform-box: view-box; animation: mascotTorso ${duration}s linear infinite; }
+      #mascot-shadow { transform-origin: 0px 0px; transform-box: view-box; animation: shadowSync ${duration}s linear infinite; }
+      #mascot-eyes { transform-origin: 0px 0px; transform-box: view-box; animation: eyeBlink 3.8s infinite; }
     </style>
+    <pattern id="dotPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1.5" fill="#1E1B18" opacity="0.15" />
+    </pattern>
   </defs>
 
-  <g id="mascot-shadow">
-    <ellipse cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22" />
-  </g>
+  ${bgMarkup}
+
+  <g id="mascot-shadow"><ellipse cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22" /></g>
 
   <g id="mascot-legs">
-    <path d="${initPose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none">
-      <animate attributeName="d" values="${leftLegValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </path>
-    <ellipse cx="${initPose.footLCenter[0].toFixed(1)}" cy="${initPose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18">
-      <animate attributeName="cx" values="${footLXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-      <animate attributeName="cy" values="${footLYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </ellipse>
-
-    <path d="${initPose.rightLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none">
-      <animate attributeName="d" values="${rightLegValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </path>
-    <ellipse cx="${initPose.footRCenter[0].toFixed(1)}" cy="${initPose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18">
-      <animate attributeName="cx" values="${footRXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-      <animate attributeName="cy" values="${footRYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </ellipse>
+    <path d="${initPose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none"><animate attributeName="d" values="${lL.join(';')}" dur="${duration}s" repeatCount="indefinite" /></path>
+    <ellipse cx="${initPose.footLCenter[0].toFixed(1)}" cy="${initPose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18"><animate attributeName="cx" values="${fLX.join(';')}" dur="${duration}s" repeatCount="indefinite" /><animate attributeName="cy" values="${fLY.join(';')}" dur="${duration}s" repeatCount="indefinite" /></ellipse>
+    <path d="${initPose.rightLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none"><animate attributeName="d" values="${rL.join(';')}" dur="${duration}s" repeatCount="indefinite" /></path>
+    <ellipse cx="${initPose.footRCenter[0].toFixed(1)}" cy="${initPose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18"><animate attributeName="cx" values="${fRX.join(';')}" dur="${duration}s" repeatCount="indefinite" /><animate attributeName="cy" values="${fRY.join(';')}" dur="${duration}s" repeatCount="indefinite" /></ellipse>
   </g>
 
   <g id="mascot-torso" class="mascot-torso-rig">
-    <g id="mascot-body">
-      ${cur.renderBody(color).trim()}
-    </g>
-    <g id="mascot-prop">
-      ${propSvg.trim()}
-    </g>
-    <g id="mascot-face">
-      ${cheeksSvg.trim()}
-      <g id="mascot-eyes">
-        ${eyesSvg.trim()}
-      </g>
-      ${mouthSvg.trim()}
-    </g>
+    <g id="mascot-body">${cur.renderBody(color).trim()}</g>
+    <g id="mascot-prop">${renderPropSvg(state.prop, cur.headTopY).trim()}</g>
+    <g id="mascot-face">${parts.cheeksSvg.trim()}<g id="mascot-eyes">${parts.eyesSvg.trim()}</g>${parts.mouthSvg.trim()}</g>
   </g>
 
   <g id="mascot-arms">
-    <path d="${initPose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none">
-      <animate attributeName="d" values="${leftArmValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </path>
-    <circle cx="${initPose.handLCenter[0].toFixed(1)}" cy="${initPose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2">
-      <animate attributeName="cx" values="${handLXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-      <animate attributeName="cy" values="${handLYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </circle>
-
-    <path d="${initPose.rightArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none">
-      <animate attributeName="d" values="${rightArmValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </path>
-    <circle cx="${initPose.handRCenter[0].toFixed(1)}" cy="${initPose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2">
-      <animate attributeName="cx" values="${handRXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-      <animate attributeName="cy" values="${handRYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
-    </circle>
+    <path d="${initPose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none"><animate attributeName="d" values="${aL.join(';')}" dur="${duration}s" repeatCount="indefinite" /></path>
+    <circle cx="${initPose.handLCenter[0].toFixed(1)}" cy="${initPose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2"><animate attributeName="cx" values="${hLX.join(';')}" dur="${duration}s" repeatCount="indefinite" /><animate attributeName="cy" values="${hLY.join(';')}" dur="${duration}s" repeatCount="indefinite" /></circle>
+    <path d="${initPose.rightArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none"><animate attributeName="d" values="${aR.join(';')}" dur="${duration}s" repeatCount="indefinite" /></path>
+    <circle cx="${initPose.handRCenter[0].toFixed(1)}" cy="${initPose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2"><animate attributeName="cx" values="${hRX.join(';')}" dur="${duration}s" repeatCount="indefinite" /><animate attributeName="cy" values="${hRY.join(';')}" dur="${duration}s" repeatCount="indefinite" /></circle>
   </g>${bubbleSvgMarkup}
 </svg>`;
     }
+    function updateBakedCodePreview() { codeBox.textContent = generateBakedStandaloneSvg(); }
 
-    function updateBakedCodePreview() {
-      codeBox.textContent = generateBakedStandaloneSvg();
-    }
-
-    /* =====================================================================
-       13. X-RAY EXPLODE INSPECTOR & RANDOMIZER
-       ===================================================================== */
     function toggleExplode() {
       state.isExploded = !state.isExploded;
-      const btn = document.getElementById('btnExplode');
-      btn.style.background = state.isExploded ? '#FB923C' : '';
+      const btn = document.getElementById('btnExplode'); btn.style.background = state.isExploded ? '#FB923C' : '';
       explodeOverlay.classList.toggle('active', state.isExploded);
-
-      if (!state.isExploded) {
-        geoFeet.removeAttribute('transform');
-        playSynth('pop', 420);
-      } else {
-        playSynth('magic');
-        const cur = GEOMETRICS[state.charIdx];
-        let overlayMarkup = `
-          <div class="tag-bubble" style="left: 50%; top: 15%;">&lt;g id="mascot-prop"&gt; (Sticker Hat)</div>
-          <div class="tag-bubble" style="left: 50%; top: 28%;">&lt;g id="mascot-face"&gt; (Clamped Gaze Rig)</div>
-          <div class="tag-bubble" style="left: 20%; top: 48%;">&lt;g id="mascot-arms"&gt; (Rubberhose IK)</div>
-          <div class="tag-bubble" style="left: 80%; top: 50%;">&lt;g id="mascot-body"&gt; (${cur.desc})</div>
-          <div class="tag-bubble" style="left: 50%; top: 76%;">&lt;g id="mascot-legs"&gt; (Deep-Socket IK)</div>
-          <div class="tag-bubble" style="left: 50%; top: 91%;">&lt;g id="mascot-shadow"&gt; (Synced Shadow)</div>
-        `;
-        if (state.bubbleType !== 'none') {
-          overlayMarkup += `<div class="tag-bubble" style="left: 75%; top: 20%;">&lt;g id="mascot-bubble"&gt; (Dynamic Bubble)</div>`;
-        }
-        explodeOverlay.innerHTML = overlayMarkup;
-      }
+      if (!state.isExploded) { geoFeet.removeAttribute('transform'); playSynth('pop', 420); }
+      else { playSynth('magic'); const cur = GEOMETRICS[state.charIdx]; let oM = `<div class="tag-bubble" style="left:50%; top:15%;">&lt;g id="mascot-prop"&gt;</div><div class="tag-bubble" style="left:50%; top:28%;">&lt;g id="mascot-face"&gt;</div><div class="tag-bubble" style="left:20%; top:48%;">&lt;g id="mascot-arms"&gt;</div><div class="tag-bubble" style="left:80%; top:50%;">&lt;g id="mascot-body"&gt;</div><div class="tag-bubble" style="left:50%; top:76%;">&lt;g id="mascot-legs"&gt;</div><div class="tag-bubble" style="left:50%; top:91%;">&lt;g id="mascot-shadow"&gt;</div>`; if (state.bubbleType !== 'none') oM += `<div class="tag-bubble" style="left:75%; top:20%;">&lt;g id="mascot-bubble"&gt;</div>`; explodeOverlay.innerHTML = oM; }
     }
 
     function randomizeEverything() {
-      playSynth('magic');
-      const randChar = Math.floor(Math.random() * GEOMETRICS.length);
-      const motions = ['bounce', 'sway', 'walk', 'float', 'wiggle', 'nod'];
-      const exprs = ['happy', 'star', 'wink', 'open', 'shades', 'chill'];
-      const props = ['none', 'crown', 'sprout', 'halo', 'beanie', 'bow'];
-      const texts = ['HELLO!', 'YAY! ✨', 'COZY VIBES', 'POP! ⚡', 'SO CUTE!', 'CHILL~'];
-
-      state.motion = motions[Math.floor(Math.random() * motions.length)];
-      state.expr = exprs[Math.floor(Math.random() * exprs.length)];
-      state.prop = props[Math.floor(Math.random() * props.length)];
-      state.bubbleText = texts[Math.floor(Math.random() * texts.length)];
+      playSynth('magic'); const r = Math.floor(Math.random() * GEOMETRICS.length);
+      state.motion = ['bounce', 'sway', 'walk', 'float', 'wiggle', 'nod'][Math.floor(Math.random() * 6)];
+      state.expr = ['happy', 'star', 'wink', 'open', 'shades', 'chill'][Math.floor(Math.random() * 6)];
+      state.prop = ['none', 'crown', 'sprout', 'halo', 'beanie', 'bow'][Math.floor(Math.random() * 6)];
+      state.bubbleText = ['HELLO!', 'YAY! ✨', 'COZY VIBES', 'POP! ⚡', 'SO CUTE!', 'CHILL~'][Math.floor(Math.random() * 6)];
       document.getElementById('bubbleTextInput').value = state.bubbleText;
-
-      motionGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.motion === state.motion));
-      exprGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.expr === state.expr));
-      propGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.prop === state.prop));
-
-      selectMascot(randChar);
-      triggerBoingImpulse();
-      showToast(`🎲 Rolled: ${GEOMETRICS[randChar].name} + ${state.motion.toUpperCase()}!`);
+      ['motionGrid','exprGrid','propGrid'].forEach(id => document.getElementById(id).querySelectorAll('.pill-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.motion===state.motion || b.dataset.expr===state.expr || b.dataset.prop===state.prop);
+      }));
+      selectMascot(r); triggerBoingImpulse();
     }
 
-    /* =====================================================================
-       14. EVENT LISTENERS
-       ===================================================================== */
-    motionGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill-btn');
-      if (!btn) return;
-      motionGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.motion = btn.dataset.motion;
-      playSynth('pop', 460);
-      updateBakedCodePreview();
-    });
+    // ==========================================
+    // ANIMATED GIF EXPORT ENGINE
+    // ==========================================
+    async function exportAnimatedGif() {
+      if (typeof gifshot === 'undefined') { showToast('❌ GIF Encoder not loaded! Ensure you are connected to the internet.'); return; }
+      if (state.isExploded) toggleExplode();
+      showToast('⏳ Generating GIF... Please wait (0%)');
+      isExportingGif = true;
 
-    exprGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill-btn');
-      if (!btn) return;
-      exprGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.expr = btn.dataset.expr;
-      renderStaticLayers();
-      playSynth('pop', 540);
-      updateBakedCodePreview();
-    });
+      const canvas = document.createElement('canvas'); canvas.width = 400; canvas.height = 460;
+      const ctx = canvas.getContext('2d');
+      const fps = 20, cycleDuration = 2.25 / state.speed, numFrames = Math.round(cycleDuration * fps);
+      const frames = []; const originalTime = state.time;
 
-    propGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill-btn');
-      if (!btn) return;
-      propGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.prop = btn.dataset.prop;
-      renderStaticLayers();
-      playSynth('pop', 600);
-      updateBakedCodePreview();
-    });
+      const bgColor = (state.bg === 'night') ? '#18181B' : (state.bg === 'clean' ? '#FFFFFF' : '#FAF7F0');
 
-    document.getElementById('bubbleTypeGrid').addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill-btn');
-      if (!btn) return;
-      document.querySelectorAll('#bubbleTypeGrid .pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.bubbleType = btn.dataset.bubble;
-      playSynth('pop', 520);
-      renderBubble();
-      updateBakedCodePreview();
-    });
+      for (let i = 0; i < numFrames; i++) {
+        renderFrameAt(i / numFrames);
+        let svgData = new XMLSerializer().serializeToString(stageSvg);
+        // Clear particles from GIF export to keep loop clean
+        svgData = svgData.replace(/<g id="geo-particles">.*?<\/g>/, '<g id="geo-particles"></g>'); 
+        if (!svgData.includes('xmlns=')) svgData = svgData.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
 
-    document.getElementById('fontGrid').addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill-btn');
-      if (!btn) return;
-      document.querySelectorAll('#fontGrid .pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.bubbleFont = btn.dataset.font;
-      playSynth('pop', 560);
-      renderBubble();
-      updateBakedCodePreview();
-    });
+        const img = await new Promise((resolve) => {
+          const i = new Image(); i.onload = () => resolve(i); i.src = URL.createObjectURL(new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'}));
+        });
 
-    document.getElementById('bubbleTextInput').addEventListener('input', (e) => {
-      state.bubbleText = e.target.value;
-      renderBubble();
-      updateBakedCodePreview();
-    });
+        // Match EXACT Stage Canvas Background
+        ctx.fillStyle = bgColor; ctx.fillRect(0, 0, 400, 460);
+        if (state.bg === 'dots') {
+          ctx.fillStyle = '#1E1B18'; ctx.globalAlpha = 0.15;
+          for(let x=0; x<400; x+=20) { for(let y=0; y<460; y+=20) { ctx.beginPath(); ctx.arc(x+10, y+10, 1.5, 0, Math.PI*2); ctx.fill(); } }
+          ctx.globalAlpha = 1.0;
+        }
+        
+        ctx.drawImage(img, 0, 0);
+        frames.push(canvas.toDataURL('image/png'));
+      }
 
-    sliderBubbleX.addEventListener('input', (e) => {
-      state.bubbleX = Number(e.target.value);
-      renderBubble();
-      updateBakedCodePreview();
-    });
+      state.time = originalTime; isExportingGif = false;
 
-    sliderBubbleY.addEventListener('input', (e) => {
-      state.bubbleY = Number(e.target.value);
-      renderBubble();
-      updateBakedCodePreview();
-    });
-
-    sliderBubbleScale.addEventListener('input', (e) => {
-      state.bubbleScale = Number(e.target.value);
-      renderBubble();
-      updateBakedCodePreview();
-    });
-
-    bgGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.pill-btn');
-      if (!btn) return;
-      bgGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.bg = btn.dataset.bg;
-      stageContainer.className = `stage-canvas bg-${state.bg}`;
-    });
-
-    document.getElementById('swatchRow').addEventListener('click', (e) => {
-      const sw = e.target.closest('.color-swatch');
-      if (!sw) return;
-      state.colorOverride = sw.dataset.color;
-      document.getElementById('pickerTint').value = state.colorOverride;
-      document.getElementById('txtTint').textContent = state.colorOverride;
-      renderStaticLayers();
-      playSynth('pop', 520);
-      updateBakedCodePreview();
-    });
-
-    document.getElementById('pickerTint').addEventListener('input', (e) => {
-      state.colorOverride = e.target.value;
-      document.getElementById('txtTint').textContent = e.target.value;
-      renderStaticLayers();
-      updateBakedCodePreview();
-    });
-
-    document.getElementById('sliderSquash').addEventListener('input', (e) => {
-      state.squash = parseFloat(e.target.value);
-      document.getElementById('txtSquash').textContent = `${state.squash.toFixed(1)}x`;
-      updateBakedCodePreview();
-    });
-
-    document.getElementById('sliderSpeed').addEventListener('input', (e) => {
-      state.speed = parseFloat(e.target.value);
-      document.getElementById('txtSpeed').textContent = `${state.speed.toFixed(1)}x`;
-      updateBakedCodePreview();
-    });
-
-    document.getElementById('sliderHeight').addEventListener('input', (e) => {
-      state.hopHeight = parseInt(e.target.value);
-      document.getElementById('txtHeight').textContent = `${state.hopHeight}px`;
-      updateBakedCodePreview();
-    });
-
-    document.getElementById('sliderGaze').addEventListener('input', (e) => {
-      state.gazeMax = parseFloat(e.target.value);
-      document.getElementById('txtGaze').textContent = `${state.gazeMax.toFixed(1)}px`;
-    });
-
-    stageSvg.addEventListener('pointermove', (e) => {
-      const pt = getSvgPoint(e);
-      state.pointer.targetX = pt.x;
-      state.pointer.targetY = pt.y;
-    });
-
-    stageSvg.addEventListener('click', (e) => {
-      if (isDraggingBubble) return;
-      triggerBoingImpulse();
-    });
-
-    document.getElementById('pillBoing').addEventListener('click', triggerBoingImpulse);
-    document.getElementById('pillRandom').addEventListener('click', randomizeEverything);
-    document.getElementById('pillXray').addEventListener('click', toggleExplode);
-    document.getElementById('btnSurprise').addEventListener('click', randomizeEverything);
-    document.getElementById('btnExplode').addEventListener('click', toggleExplode);
-
-    document.getElementById('btnSound').addEventListener('click', () => {
-      state.soundEnabled = !state.soundEnabled;
-      document.getElementById('soundIcon').textContent = state.soundEnabled ? '🔊' : '🔇';
-      showToast(state.soundEnabled ? '🔊 SFX Enabled' : '🔇 SFX Muted');
-    });
-
-    function copySvgToClipboard() {
-      const svgText = generateBakedStandaloneSvg();
-      const tempArea = document.createElement('textarea');
-      tempArea.value = svgText;
-      document.body.appendChild(tempArea);
-      tempArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempArea);
-      playSynth('magic');
-      showToast('📋 Copied Animated SVG!');
+      gifshot.createGIF({
+        gifWidth: 400, gifHeight: 460, images: frames, interval: 1 / fps, numWorkers: 2,
+        progressCallback: (pct) => toastBox.textContent = `⏳ Generating GIF... (${Math.round(pct * 100)}%)`
+      }, (obj) => {
+        if (!obj.error) {
+          const a = document.createElement('a'); a.href = obj.image; a.download = `${GEOMETRICS[state.charIdx].id}-${state.motion}.gif`;
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          showToast('✅ GIF Exported Successfully!'); playSynth('magic');
+        } else showToast('❌ Failed to generate GIF.');
+      });
     }
 
-    function downloadSvgFile() {
-      playSynth('magic');
-      const cur = GEOMETRICS[state.charIdx];
-      const svgText = generateBakedStandaloneSvg();
-      const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${cur.id}-${state.motion}-sticker.svg`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showToast(`⬇️ Downloaded ${cur.id}-${state.motion}-sticker.svg!`);
-    }
+    // UI Event Listeners
+    motionGrid.addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; motionGrid.querySelectorAll('.pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.motion=b.dataset.motion; playSynth('pop', 460); updateBakedCodePreview(); });
+    exprGrid.addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; exprGrid.querySelectorAll('.pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.expr=b.dataset.expr; renderStaticLayers(); playSynth('pop', 540); updateBakedCodePreview(); });
+    propGrid.addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; propGrid.querySelectorAll('.pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.prop=b.dataset.prop; renderStaticLayers(); playSynth('pop', 600); updateBakedCodePreview(); });
+    document.getElementById('bubbleTypeGrid').addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; document.querySelectorAll('#bubbleTypeGrid .pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.bubbleType=b.dataset.bubble; playSynth('pop', 520); renderBubble(); updateBakedCodePreview(); });
+    document.getElementById('fontGrid').addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; document.querySelectorAll('#fontGrid .pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.bubbleFont=b.dataset.font; playSynth('pop', 560); renderBubble(); updateBakedCodePreview(); });
+    document.getElementById('bubbleTextInput').addEventListener('input', (e) => { state.bubbleText = e.target.value; renderBubble(); updateBakedCodePreview(); });
+    sliderBubbleX.addEventListener('input', (e) => { state.bubbleX = Number(e.target.value); renderBubble(); updateBakedCodePreview(); });
+    sliderBubbleY.addEventListener('input', (e) => { state.bubbleY = Number(e.target.value); renderBubble(); updateBakedCodePreview(); });
+    sliderBubbleScale.addEventListener('input', (e) => { state.bubbleScale = Number(e.target.value); renderBubble(); updateBakedCodePreview(); });
+    bgGrid.addEventListener('click', (e) => { const b=e.target.closest('.pill-btn'); if(!b) return; bgGrid.querySelectorAll('.pill-btn').forEach(btn=>btn.classList.remove('active')); b.classList.add('active'); state.bg=b.dataset.bg; stageContainer.className=`stage-canvas bg-${state.bg}`; updateBakedCodePreview(); });
+    document.getElementById('swatchRow').addEventListener('click', (e) => { const s=e.target.closest('.color-swatch'); if(!s) return; state.colorOverride=s.dataset.color; document.getElementById('pickerTint').value=state.colorOverride; document.getElementById('txtTint').textContent=state.colorOverride; renderStaticLayers(); playSynth('pop', 520); updateBakedCodePreview(); });
+    document.getElementById('pickerTint').addEventListener('input', (e) => { state.colorOverride = e.target.value; document.getElementById('txtTint').textContent = e.target.value; renderStaticLayers(); updateBakedCodePreview(); });
+    document.getElementById('sliderSquash').addEventListener('input', (e) => { state.squash = parseFloat(e.target.value); document.getElementById('txtSquash').textContent = `${state.squash.toFixed(1)}x`; updateBakedCodePreview(); });
+    document.getElementById('sliderSpeed').addEventListener('input', (e) => { state.speed = parseFloat(e.target.value); document.getElementById('txtSpeed').textContent = `${state.speed.toFixed(1)}x`; updateBakedCodePreview(); });
+    document.getElementById('sliderHeight').addEventListener('input', (e) => { state.hopHeight = parseInt(e.target.value); document.getElementById('txtHeight').textContent = `${state.hopHeight}px`; updateBakedCodePreview(); });
+    document.getElementById('sliderGaze').addEventListener('input', (e) => { state.gazeMax = parseFloat(e.target.value); document.getElementById('txtGaze').textContent = `${state.gazeMax.toFixed(1)}px`; });
+    
+    stageSvg.addEventListener('pointermove', (e) => { const pt = getSvgPoint(e); state.pointer.targetX = pt.x; state.pointer.targetY = pt.y; });
+    stageSvg.addEventListener('click', (e) => { if (isDraggingBubble) return; triggerBoingImpulse(); });
+    
+    document.getElementById('pillBoing').addEventListener('click', triggerBoingImpulse); document.getElementById('pillRandom').addEventListener('click', randomizeEverything); document.getElementById('pillXray').addEventListener('click', toggleExplode); document.getElementById('btnSurprise').addEventListener('click', randomizeEverything); document.getElementById('btnExplode').addEventListener('click', toggleExplode);
+    document.getElementById('btnSound').addEventListener('click', () => { state.soundEnabled = !state.soundEnabled; document.getElementById('soundIcon').textContent = state.soundEnabled ? '🔊' : '🔇'; showToast(state.soundEnabled ? '🔊 SFX Enabled' : '🔇 SFX Muted'); });
 
-    document.getElementById('btnCopySvg').addEventListener('click', copySvgToClipboard);
-    document.getElementById('btnExport').addEventListener('click', downloadSvgFile);
+    function copySvgToClipboard() { const t = document.createElement('textarea'); t.value = generateBakedStandaloneSvg(); document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); playSynth('magic'); showToast('📋 Copied Code!'); }
+    function downloadSvgFile() { playSynth('magic'); const cur=GEOMETRICS[state.charIdx]; const blob=new Blob([generateBakedStandaloneSvg()], {type:'image/svg+xml;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`${cur.id}-${state.motion}-sticker.svg`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showToast('⬇️ Downloaded .svg!'); }
+
+    document.getElementById('btnExportGif').addEventListener('click', exportAnimatedGif);
+    document.getElementById('btnExportSvg').addEventListener('click', downloadSvgFile);
     document.getElementById('btnModalCopy').addEventListener('click', copySvgToClipboard);
     document.getElementById('btnModalDownload').addEventListener('click', downloadSvgFile);
 
-    const previewModal = document.getElementById('previewModal');
-    const modalSvgHolder = document.getElementById('modalSvgHolder');
+    const previewModal = document.getElementById('previewModal'), modalSvgHolder = document.getElementById('modalSvgHolder');
+    document.getElementById('btnPreviewSvg').addEventListener('click', () => { playSynth('pop', 560); modalSvgHolder.innerHTML = generateBakedStandaloneSvg(); previewModal.classList.add('open'); });
+    document.getElementById('btnCloseModal').addEventListener('click', () => { previewModal.classList.remove('open'); modalSvgHolder.innerHTML = ''; });
+    previewModal.addEventListener('click', (e) => { if (e.target === previewModal) { previewModal.classList.remove('open'); modalSvgHolder.innerHTML = ''; } });
 
-    document.getElementById('btnPreviewSvg').addEventListener('click', () => {
-      playSynth('pop', 560);
-      modalSvgHolder.innerHTML = generateBakedStandaloneSvg();
-      previewModal.classList.add('open');
-    });
+    window.addEventListener('keydown', (e) => { if (e.target.tagName === 'INPUT') return; if (e.code === 'Space') { e.preventDefault(); triggerBoingImpulse(); } else if (e.key === 'r' || e.key === 'R') randomizeEverything(); else if (e.key === 'e' || e.key === 'E') toggleExplode(); else if (e.key >= '1' && e.key <= '8') { selectMascot(parseInt(e.key) - 1); playSynth('pop', 500); } });
 
-    document.getElementById('btnCloseModal').addEventListener('click', () => {
-      previewModal.classList.remove('open');
-      modalSvgHolder.innerHTML = '';
-    });
-
-    previewModal.addEventListener('click', (e) => {
-      if (e.target === previewModal) {
-        previewModal.classList.remove('open');
-        modalSvgHolder.innerHTML = '';
-      }
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if (e.code === 'Space') {
-        e.preventDefault();
-        triggerBoingImpulse();
-      } else if (e.key === 'r' || e.key === 'R') {
-        randomizeEverything();
-      } else if (e.key === 'e' || e.key === 'E') {
-        toggleExplode();
-      } else if (e.key >= '1' && e.key <= '8') {
-        const idx = parseInt(e.key) - 1;
-        selectMascot(idx);
-        playSynth('pop', 500);
-      }
-    });
-
-    // Boot Studio
-    initMascotCards();
-    selectMascot(0);
-    renderBubble();
-    requestAnimationFrame(animate);
+    initMascotCards(); selectMascot(0); renderBubble(); requestAnimationFrame(animate);
   </script>
 </body>
 </html>
