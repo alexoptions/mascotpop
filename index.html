@@ -982,7 +982,7 @@
                 <span>🍃 Tempo</span>
                 <span id="txtSpeed">0.8x</span>
               </div>
-              <input type="range" id="sliderSpeed" min="0.4" max="1.5" step="0.1" value="0.8">
+              <input type="range" id="sliderSpeed" min="0.4" max="5.0" step="0.1" value="0.8">
             </div>
 
             <div class="slider-row">
@@ -1612,7 +1612,7 @@
     }
 
     /* =====================================================================
-       7. PURE MATHEMATICAL COZY POSE SOLVER
+       7. PURE MATHEMATICAL COZY POSE SOLVER (WITH UNIT-AWARE CSS OUTPUT)
        ===================================================================== */
     function computePoseAtPhase(p, cur, motion, hopHeight, squashFactor, boingBoost = 0) {
       const groundY = 364;
@@ -1797,8 +1797,12 @@
       const shadowOpacity = Math.max(0.11, 0.22 - liftDist / 260);
 
       return {
+        // Unitless for live SVG transform attribute
         bodyTransform: `translate(${(200 + bodyX).toFixed(2)}, ${(cur.pivotY + bodyY).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200, ${-cur.pivotY})`,
+        // Strict CSS units for standalone SVG @keyframes animation
+        bodyTransformCSS: `translate(${(200 + bodyX).toFixed(2)}px, ${(cur.pivotY + bodyY).toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)}) translate(-200px, ${-cur.pivotY}px)`,
         shadowTransform: `translate(${(200 + bodyX * 0.65).toFixed(2)}, 374) scale(${shadowScale.toFixed(3)}) translate(-200, -374)`,
+        shadowTransformCSS: `translate(${(200 + bodyX * 0.65).toFixed(2)}px, 374px) scale(${shadowScale.toFixed(3)}) translate(-200px, -374px)`,
         shadowOpacity: shadowOpacity.toFixed(2),
         leftLegPath: `M ${hipL[0].toFixed(1)} ${hipL[1].toFixed(1)} Q ${kneeLX.toFixed(1)} ${kneeLY.toFixed(1)} ${footLX.toFixed(1)} ${footLY.toFixed(1)}`,
         rightLegPath: `M ${hipR[0].toFixed(1)} ${hipR[1].toFixed(1)} Q ${kneeRX.toFixed(1)} ${kneeRY.toFixed(1)} ${footRX.toFixed(1)} ${footRY.toFixed(1)}`,
@@ -1928,12 +1932,23 @@
     }
 
     /* =====================================================================
-       10. 60 FPS REAL-TIME ANIMATION LOOP
+       10. DELTA-TIME 60FPS SYNCHRONIZED ANIMATION LOOP
+       Locks live animation speed perfectly to the exported SVG duration
        ===================================================================== */
-    function animate() {
-      state.time += 0.0072 * state.speed;
-      if (state.boingImpulse > 0.08) {
-        state.boingImpulse *= 0.91;
+    let lastTime = performance.now();
+    
+    function animate(now) {
+      // Prevent wild jumps if user switches tabs
+      const dt = Math.min((now - lastTime) / 1000, 0.1); 
+      lastTime = now;
+      
+      // Match live cycle strictly to the baked duration formula
+      const cycleDuration = 2.25 / state.speed; 
+      state.time += dt / cycleDuration;
+      
+      // Frame-independent decay for boing impulse
+      if (state.boingImpulse > 0.01) {
+        state.boingImpulse *= Math.pow(0.003, dt); // ~0.91^60 at 60fps
       } else {
         state.boingImpulse = 0;
       }
@@ -1942,7 +1957,7 @@
       const [, fy] = cur.faceCenter;
 
       // 1. Organic Blinking
-      state.blinkTimer += 0.016;
+      state.blinkTimer += dt;
       if (state.blinkTimer > state.nextBlink) {
         state.isBlinking = true;
         if (state.blinkTimer > state.nextBlink + 0.12) {
@@ -1962,8 +1977,8 @@
       }
 
       // 2. Clamped Pupil Tracking
-      state.pointer.currentX += (state.pointer.targetX - state.pointer.currentX) * 0.14;
-      state.pointer.currentY += (state.pointer.targetY - state.pointer.currentY) * 0.14;
+      state.pointer.currentX += (state.pointer.targetX - state.pointer.currentX) * 8 * dt;
+      state.pointer.currentY += (state.pointer.targetY - state.pointer.currentY) * 8 * dt;
 
       const gazeDx = (state.pointer.currentX - 200) / 110;
       const gazeDy = (state.pointer.currentY - fy) / 110;
@@ -2014,10 +2029,10 @@
       if (state.particles.length > 0) {
         let pHtml = '';
         state.particles = state.particles.filter(pt => {
-          pt.x += pt.vx;
-          pt.y += pt.vy;
-          pt.vy += 0.12;
-          pt.life -= 0.03;
+          pt.x += pt.vx * (dt * 60);
+          pt.y += pt.vy * (dt * 60);
+          pt.vy += 0.12 * (dt * 60);
+          pt.life -= 0.03 * (dt * 60);
           if (pt.life > 0) {
             pHtml += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${(pt.size * pt.life).toFixed(1)}" fill="${pt.color}" stroke="#1E1B18" stroke-width="1.5" opacity="${pt.life.toFixed(2)}" />`;
             return true;
@@ -2073,7 +2088,7 @@
     });
 
     /* =====================================================================
-       12. 100% EXACT 1:1 STANDALONE ANIMATED SVG BAKER (SMIL + CSS)
+       12. 100% EXACT 1:1 STANDALONE ANIMATED SVG BAKER (STRICT CSS UNITS)
        ===================================================================== */
     function generateBakedStandaloneSvg() {
       const cur = GEOMETRICS[state.charIdx];
@@ -2104,8 +2119,9 @@
         const pct = ((i / numSteps) * 100).toFixed(2);
         const pose = computePoseAtPhase(p, cur, state.motion, state.hopHeight, state.squash, 0);
 
-        bodyKeyframes += `        ${pct}% { transform: ${pose.bodyTransform}; }\n`;
-        shadowKeyframes += `        ${pct}% { transform: ${pose.shadowTransform}; opacity: ${pose.shadowOpacity}; }\n`;
+        // Strict CSS units: px and deg ensure the keyframes are valid in standalone SVG
+        bodyKeyframes += `        ${pct}% { transform: ${pose.bodyTransformCSS}; }\n`;
+        shadowKeyframes += `        ${pct}% { transform: ${pose.shadowTransformCSS}; opacity: ${pose.shadowOpacity}; }\n`;
 
         leftLegValues.push(pose.leftLegPath);
         rightLegValues.push(pose.rightLegPath);
@@ -2151,12 +2167,18 @@ ${shadowKeyframes}      }
         96% { transform: translate(0px, ${fy}px) scaleY(0.1) translate(0px, ${-fy}px); }
       }
       .mascot-torso-rig {
+        transform-origin: 0px 0px;
+        transform-box: view-box;
         animation: mascotTorso ${duration}s linear infinite;
       }
       #mascot-shadow {
+        transform-origin: 0px 0px;
+        transform-box: view-box;
         animation: shadowSync ${duration}s linear infinite;
       }
       #mascot-eyes {
+        transform-origin: 0px 0px;
+        transform-box: view-box;
         animation: eyeBlink 3.8s infinite;
       }
     </style>
