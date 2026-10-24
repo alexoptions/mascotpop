@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MASCOT POP! ⚡ Sticker & Rig Studio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <title>MASCOT POP! ⚡ Sticker &amp; Rig Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-cream: #FAF7F0;
@@ -35,25 +35,25 @@
       background-color: var(--bg-cream);
       color: var(--text-main);
       font-family: var(--font-sans);
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     /* Top Header */
     header {
       background: var(--card-bg);
       border-bottom: 2.5px solid var(--border-ink);
-      padding: 10px 20px;
+      height: 52px;
+      padding: 0 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 50;
-      flex-wrap: wrap;
-      gap: 10px;
+      flex-shrink: 0;
     }
 
     .brand {
@@ -66,9 +66,9 @@
       background: var(--pop-yellow);
       color: var(--border-ink);
       font-weight: 800;
-      font-size: 13px;
-      padding: 5px 11px;
-      border-radius: 9px;
+      font-size: 12.5px;
+      padding: 4px 10px;
+      border-radius: 8px;
       border: 2px solid var(--border-ink);
       box-shadow: 2px 2px 0 var(--border-ink);
       display: flex;
@@ -78,20 +78,20 @@
     }
 
     .brand-title {
-      font-size: 18px;
+      font-size: 16.5px;
       font-weight: 800;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.3px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .subtag {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       color: #9A3412;
       background: #FFEDD5;
-      padding: 3px 9px;
+      padding: 2px 8px;
       border-radius: 999px;
       border: 1.5px solid var(--border-ink);
     }
@@ -99,8 +99,20 @@
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-divider {
+      width: 2px;
+      height: 22px;
+      background: #E7E5E4;
+      margin: 0 3px;
     }
 
     .btn {
@@ -109,88 +121,80 @@
       background: #FFFFFF;
       color: var(--text-main);
       font-family: var(--font-sans);
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 800;
-      padding: 7px 13px;
-      border-radius: 10px;
+      height: 33px;
+      padding: 0 11px;
+      border-radius: 9px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 5px;
       transition: all 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
-      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+      box-shadow: 2px 2px 0 var(--border-ink);
+      white-space: nowrap;
     }
 
     .btn:hover {
-      transform: translate(-1.5px, -1.5px);
-      box-shadow: 4px 4px 0 var(--border-ink);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--border-ink);
     }
 
     .btn:active {
-      transform: translate(1.5px, 1.5px);
+      transform: translate(1px, 1px);
       box-shadow: 1px 1px 0 var(--border-ink);
     }
 
-    .btn-surprise {
-      background: #E9D5FF;
-      color: var(--border-ink);
-    }
-
-    .btn-yellow {
-      background: var(--pop-yellow);
-    }
-
-    .btn-mint {
-      background: var(--pop-mint);
-    }
-
-    .btn-orange {
-      background: var(--pop-orange);
-      color: #1E1B18;
-    }
+    .btn-surprise { background: #E9D5FF; }
+    .btn-yellow { background: var(--pop-yellow); }
+    .btn-mint { background: var(--pop-mint); }
+    .btn-orange { background: var(--pop-orange); }
 
     /* Main 3-Column Studio */
     .workspace {
       display: grid;
-      grid-template-columns: 325px 1fr 335px;
+      grid-template-columns: 310px 1fr 320px;
       flex: 1;
-      height: calc(100vh - 59px);
+      height: calc(100vh - 52px);
+      min-height: 0;
       overflow: hidden;
     }
 
     .sidebar {
       background: var(--card-bg);
       border-right: 2.5px solid var(--border-ink);
-      padding: 14px;
+      padding: 10px 12px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 8px;
     }
 
     .sidebar-right {
       border-right: none;
       border-left: 2.5px solid var(--border-ink);
+      gap: 8px;
     }
 
     .section-title {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.7px;
+      letter-spacing: 0.6px;
       color: var(--text-sub);
-      margin-bottom: 7px;
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .section-badge {
-      font-size: 10px;
+      font-size: 9.5px;
       background: #F5F5F4;
       border: 1.5px solid #D6D3D1;
-      padding: 1px 6px;
-      border-radius: 6px;
+      padding: 1px 5px;
+      border-radius: 5px;
       color: var(--border-ink);
       font-family: var(--font-mono);
     }
@@ -199,44 +203,44 @@
     .char-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 7px;
+      gap: 5px;
     }
 
     .char-card {
       border: 2px solid #E7E5E4;
-      border-radius: 12px;
-      padding: 8px 6px;
+      border-radius: 10px;
+      padding: 5px 6px;
       text-align: center;
       cursor: pointer;
       background: #FAF9F6;
-      transition: all 0.14s ease;
+      transition: all 0.12s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       position: relative;
     }
 
     .char-card:hover {
       border-color: var(--border-ink);
-      transform: translateY(-1.5px);
+      transform: translateY(-1px);
     }
 
     .char-card.active {
       border-color: var(--border-ink);
       background: #FEF08A;
-      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+      box-shadow: 2px 2px 0 var(--border-ink);
     }
 
     .char-preview-icon {
-      width: 38px;
-      height: 38px;
+      width: 32px;
+      height: 32px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #FFFFFF;
       border: 1.5px solid var(--border-ink);
-      border-radius: 9px;
+      border-radius: 8px;
     }
 
     .char-info {
@@ -245,45 +249,51 @@
     }
 
     .char-name {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 800;
       line-height: 1.15;
     }
 
     .char-desc {
-      font-size: 10.5px;
+      font-size: 10px;
       color: var(--text-sub);
       font-weight: 600;
     }
 
     .key-hint {
       position: absolute;
-      top: 4px;
+      top: 3px;
       right: 5px;
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 700;
       color: #78716C;
-      opacity: 0.7;
+      opacity: 0.65;
     }
 
     /* Pill Selection Buttons */
     .pill-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: 5px;
     }
 
     .pill-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
+      gap: 5px;
+    }
+
+    .pill-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
     }
 
     .pill-btn {
-      padding: 7px 8px;
-      border-radius: 9px;
-      font-size: 11.5px;
+      padding: 5.5px 5px;
+      border-radius: 8px;
+      font-size: 11px;
       font-weight: 700;
       background: #FAF9F6;
       border: 2px solid #E7E5E4;
@@ -295,6 +305,7 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
+      white-space: nowrap;
     }
 
     .pill-btn:hover {
@@ -306,7 +317,7 @@
       background: var(--border-ink);
       color: #FFFFFF;
       border-color: var(--border-ink);
-      box-shadow: 2px 2px 0 rgba(0,0,0,0.18);
+      box-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.18);
     }
 
     /* Center Stage Canvas */
@@ -322,6 +333,12 @@
         linear-gradient(to bottom, rgba(30, 27, 24, 0.055) 1px, transparent 1px);
       background-size: 24px 24px;
       overflow: hidden;
+      transition: outline 0.2s ease;
+    }
+
+    .stage-canvas.dragging-bubble {
+      outline: 2px dashed rgba(30, 27, 24, 0.35);
+      outline-offset: -8px;
     }
 
     .stage-canvas.bg-dots {
@@ -344,26 +361,26 @@
     /* Top Stage Shortcut Bar */
     .stage-top-bar {
       position: absolute;
-      top: 14px;
+      top: 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
       justify-content: center;
       z-index: 10;
-      padding: 0 12px;
+      padding: 0 10px;
     }
 
     .kbd-pill {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       border: 1.5px solid var(--border-ink);
-      border-radius: 8px;
-      padding: 4px 9px;
-      font-size: 11px;
+      border-radius: 7px;
+      padding: 3px 8px;
+      font-size: 10.5px;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       box-shadow: 1.5px 1.5px 0 var(--border-ink);
       cursor: pointer;
       transition: transform 0.1s ease;
@@ -376,10 +393,10 @@
 
     .kbd-tag {
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 9.5px;
       background: var(--border-ink);
       color: #FFF;
-      padding: 1px 5px;
+      padding: 1px 4px;
       border-radius: 4px;
     }
 
@@ -391,62 +408,89 @@
       cursor: pointer;
     }
 
+    #geo-bubble {
+      cursor: grab;
+    }
+
+    #geo-bubble:active {
+      cursor: grabbing;
+    }
+
     /* Stage Bottom Status Pill */
     .status-pill {
       position: absolute;
-      bottom: 18px;
+      bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #FFFFFF;
-      padding: 6px 15px;
+      padding: 5px 13px;
       border-radius: 999px;
       border: 2px solid var(--border-ink);
-      box-shadow: 2.5px 2.5px 0 var(--border-ink);
-      font-size: 12px;
+      box-shadow: 2px 2px 0 var(--border-ink);
+      font-size: 11.5px;
       font-weight: 800;
       z-index: 10;
     }
 
     .live-dot {
-      width: 8px;
-      height: 8px;
+      width: 7.5px;
+      height: 7.5px;
       background: #22C55E;
       border-radius: 50%;
-      box-shadow: 0 0 6px #22C55E;
+      box-shadow: 0 0 5px #22C55E;
     }
 
     /* Right Control Cards */
     .control-card {
       background: #FAF9F6;
       border: 2px solid var(--border-ink);
-      border-radius: 12px;
-      padding: 12px;
+      border-radius: 11px;
+      padding: 7px 9px;
       display: flex;
       flex-direction: column;
-      gap: 11px;
-      box-shadow: 2.5px 2.5px 0 var(--border-ink);
+      gap: 6px;
+      box-shadow: 2px 2px 0 var(--border-ink);
+    }
+
+    .tip-banner {
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+      color: #B45309;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+      padding: 3.5px 6px;
+      border-radius: 6px;
+      line-height: 1.25;
+    }
+
+    .slider-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 8px;
     }
 
     .slider-row {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2.5px;
     }
 
     .slider-header {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     .slider-header span:last-child {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10px;
       color: #9A3412;
       background: #FFEDD5;
-      padding: 0 6px;
+      padding: 0 4px;
       border-radius: 4px;
       border: 1px solid #FDBA74;
     }
@@ -454,7 +498,7 @@
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
-      height: 7px;
+      height: 6px;
       background: #E7E5E4;
       border-radius: 999px;
       border: 1.5px solid var(--border-ink);
@@ -463,12 +507,12 @@
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: var(--pop-yellow);
       cursor: pointer;
-      border: 2px solid var(--border-ink);
+      border: 1.5px solid var(--border-ink);
       box-shadow: 1px 1px 0 var(--border-ink);
       transition: transform 0.1s ease;
     }
@@ -481,13 +525,13 @@
     .swatch-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex-wrap: wrap;
     }
 
     .color-swatch {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       border: 2px solid var(--border-ink);
       cursor: pointer;
@@ -498,18 +542,47 @@
       transform: scale(1.15);
     }
 
-    /* Clean Code Inspection */
+    /* Collapsible Code Drawer */
+    .code-details {
+      background: #FAF9F6;
+      border: 2px solid var(--border-ink);
+      border-radius: 10px;
+      padding: 5px 9px;
+      box-shadow: 2px 2px 0 var(--border-ink);
+    }
+
+    .code-details summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-sub);
+    }
+
+    .code-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .code-details[open] summary {
+      margin-bottom: 5px;
+    }
+
     .code-box {
       background: #1E1B18;
       color: #FDE047;
       font-family: var(--font-mono);
-      font-size: 10.5px;
-      line-height: 1.45;
-      padding: 10px;
-      border-radius: 10px;
-      max-height: 140px;
+      font-size: 9.5px;
+      line-height: 1.4;
+      padding: 8px;
+      border-radius: 8px;
+      max-height: 110px;
       overflow-y: auto;
-      border: 2px solid var(--border-ink);
+      border: 1.5px solid var(--border-ink);
       white-space: pre-wrap;
       word-break: break-all;
       user-select: text;
@@ -537,10 +610,10 @@
       background: var(--border-ink);
       color: #FFFFFF;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      padding: 4px 9px;
-      border-radius: 7px;
+      padding: 3px 8px;
+      border-radius: 6px;
       transform: translate(-50%, -50%);
       border: 1.5px solid #FFF;
       box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
@@ -550,14 +623,14 @@
     /* Toast Notification */
     .toast {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      right: 20px;
       background: var(--border-ink);
       color: #FEF08A;
       border: 2px solid #FFF;
-      padding: 10px 18px;
-      border-radius: 12px;
-      font-size: 13px;
+      padding: 8px 15px;
+      border-radius: 10px;
+      font-size: 12px;
       font-weight: 800;
       box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
       transform: translateY(80px);
@@ -673,41 +746,46 @@
   </style>
 </head>
 <body>
-
-  <!-- Header -->
+  <!-- Header with Structured Action Groups -->
   <header>
     <div class="brand">
       <div class="brand-badge">⚡ MASCOT POP!</div>
       <div class="brand-title">
-        Sticker & Rig Lab
+        Sticker &amp; Rig Lab
         <span class="subtag">Cozy 1:1 SVG Motion</span>
       </div>
     </div>
     <div class="top-actions">
-      <button class="btn btn-surprise" id="btnSurprise" title="Randomize Character, Move & Hat [R]">
-        <span>🎲</span> Surprise Me!
-      </button>
-      <button class="btn" id="btnSound" title="Toggle Synth SFX">
-        <span id="soundIcon">🔊</span> SFX
-      </button>
-      <button class="btn btn-yellow" id="btnExplode" title="Inspect SVG Layers [E]">
-        <span>🩻</span> X-Ray Layers
-      </button>
-      <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
-        <span>👁️</span> Preview Export
-      </button>
-      <button class="btn btn-mint" id="btnCopySvg" title="Copy Standalone Animated SVG Code">
-        <span>📋</span> Copy SVG
-      </button>
-      <button class="btn btn-orange" id="btnExport" title="Download Standalone Animated .SVG File">
-        <span>⬇️</span> Download .SVG
-      </button>
+      <div class="btn-group">
+        <button class="btn btn-surprise" id="btnSurprise" title="Randomize Character, Move, Hat &amp; Bubble [R]">
+          <span>🎲</span> Surprise Me!
+        </button>
+        <button class="btn" id="btnSound" title="Toggle Synth SFX">
+          <span id="soundIcon">🔊</span> SFX
+        </button>
+        <button class="btn btn-yellow" id="btnExplode" title="Inspect SVG Layers [E]">
+          <span>🩻</span> X-Ray Layers
+        </button>
+      </div>
+
+      <div class="action-divider"></div>
+
+      <div class="btn-group">
+        <button class="btn" id="btnPreviewSvg" style="background:#E0E7FF;" title="Verify Standalone 1:1 Animated SVG">
+          <span>👁️</span> Preview Export
+        </button>
+        <button class="btn btn-mint" id="btnCopySvg" title="Copy Standalone Animated SVG Code">
+          <span>📋</span> Copy SVG
+        </button>
+        <button class="btn btn-orange" id="btnExport" title="Download Standalone Animated .SVG File">
+          <span>⬇️</span> Download .SVG
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Studio Workspace -->
+  <!-- Main Studio Workspace (Locked to 1 Screen) -->
   <main class="workspace">
-
     <!-- Left Sidebar: Buddies, Moves, Props & Faces -->
     <aside class="sidebar">
       <div>
@@ -724,12 +802,12 @@
           <span class="section-badge">SOFT IK</span>
         </div>
         <div class="pill-grid" id="motionGrid">
-          <button class="pill-btn active" data-motion="bounce">☁️ Cozy Hop</button>
+          <button class="pill-btn" data-motion="bounce">☁️ Cozy Hop</button>
           <button class="pill-btn" data-motion="sway">🎵 Chill Sway</button>
           <button class="pill-btn" data-motion="walk">👟 Happy Stroll</button>
           <button class="pill-btn" data-motion="float">✨ Dreamy Float</button>
           <button class="pill-btn" data-motion="wiggle">🌸 Soft Wiggle</button>
-          <button class="pill-btn" data-motion="nod">🎧 Lo-Fi Nod</button>
+          <button class="pill-btn active" data-motion="nod">🎧 Lo-Fi Nod</button>
         </div>
       </div>
 
@@ -739,9 +817,9 @@
           <span class="section-badge">FACE RIG</span>
         </div>
         <div class="pill-grid-3" id="exprGrid">
-          <button class="pill-btn active" data-expr="happy">😊 Happy</button>
+          <button class="pill-btn" data-expr="happy">😊 Happy</button>
           <button class="pill-btn" data-expr="star">🤩 Starry</button>
-          <button class="pill-btn" data-expr="wink">😉 Cheeky</button>
+          <button class="pill-btn active" data-expr="wink">😉 Cheeky</button>
           <button class="pill-btn" data-expr="open">😮 Shock</button>
           <button class="pill-btn" data-expr="shades">😎 Cool</button>
           <button class="pill-btn" data-expr="chill">😌 Zen</button>
@@ -765,7 +843,7 @@
     </aside>
 
     <!-- Center Stage -->
-    <section class="stage-canvas" id="stageContainer">
+    <section class="stage-canvas bg-dots" id="stageContainer">
       <!-- Interactive Shortcut Pills -->
       <div class="stage-top-bar">
         <div class="kbd-pill" id="pillBoing">
@@ -782,30 +860,29 @@
       <svg id="stageSvg" class="svg-stage" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
         <!-- Floor Cast Shadow -->
         <g id="geo-shadow">
-          <ellipse id="shadowEl" cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22" />
+          <ellipse id="shadowEl" cx="200" cy="374" rx="56" ry="9.5" fill="#1E1B18" opacity="0.22"></ellipse>
         </g>
 
         <!-- Main Character Hierarchy -->
         <g id="geo-root">
           <!-- 1. Legs placed behind torso with deep hip socket overlap (never detaches!) -->
           <g id="geo-feet"></g>
-
           <!-- 2. Main Geometric Silhouette -->
           <g id="geo-body"></g>
-
           <!-- 3. Headwear Prop (Anchored to top of head) -->
           <g id="geo-prop"></g>
-
           <!-- 4. Facial Features (Locked sockets + clamped pupil peek) -->
           <g id="geo-face">
             <g id="geo-cheeks"></g>
             <g id="geo-eyes"></g>
             <g id="geo-mouth"></g>
           </g>
-
           <!-- 5. Rubberhose Arms -->
           <g id="geo-hands"></g>
         </g>
+
+        <!-- Dynamic Orientation-Aware Dialog & Thought Bubble -->
+        <g id="geo-bubble"></g>
 
         <!-- Particle FX Layer -->
         <g id="geo-particles"></g>
@@ -817,61 +894,126 @@
       <!-- Bottom Status Pill -->
       <div class="status-pill">
         <span class="live-dot"></span>
-        <span id="statusText">Plus (加號仔) • ClickMascot or Press [Space] to Boing!</span>
+        <span id="statusText">Circle (圓碌碌) • Click Mascot or Press [Space] to Boing!</span>
       </div>
     </section>
 
-    <!-- Right Sidebar: Creator Sliders, Color Swatches & Baked SVG Code -->
+    <!-- Right Sidebar (Compact, 1-Screen Optimized) -->
     <aside class="sidebar sidebar-right">
+      <!-- 5. Dialog & Bubble (Orientation-Aware Functionality) -->
       <div>
         <div class="section-title">
-          <span>5. Cozy Feel & Squish</span>
-          <span class="section-badge">GENTLE</span>
+          <span>5. Dialog &amp; Bubble</span>
+          <span class="section-badge">DYNAMIC TAIL</span>
         </div>
         <div class="control-card">
-          <div class="slider-row">
-            <div class="slider-header">
-              <span>🍮 Soft Squish</span>
-              <span id="txtSquash">0.8x</span>
-            </div>
-            <input type="range" id="sliderSquash" min="0" max="1.5" step="0.1" value="0.8">
+          <div class="pill-grid-3" id="bubbleTypeGrid">
+            <button class="pill-btn" data-bubble="none">🚫 None</button>
+            <button class="pill-btn active" data-bubble="speech">💬 Speech</button>
+            <button class="pill-btn" data-bubble="thought">💭 Thought</button>
           </div>
 
-          <div class="slider-row">
-            <div class="slider-header">
-              <span>🍃 Chill Tempo</span>
-              <span id="txtSpeed">0.8x</span>
+          <div id="bubbleControlsWrap" style="display:flex; flex-direction:column; gap:6px; transition:opacity 0.2s ease;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; align-items:end;">
+              <div>
+                <div style="font-size:10px; font-weight:800; color:var(--text-sub); text-transform:uppercase; margin-bottom:2px;">Text</div>
+                <input type="text" id="bubbleTextInput" value="HELLO!" maxlength="18" style="width:100%; border:1.5px solid var(--border-ink); border-radius:7px; padding:4px 8px; font-family:var(--font-sans); font-size:11.5px; font-weight:800; outline:none; background:#FFF;">
+              </div>
+              <div>
+                <div style="font-size:10px; font-weight:800; color:var(--text-sub); text-transform:uppercase; margin-bottom:2px;">Font Vibe</div>
+                <div class="pill-grid-3" id="fontGrid">
+                  <button class="pill-btn" data-font="cute" style="padding:4.5px 2px;">圓體</button>
+                  <button class="pill-btn" data-font="comic" style="padding:4.5px 2px;">黑體</button>
+                  <button class="pill-btn active" data-font="modern" style="padding:4.5px 2px;">Modern</button>
+                </div>
+              </div>
             </div>
-            <input type="range" id="sliderSpeed" min="0.4" max="1.5" step="0.1" value="0.8">
-          </div>
 
-          <div class="slider-row">
-            <div class="slider-header">
-              <span>☁️ Cushion Height</span>
-              <span id="txtHeight">12px</span>
-            </div>
-            <input type="range" id="sliderHeight" min="4" max="24" step="1" value="12">
-          </div>
+            <div class="tip-banner">💡 Tip: Drag bubble anywhere—tail &amp; puffs point dynamically!</div>
 
-          <div class="slider-row">
-            <div class="slider-header">
-              <span>👀 Eye Peek Range</span>
-              <span id="txtGaze">1.6px</span>
+            <!-- Compact 2-Column Bubble Sliders -->
+            <div class="slider-grid-2">
+              <div class="slider-row">
+                <div class="slider-header">
+                  <span>↔️ Bubble X</span>
+                  <span id="txtBubbleX">285</span>
+                </div>
+                <input type="range" id="sliderBubbleX" min="60" max="340" value="285">
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-header">
+                  <span>↕️ Bubble Y</span>
+                  <span id="txtBubbleY">100</span>
+                </div>
+                <input type="range" id="sliderBubbleY" min="40" max="380" value="100">
+              </div>
             </div>
-            <input type="range" id="sliderGaze" min="0" max="2.5" step="0.1" value="1.6">
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>🔍 Bubble Size</span>
+                <span id="txtBubbleScale">1.0x</span>
+              </div>
+              <input type="range" id="sliderBubbleScale" min="0.7" max="1.4" step="0.05" value="1.0">
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- 6. Cozy Feel & Squish (2x2 Compact Grid) -->
       <div>
         <div class="section-title">
-          <span>6. Sticker Color & Backdrop</span>
+          <span>6. Cozy Feel &amp; Squish</span>
+          <span class="section-badge">GENTLE</span>
+        </div>
+        <div class="control-card">
+          <div class="slider-grid-2">
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>🍮 Squish</span>
+                <span id="txtSquash">0.8x</span>
+              </div>
+              <input type="range" id="sliderSquash" min="0" max="1.5" step="0.1" value="0.8">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>🍃 Tempo</span>
+                <span id="txtSpeed">0.8x</span>
+              </div>
+              <input type="range" id="sliderSpeed" min="0.4" max="1.5" step="0.1" value="0.8">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>☁️ Height</span>
+                <span id="txtHeight">12px</span>
+              </div>
+              <input type="range" id="sliderHeight" min="4" max="24" step="1" value="12">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>👀 Gaze</span>
+                <span id="txtGaze">1.6px</span>
+              </div>
+              <input type="range" id="sliderGaze" min="0" max="2.5" step="0.1" value="1.6">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Sticker Color & Backdrop -->
+      <div>
+        <div class="section-title">
+          <span>7. Sticker Color &amp; Backdrop</span>
           <span class="section-badge">STYLE</span>
         </div>
         <div class="control-card">
-          <div class="Swatch-header" style="font-size:11.5px; font-weight:800; display:flex; justify-content:space-between;">
-            <span>Quick Pop Swatches</span>
-            <span id="txtTint" style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-sub);">Original</span>
+          <div style="font-size:10.5px; font-weight:800; display:flex; justify-content:space-between; align-items:center;">
+            <span>Pop Swatches</span>
+            <span id="txtTint" style="font-family:var(--font-mono); font-size:10px; color:var(--text-sub);">Original</span>
           </div>
           <div class="swatch-row" id="swatchRow">
             <div class="color-swatch" data-color="#FACC15" style="background:#FACC15;" title="Sunny Yellow"></div>
@@ -881,26 +1023,28 @@
             <div class="color-swatch" data-color="#A5B4FC" style="background:#A5B4FC;" title="Periwinkle"></div>
             <div class="color-swatch" data-color="#F472B6" style="background:#F472B6;" title="Bubblegum"></div>
             <div class="color-swatch" data-color="#38BDF8" style="background:#38BDF8;" title="Sky Soda"></div>
-            <input type="color" id="pickerTint" value="#FACC15" style="width:26px; height:26px; border:2px solid var(--border-ink); border-radius:50%; cursor:pointer; padding:0; background:none;" title="Custom Hex Picker">
+            <input type="color" id="pickerTint" value="#FACC15" style="width:22px; height:22px; border:2px solid var(--border-ink); border-radius:50%; cursor:pointer; padding:0; background:none;" title="Custom Hex Picker">
           </div>
-          <div class="pill-grid" id="bgGrid" style="margin-top:4px;">
-            <button class="pill-btn active" data-bg="grid">📓 Grid</button>
-            <button class="pill-btn" data-bg="dots">⠿ Dots</button>
+          <div class="pill-grid-4" id="bgGrid" style="margin-top:2px;">
+            <button class="pill-btn" data-bg="grid">📓 Grid</button>
+            <button class="pill-btn active" data-bg="dots">⠿ Dots</button>
             <button class="pill-btn" data-bg="clean">⬜ Clean</button>
             <button class="pill-btn" data-bg="night">🌙 Night</button>
           </div>
         </div>
       </div>
 
+      <!-- Collapsible 1:1 Standalone SVG Code Drawer -->
       <div>
-        <div class="section-title">
-          <span>1:1 Standalone SVG Code</span>
-          <span class="section-badge" style="background:#DCFCE7; border-color:#86EFAC;">SMIL + CSS</span>
-        </div>
-        <div class="code-box" id="codeBox">&lt;!-- 17-Step Morphing Animated SVG --&gt;</div>
+        <details class="code-details" id="codeDetails">
+          <summary>
+            <span>1:1 Standalone SVG Code</span>
+            <span class="section-badge" style="background:#DCFCE7; border-color:#86EFAC;">‹/› View</span>
+          </summary>
+          <div class="code-box" id="codeBox"></div>
+        </details>
       </div>
     </aside>
-
   </main>
 
   <!-- Live Standalone SVG Verification Modal -->
@@ -916,7 +1060,7 @@
       <div class="modal-body">
         <div class="modal-preview-frame" id="modalSvgHolder"></div>
         <p class="modal-note">
-          This preview renders the <strong>exact standalone SVG file</strong> generated by the studio—with 17-frame SMIL path morphing for the rubberhose arms & legs, synchronized feet/hands, shadow breathing, and body motion!
+          This preview renders the <strong>exact standalone SVG file</strong> generated by the studio—with 17-frame SMIL path morphing for rubberhose limbs, dynamic dialog bubbles, synchronized shadow breathing, and body motion!
         </p>
         <div style="display:flex; gap:10px; width:100%; justify-content:center;">
           <button class="btn btn-mint" id="btnModalCopy">📋 Copy Standalone SVG</button>
@@ -927,13 +1071,11 @@
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast" id="toastBox">✨ Copied Animated SVG to Clipboard!</div>
+  <div class="toast" id="toastBox">⬇️ Downloaded sticker.svg!</div>
 
   <script>
     /* =====================================================================
        1. 8 PURE GEOMETRIC BUDDIES (DEEP-SOCKETED ZERO-DETACHMENT RIG)
-       Every character has hipRoots tucked 16-24px INSIDE the lower body fill
-       so legs NEVER disconnect under any squash, stretch, or strut!
        ===================================================================== */
     const GEOMETRICS = [
       {
@@ -945,7 +1087,7 @@
         headTopY: 138,
         pivotY: 285,
         renderBody: (c) => `
-          <path d="M 156 138 H 244 Q 256 138 256 150 V 174 H 280 Q 292 174 292 186 V 246 Q 292 258 280 258 H 256 V 282 Q 256 294 244 294 H 156 Q 144 294 144 282 V 258 H 120 Q 108 258 108 246 V 186 Q 108 174 120 174 H 144 V 150 Q 144 138 156 138 Z" 
+          <path d="M 156 138 H 244 Q 256 138 256 150 V 174 H 280 Q 292 174 292 186 V 246 Q 292 258 280 258 H 256 V 282 Q 256 294 244 294 H 156 Q 144 294 144 282 V 258 H 120 Q 108 258 108 246 V 186 Q 108 174 120 174 H 144 V 150 Q 144 138 156 138 Z"
                 fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
           <path d="M 162 148 H 220" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.65" />
         `,
@@ -991,7 +1133,7 @@
         headTopY: 138,
         pivotY: 282,
         renderBody: (c) => `
-          <path d="M 184 146 Q 200 126 216 146 L 280 256 Q 292 282 264 282 L 136 282 Q 108 282 120 256 Z" 
+          <path d="M 184 146 Q 200 126 216 146 L 280 256 Q 292 282 264 282 L 136 282 Q 108 282 120 256 Z"
                 fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
         `,
         armRoots: { left: [148, 226], right: [252, 226] },
@@ -1006,7 +1148,7 @@
         headTopY: 132,
         pivotY: 280,
         renderBody: (c) => `
-          <path d="M 200 130 
+          <path d="M 200 130
                    C 208 130 220 168 228 174
                    C 236 180 278 180 282 190
                    C 286 200 254 226 250 236
@@ -1016,7 +1158,7 @@
                    C 142 282 154 246 150 236
                    C 146 226 114 200 118 190
                    C 122 180 164 180 172 174
-                   C 180 168 192 130 200 130 Z" 
+                   C 180 168 192 130 200 130 Z"
                 fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
         `,
         armRoots: { left: [144, 212], right: [256, 212] },
@@ -1031,11 +1173,11 @@
         headTopY: 152,
         pivotY: 280,
         renderBody: (c) => `
-          <path d="M 200 168 
-                   C 182 132 118 136 118 192 
-                   C 118 242 174 282 200 286 
-                   C 226 282 282 242 282 192 
-                   C 282 136 218 132 200 168 Z" 
+          <path d="M 200 168
+                   C 182 132 118 136 118 192
+                   C 118 242 174 282 200 286
+                   C 226 282 282 242 282 192
+                   C 282 136 218 132 200 168 Z"
                 fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
           <path d="M 142 168 Q 156 155 174 162" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6" />
         `,
@@ -1066,7 +1208,7 @@
         headTopY: 140,
         pivotY: 286,
         renderBody: (c) => `
-          <path d="M 192 142 Q 200 137 208 142 L 264 174 Q 272 179 272 189 L 272 245 Q 272 255 264 260 L 208 292 Q 200 297 192 292 L 136 260 Q 128 255 128 245 L 128 189 Q 128 179 136 174 Z" 
+          <path d="M 192 142 Q 200 137 208 142 L 264 174 Q 272 179 272 189 L 272 245 Q 272 255 264 260 L 208 292 Q 200 297 192 292 L 136 260 Q 128 255 128 245 L 128 189 Q 128 179 136 174 Z"
                 fill="${c}" stroke="#1E1B18" stroke-width="5.5" stroke-linejoin="round" />
         `,
         armRoots: { left: [134, 216], right: [266, 216] },
@@ -1216,11 +1358,19 @@
       motion: 'bounce',
       expr: 'happy',
       prop: 'none',
-      bg: 'grid',
+      bg: 'dots',
       colorOverride: null,
       isExploded: false,
       soundEnabled: true,
       time: 0,
+
+      // Dialog & Thought Bubble State (Orientation-Aware)
+      bubbleType: 'speech',
+      bubbleText: 'HELLO!',
+      bubbleFont: 'modern',
+      bubbleX: 285,
+      bubbleY: 95,
+      bubbleScale: 1.0,
 
       // Cozy, Gentle Default Feel Sliders
       gazeMax: 1.6,
@@ -1244,6 +1394,11 @@
       nextBlink: 3.2,
       isBlinking: false
     };
+
+    const STAGE_W = 400;
+    const STAGE_H = 460;
+    const BUBBLE_BASE_HALF_W = 68;
+    const BUBBLE_BASE_HALF_H = 32;
 
     /* =====================================================================
        5. PROCEDURAL WEB AUDIO SYNTHESIZER
@@ -1296,9 +1451,168 @@
     }
 
     /* =====================================================================
-       6. PURE MATHEMATICAL COZY POSE SOLVER (SHARED BY 60FPS STAGE & 1:1 SVG BAKER!)
-       Evaluates any normalized cycle phase p in [0, 1) with smooth cosine easing
-       so every movement is relaxed, organic, and 100% identical in exported SVGs!
+       6. DYNAMIC ORIENTATION-AWARE DIALOG BUBBLE & THINKING WINDOW
+       ===================================================================== */
+    function clampBubblePosition() {
+      const margin = 12;
+      const halfW = BUBBLE_BASE_HALF_W * state.bubbleScale;
+      const halfH = BUBBLE_BASE_HALF_H * state.bubbleScale;
+      const tailPad = 22 * state.bubbleScale;
+
+      const minX = Math.ceil(halfW + margin);
+      const maxX = Math.floor(STAGE_W - halfW - margin);
+      const minY = Math.ceil(halfH + margin);
+      const maxY = Math.floor(STAGE_H - halfH - tailPad - margin);
+
+      sliderBubbleX.min = minX;
+      sliderBubbleX.max = maxX;
+      sliderBubbleY.min = minY;
+      sliderBubbleY.max = maxY;
+
+      state.bubbleX = Math.max(minX, Math.min(maxX, Math.round(state.bubbleX)));
+      state.bubbleY = Math.max(minY, Math.min(maxY, Math.round(state.bubbleY)));
+
+      sliderBubbleX.value = state.bubbleX;
+      sliderBubbleY.value = state.bubbleY;
+      sliderBubbleScale.value = state.bubbleScale;
+
+      document.getElementById('txtBubbleX').textContent = state.bubbleX;
+      document.getElementById('txtBubbleY').textContent = state.bubbleY;
+      document.getElementById('txtBubbleScale').textContent = `${state.bubbleScale.toFixed(1)}x`;
+    }
+
+    function buildUnifiedSpeechPath(w, h, r, tailTipX, tailTipY) {
+      const hw = w / 2;
+      const hh = h / 2;
+      const pointDown = tailTipY >= 0;
+
+      const baseCenter = Math.max(-hw + r + 14, Math.min(hw - r - 14, tailTipX * 0.38));
+      const baseLeft = baseCenter - 10;
+      const baseRight = baseCenter + 10;
+
+      if (pointDown) {
+        return [
+          `M ${-hw + r} ${-hh}`,
+          `H ${hw - r}`,
+          `A ${r} ${r} 0 0 1 ${hw} ${-hh + r}`,
+          `V ${hh - r}`,
+          `A ${r} ${r} 0 0 1 ${hw - r} ${hh}`,
+          `H ${baseRight}`,
+          `L ${tailTipX.toFixed(1)} ${tailTipY.toFixed(1)}`,
+          `L ${baseLeft} ${hh}`,
+          `H ${-hw + r}`,
+          `A ${r} ${r} 0 0 1 ${-hw} ${hh - r}`,
+          `V ${-hh + r}`,
+          `A ${r} ${r} 0 0 1 ${-hw + r} ${-hh}`,
+          `Z`
+        ].join(' ');
+      } else {
+        return [
+          `M ${-hw + r} ${-hh}`,
+          `H ${baseLeft}`,
+          `L ${tailTipX.toFixed(1)} ${tailTipY.toFixed(1)}`,
+          `L ${baseRight} ${-hh}`,
+          `H ${hw - r}`,
+          `A ${r} ${r} 0 0 1 ${hw} ${-hh + r}`,
+          `V ${hh - r}`,
+          `A ${r} ${r} 0 0 1 ${hw - r} ${hh}`,
+          `H ${-hw + r}`,
+          `A ${r} ${r} 0 0 1 ${-hw} ${hh - r}`,
+          `V ${-hh + r}`,
+          `A ${r} ${r} 0 0 1 ${-hw + r} ${-hh}`,
+          `Z`
+        ].join(' ');
+      }
+    }
+
+    function generateBubbleMarkup() {
+      if (state.bubbleType === 'none') return null;
+
+      clampBubblePosition();
+
+      const fontMap = {
+        cute: "'Fredoka', cursive, sans-serif",
+        comic: "'Nunito', sans-serif",
+        modern: "'Plus Jakarta Sans', system-ui, sans-serif"
+      };
+      const fontFamily = fontMap[state.bubbleFont] || fontMap.modern;
+
+      const boxW = BUBBLE_BASE_HALF_W * 2;
+      const boxH = BUBBLE_BASE_HALF_H * 2;
+      const cornerR = 16;
+
+      const cur = GEOMETRICS[state.charIdx];
+      const [fx, fy] = cur.faceCenter;
+      const targetX = (fx - state.bubbleX) / state.bubbleScale;
+      const targetY = (fy - state.bubbleY) / state.bubbleScale;
+
+      const dist = Math.hypot(targetX, targetY) || 1;
+      const maxReach = 58;
+      const reach = Math.min(dist * 0.52, maxReach);
+      let tipX = (targetX / dist) * reach;
+      let tipY = (targetY / dist) * reach;
+
+      if (tipY >= 0 && tipY < BUBBLE_BASE_HALF_H + 14) tipY = BUBBLE_BASE_HALF_H + 18;
+      if (tipY < 0 && tipY > -BUBBLE_BASE_HALF_H - 14) tipY = -BUBBLE_BASE_HALF_H - 18;
+
+      let shapeMarkup = '';
+      if (state.bubbleType === 'speech') {
+        const unifiedPath = buildUnifiedSpeechPath(boxW, boxH, cornerR, tipX, tipY);
+        shapeMarkup = `<path d="${unifiedPath}" fill="#FFFFFF" stroke="#1E1B18" stroke-width="4.5" stroke-linejoin="round" />`;
+      } else {
+        const puff1X = (tipX * 0.62).toFixed(1);
+        const puff1Y = (tipY * 0.68).toFixed(1);
+        const puff2X = (tipX * 0.90).toFixed(1);
+        const puff2Y = (tipY * 0.92).toFixed(1);
+        shapeMarkup = `
+          <rect x="${-BUBBLE_BASE_HALF_W}" y="${-BUBBLE_BASE_HALF_H}" width="${boxW}" height="${boxH}" rx="26" fill="#FFFFFF" stroke="#1E1B18" stroke-width="4.5" />
+          <circle cx="${puff1X}" cy="${puff1Y}" r="7" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.5" />
+          <circle cx="${puff2X}" cy="${puff2Y}" r="4" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3" />
+        `;
+      }
+
+      const escapedText = (state.bubbleText || ' ')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      return { shapeMarkup, fontFamily, escapedText };
+    }
+
+    function renderBubble() {
+      const controlsWrap = document.getElementById('bubbleControlsWrap');
+      if (state.bubbleType === 'none') {
+        geoBubble.innerHTML = '';
+        geoBubble.style.display = 'none';
+        if (controlsWrap) {
+          controlsWrap.style.opacity = '0.4';
+          controlsWrap.style.pointerEvents = 'none';
+        }
+        return;
+      }
+
+      geoBubble.style.display = 'block';
+      if (controlsWrap) {
+        controlsWrap.style.opacity = '1';
+        controlsWrap.style.pointerEvents = 'auto';
+      }
+
+      const bubbleData = generateBubbleMarkup();
+      if (!bubbleData) return;
+
+      geoBubble.setAttribute(
+        'transform',
+        `translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})`
+      );
+
+      geoBubble.innerHTML = `
+        ${bubbleData.shapeMarkup}
+        <text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${bubbleData.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${bubbleData.escapedText}</text>
+      `;
+    }
+
+    /* =====================================================================
+       7. PURE MATHEMATICAL COZY POSE SOLVER
        ===================================================================== */
     function computePoseAtPhase(p, cur, motion, hopHeight, squashFactor, boingBoost = 0) {
       const groundY = 364;
@@ -1315,7 +1629,6 @@
       let scaleY = 1;
       let rot = 0;
 
-      // Foot base positions in world coordinates (planted on groundY = 364 unless gently lifted)
       const hlxBase = cur.hipRoots.left[0];
       const hrxBase = cur.hipRoots.right[0];
 
@@ -1330,7 +1643,6 @@
 
       switch (motion) {
         case 'sway': {
-          // Chill Sway: Relaxed side-to-side weight shift with soft pendulum arms
           bodyX = s * 8.5;
           bodyY = (1 - c2) * 0.5 * (H * 0.32);
           rot = s * 3.2;
@@ -1340,7 +1652,6 @@
           scaleY = 1 / scaleX;
 
           kneeBendOut = 5 + (1 - c2) * 2.5;
-          // Delayed pendulum arms
           handLY_off = 16 - Math.sin(rad - 0.35) * 10;
           handRY_off = 16 + Math.sin(rad - 0.35) * 10;
           handLX_off = -26 + c * 4;
@@ -1349,7 +1660,6 @@
         }
 
         case 'walk': {
-          // Happy Stroll: Easygoing rhythmic walk with small, natural foot arcs
           bodyY = -Math.abs(s) * (H * 0.42) + 2;
           bodyX = s * 3.5;
           rot = s * 2.4;
@@ -1376,7 +1686,6 @@
         }
 
         case 'float': {
-          // Dreamy Float: Zero-gravity cloud bobbing with slow breathing
           bodyX = s * 4.5;
           bodyY = -10 + c * (H * 0.55);
           rot = s * 2.0;
@@ -1395,7 +1704,6 @@
         }
 
         case 'wiggle': {
-          // Soft Wiggle: Cute, subtle joyful shimmy without aggressive rotation
           bodyX = s * 5.0;
           bodyY = (1 - c2) * 0.5 * (H * 0.28);
           rot = Math.sin(rad * 2) * 2.6;
@@ -1413,8 +1721,7 @@
         }
 
         case 'nod': {
-          // Lo-Fi Nod: Soft rhythmic beat-nodding like listening to chill beats
-          const beat = (1 - c) * 0.5; // Smooth 0 -> 1 -> 0 cosine wave
+          const beat = (1 - c) * 0.5;
           bodyY = beat * (H * 0.48);
           rot = s * 1.6;
 
@@ -1430,24 +1737,19 @@
 
         case 'bounce':
         default: {
-          // Cozy Hop: Smooth continuous sinusoidal cushion & gentle hop (no harsh snaps)
-          const liftWave = (1 - c) * 0.5; // Smoothly 0 at ground (p=0,1) and 1 at peak (p=0.5)
-          // At p=0, character gently cushions down (+3.5px), at p=0.5 rises smoothly (-H * 0.85)
+          const liftWave = (1 - c) * 0.5;
           bodyY = (1 - liftWave) * 3.5 - Math.pow(liftWave, 1.15) * (H * 0.88);
 
-          // Gentle volume-preserving squash & stretch (capped around 5-6%)
           const sq = c * 0.052 * squashFactor;
           scaleX = 1 + sq;
           scaleY = 1 / scaleX;
 
-          // Feet stay planted during the ground cushion, then lift softly at the peak of the hop
           const airLift = Math.max(0, liftWave - 0.35) / 0.65;
           footLY = groundY - airLift * (H * 0.45);
           footRY = groundY - airLift * (H * 0.45);
 
           kneeBendOut = 5 + (1 - liftWave) * 4.5;
 
-          // Soft delayed follow-through on rubberhose arms
           const delayedWave = Math.sin(rad - 0.55);
           handLY_off = 15 + delayedWave * 9;
           handRY_off = 15 + delayedWave * 9;
@@ -1457,7 +1759,6 @@
         }
       }
 
-      // Compute Transformed Hip & Shoulder World Positions so IK connects seamlessly
       const transformPt = (x, y) => {
         const dx = (x - 200) * scaleX;
         const dy = (y - cur.pivotY) * scaleY;
@@ -1472,7 +1773,6 @@
       const armL = transformPt(cur.armRoots.left[0], cur.armRoots.left[1]);
       const armR = transformPt(cur.armRoots.right[0], cur.armRoots.right[1]);
 
-      // Knee control points bend softly outward when compressed
       const legCompL = Math.max(0, 86 - (footLY - hipL[1]));
       const legCompR = Math.max(0, 86 - (footRY - hipR[1]));
 
@@ -1482,7 +1782,6 @@
       const kneeRX = (hipR[0] + footRX) * 0.5 + (kneeBendOut + legCompR * 0.16);
       const kneeRY = (hipR[1] + footRY) * 0.5;
 
-      // Hand endpoints and soft elbow curves
       const handLX = armL[0] + handLX_off;
       const handLY = armL[1] + handLY_off;
       const elbowLX = armL[0] + handLX_off * 0.62;
@@ -1493,7 +1792,6 @@
       const elbowRX = armR[0] + handRX_off * 0.62;
       const elbowRY = armR[1] + handRY_off * 0.35 + 6;
 
-      // Shadow scale & opacity
       const liftDist = Math.max(0, -bodyY);
       const shadowScale = Math.max(0.72, (1 - liftDist / 140) * scaleX);
       const shadowOpacity = Math.max(0.11, 0.22 - liftDist / 260);
@@ -1514,7 +1812,7 @@
     }
 
     /* =====================================================================
-       7. DOM ELEMENTS & INITIALIZATION
+       8. DOM ELEMENTS & INITIALIZATION
        ===================================================================== */
     const charGrid = document.getElementById('charGrid');
     const motionGrid = document.getElementById('motionGrid');
@@ -1525,9 +1823,9 @@
     const explodeOverlay = document.getElementById('explodeOverlay');
     const codeBox = document.getElementById('codeBox');
     const stageContainer = document.getElementById('stageContainer');
+    const stageSvg = document.getElementById('stageSvg');
     const toastBox = document.getElementById('toastBox');
 
-    const geoRoot = document.getElementById('geo-root');
     const geoBody = document.getElementById('geo-body');
     const geoProp = document.getElementById('geo-prop');
     const geoFace = document.getElementById('geo-face');
@@ -1536,8 +1834,13 @@
     const geoCheeks = document.getElementById('geo-cheeks');
     const geoHands = document.getElementById('geo-hands');
     const geoFeet = document.getElementById('geo-feet');
+    const geoBubble = document.getElementById('geo-bubble');
     const geoParticles = document.getElementById('geo-particles');
     const shadowEl = document.getElementById('shadowEl');
+
+    const sliderBubbleX = document.getElementById('sliderBubbleX');
+    const sliderBubbleY = document.getElementById('sliderBubbleY');
+    const sliderBubbleScale = document.getElementById('sliderBubbleScale');
 
     function showToast(msg) {
       toastBox.textContent = msg;
@@ -1553,7 +1856,7 @@
         card.innerHTML = `
           <span class="key-hint">${idx + 1}</span>
           <div class="char-preview-icon">
-            <svg viewBox="0 0 40 40" width="30" height="30">
+            <svg viewBox="0 0 40 40" width="28" height="28">
               <g transform="scale(0.18) translate(-90, -105)">
                 ${item.renderBody(item.color)}
               </g>
@@ -1583,6 +1886,7 @@
       document.getElementById('txtTint').textContent = 'Original';
       statusText.textContent = `${cur.name} (${cur.desc}) • Click Mascot or Press [Space] to Boing!`;
       renderStaticLayers();
+      renderBubble();
       updateBakedCodePreview();
     }
 
@@ -1601,13 +1905,12 @@
     }
 
     /* =====================================================================
-       8. INTERACTIVE BOING IMPULSE & PARTICLE BURST
+       9. INTERACTIVE BOING IMPULSE & PARTICLE BURST
        ===================================================================== */
     function triggerBoingImpulse() {
       state.boingImpulse = 10;
       playSynth('boing');
 
-      // Spawn celebratory floating particles
       const colors = ['#FACC15', '#FB7185', '#34D399', '#60A5FA', '#A78BFA'];
       for (let i = 0; i < 8; i++) {
         const angle = (Math.PI * 2 * i) / 8 + (Math.random() - 0.5) * 0.4;
@@ -1625,10 +1928,9 @@
     }
 
     /* =====================================================================
-       9. 60 FPS REAL-TIME ANIMATION LOOP
+       10. 60 FPS REAL-TIME ANIMATION LOOP
        ===================================================================== */
     function animate() {
-      // Relaxed, cozy master clock increment
       state.time += 0.0072 * state.speed;
       if (state.boingImpulse > 0.08) {
         state.boingImpulse *= 0.91;
@@ -1680,16 +1982,13 @@
         const phase = state.time % 1;
         const pose = computePoseAtPhase(phase, cur, state.motion, state.hopHeight, state.squash, state.boingImpulse);
 
-        // Apply body transform to Body, Prop, and Face together so they move as one solid unit
         geoBody.setAttribute('transform', pose.bodyTransform);
         geoProp.setAttribute('transform', pose.bodyTransform);
         geoFace.setAttribute('transform', pose.bodyTransform);
 
-        // Shadow
         shadowEl.setAttribute('transform', pose.shadowTransform);
         shadowEl.setAttribute('opacity', pose.shadowOpacity);
 
-        // World-Space IK Legs (Connected to transformed hip sockets inside body!)
         geoFeet.innerHTML = `
           <path d="${pose.leftLegPath}" stroke="#1E1B18" stroke-width="5.5" stroke-linecap="round" fill="none" />
           <ellipse cx="${pose.footLCenter[0].toFixed(1)}" cy="${pose.footLCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />
@@ -1697,7 +1996,6 @@
           <ellipse cx="${pose.footRCenter[0].toFixed(1)}" cy="${pose.footRCenter[1].toFixed(1)}" rx="9.5" ry="4.8" fill="#1E1B18" />
         `;
 
-        // World-Space Rubberhose Arms
         geoHands.innerHTML = `
           <path d="${pose.leftArmPath}" stroke="#1E1B18" stroke-width="5" stroke-linecap="round" fill="none" />
           <circle cx="${pose.handLCenter[0].toFixed(1)}" cy="${pose.handLCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />
@@ -1705,7 +2003,6 @@
           <circle cx="${pose.handRCenter[0].toFixed(1)}" cy="${pose.handRCenter[1].toFixed(1)}" r="5.5" fill="#FFFFFF" stroke="#1E1B18" stroke-width="3.2" />
         `;
       } else {
-        // X-Ray Explode Mode
         geoBody.setAttribute('transform', 'translate(0, 0)');
         geoProp.setAttribute('transform', 'translate(0, -52)');
         geoFace.setAttribute('transform', 'translate(0, -34)');
@@ -1736,19 +2033,54 @@
     }
 
     /* =====================================================================
-       10. 100% EXACT 1:1 STANDALONE ANIMATED SVG BAKER (SMIL + CSS)
-       Samples the exact active motion loop across 17 evenly-spaced keyframe
-       steps and bakes both CSS transforms AND SVG <animate> path morphing
-       for the bending rubberhose arms, walking legs, hands, and feet!
+       11. DRAGGING THE BUBBLE ON STAGE
+       ===================================================================== */
+    let isDraggingBubble = false;
+    let dragOffset = { x: 0, y: 0 };
+
+    function getSvgPoint(evt) {
+      const pt = stageSvg.createSVGPoint();
+      pt.x = evt.clientX;
+      pt.y = evt.clientY;
+      return pt.matrixTransform(stageSvg.getScreenCTM().inverse());
+    }
+
+    geoBubble.addEventListener('pointerdown', (e) => {
+      if (state.bubbleType === 'none') return;
+      isDraggingBubble = true;
+      stageContainer.classList.add('dragging-bubble');
+      const pt = getSvgPoint(e);
+      dragOffset.x = pt.x - state.bubbleX;
+      dragOffset.y = pt.y - state.bubbleY;
+      geoBubble.setPointerCapture(e.pointerId);
+      e.stopPropagation();
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDraggingBubble) return;
+      const pt = getSvgPoint(e);
+      state.bubbleX = pt.x - dragOffset.x;
+      state.bubbleY = pt.y - dragOffset.y;
+      renderBubble();
+      updateBakedCodePreview();
+    });
+
+    window.addEventListener('pointerup', () => {
+      if (isDraggingBubble) {
+        isDraggingBubble = false;
+        stageContainer.classList.remove('dragging-bubble');
+      }
+    });
+
+    /* =====================================================================
+       12. 100% EXACT 1:1 STANDALONE ANIMATED SVG BAKER (SMIL + CSS)
        ===================================================================== */
     function generateBakedStandaloneSvg() {
       const cur = GEOMETRICS[state.charIdx];
       const color = state.colorOverride || cur.color;
       const [fx, fy] = cur.faceCenter;
-      // Exact cycle duration matching the live cozy 60fps loop
       const duration = (2.25 / state.speed).toFixed(2);
 
-      // 17 evenly spaced keyframe steps from 0% to 100% for silky-smooth 1:1 fidelity
       const numSteps = 16;
       let bodyKeyframes = '';
       let shadowKeyframes = '';
@@ -1793,6 +2125,17 @@
       const initPose = computePoseAtPhase(0, cur, state.motion, state.hopHeight, state.squash, 0);
       const { eyesSvg, mouthSvg, cheeksSvg } = renderFaceParts(state.expr, fx, fy);
       const propSvg = renderPropSvg(state.prop, cur.headTopY);
+
+      let bubbleSvgMarkup = '';
+      const bubbleData = generateBubbleMarkup();
+      if (bubbleData) {
+        bubbleSvgMarkup = `
+  <!-- 1:1 Dynamic Orientation-Aware Bubble -->
+  <g id="mascot-bubble" transform="translate(${state.bubbleX}, ${state.bubbleY}) scale(${state.bubbleScale})">
+    ${bubbleData.shapeMarkup.trim()}
+    <text x="0" y="4" text-anchor="middle" dominant-baseline="middle" fill="#1E1B18" font-family="${bubbleData.fontFamily}" font-weight="800" font-size="14.5" letter-spacing="0.4">${bubbleData.escapedText}</text>
+  </g>`;
+      }
 
       return `<?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated by MASCOT POP! Sticker & Rig Studio | Character: ${cur.name} (${cur.desc}) | Motion: ${state.motion} (1:1 Exact Rig) -->
@@ -1877,7 +2220,7 @@ ${shadowKeyframes}      }
       <animate attributeName="cx" values="${handRXValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
       <animate attributeName="cy" values="${handRYValues.join(';')}" dur="${duration}s" repeatCount="indefinite" />
     </circle>
-  </g>
+  </g>${bubbleSvgMarkup}
 </svg>`;
     }
 
@@ -1886,7 +2229,7 @@ ${shadowKeyframes}      }
     }
 
     /* =====================================================================
-       11. X-RAY EXPLODE INSPECTOR & RANDOMIZER
+       13. X-RAY EXPLODE INSPECTOR & RANDOMIZER
        ===================================================================== */
     function toggleExplode() {
       state.isExploded = !state.isExploded;
@@ -1900,7 +2243,7 @@ ${shadowKeyframes}      }
       } else {
         playSynth('magic');
         const cur = GEOMETRICS[state.charIdx];
-        explodeOverlay.innerHTML = `
+        let overlayMarkup = `
           <div class="tag-bubble" style="left: 50%; top: 15%;">&lt;g id="mascot-prop"&gt; (Sticker Hat)</div>
           <div class="tag-bubble" style="left: 50%; top: 28%;">&lt;g id="mascot-face"&gt; (Clamped Gaze Rig)</div>
           <div class="tag-bubble" style="left: 20%; top: 48%;">&lt;g id="mascot-arms"&gt; (Rubberhose IK)</div>
@@ -1908,6 +2251,10 @@ ${shadowKeyframes}      }
           <div class="tag-bubble" style="left: 50%; top: 76%;">&lt;g id="mascot-legs"&gt; (Deep-Socket IK)</div>
           <div class="tag-bubble" style="left: 50%; top: 91%;">&lt;g id="mascot-shadow"&gt; (Synced Shadow)</div>
         `;
+        if (state.bubbleType !== 'none') {
+          overlayMarkup += `<div class="tag-bubble" style="left: 75%; top: 20%;">&lt;g id="mascot-bubble"&gt; (Dynamic Bubble)</div>`;
+        }
+        explodeOverlay.innerHTML = overlayMarkup;
       }
     }
 
@@ -1917,12 +2264,14 @@ ${shadowKeyframes}      }
       const motions = ['bounce', 'sway', 'walk', 'float', 'wiggle', 'nod'];
       const exprs = ['happy', 'star', 'wink', 'open', 'shades', 'chill'];
       const props = ['none', 'crown', 'sprout', 'halo', 'beanie', 'bow'];
+      const texts = ['HELLO!', 'YAY! ✨', 'COZY VIBES', 'POP! ⚡', 'SO CUTE!', 'CHILL~'];
 
       state.motion = motions[Math.floor(Math.random() * motions.length)];
       state.expr = exprs[Math.floor(Math.random() * exprs.length)];
       state.prop = props[Math.floor(Math.random() * props.length)];
+      state.bubbleText = texts[Math.floor(Math.random() * texts.length)];
+      document.getElementById('bubbleTextInput').value = state.bubbleText;
 
-      // Sync UI active pills
       motionGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.motion === state.motion));
       exprGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.expr === state.expr));
       propGrid.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.dataset.prop === state.prop));
@@ -1933,7 +2282,7 @@ ${shadowKeyframes}      }
     }
 
     /* =====================================================================
-       12. EVENT LISTENERS & KEYBOARD SHORTCUTS
+       14. EVENT LISTENERS & KEYBOARD SHORTCUTS
        ===================================================================== */
     motionGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('.pill-btn');
@@ -1964,6 +2313,53 @@ ${shadowKeyframes}      }
       state.prop = btn.dataset.prop;
       renderStaticLayers();
       playSynth('pop', 600);
+      updateBakedCodePreview();
+    });
+
+    // Bubble Type & Font Grid
+    document.getElementById('bubbleTypeGrid').addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill-btn');
+      if (!btn) return;
+      document.querySelectorAll('#bubbleTypeGrid .pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.bubbleType = btn.dataset.bubble;
+      playSynth('pop', 520);
+      renderBubble();
+      updateBakedCodePreview();
+    });
+
+    document.getElementById('fontGrid').addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill-btn');
+      if (!btn) return;
+      document.querySelectorAll('#fontGrid .pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.bubbleFont = btn.dataset.font;
+      playSynth('pop', 560);
+      renderBubble();
+      updateBakedCodePreview();
+    });
+
+    document.getElementById('bubbleTextInput').addEventListener('input', (e) => {
+      state.bubbleText = e.target.value;
+      renderBubble();
+      updateBakedCodePreview();
+    });
+
+    sliderBubbleX.addEventListener('input', (e) => {
+      state.bubbleX = Number(e.target.value);
+      renderBubble();
+      updateBakedCodePreview();
+    });
+
+    sliderBubbleY.addEventListener('input', (e) => {
+      state.bubbleY = Number(e.target.value);
+      renderBubble();
+      updateBakedCodePreview();
+    });
+
+    sliderBubbleScale.addEventListener('input', (e) => {
+      state.bubbleScale = Number(e.target.value);
+      renderBubble();
       updateBakedCodePreview();
     });
 
@@ -2018,8 +2414,31 @@ ${shadowKeyframes}      }
       document.getElementById('txtGaze').textContent = `${state.gazeMax.toFixed(1)}px`;
     });
 
-    // Stage Pointer & Click Boing
-    // Copy, Preview & Download Baked SVG
+    // Stage Pointer Tracking & Boing
+    stageSvg.addEventListener('pointermove', (e) => {
+      const pt = getSvgPoint(e);
+      state.pointer.targetX = pt.x;
+      state.pointer.targetY = pt.y;
+    });
+
+    stageSvg.addEventListener('click', (e) => {
+      if (isDraggingBubble) return;
+      triggerBoingImpulse();
+    });
+
+    document.getElementById('pillBoing').addEventListener('click', triggerBoingImpulse);
+    document.getElementById('pillRandom').addEventListener('click', randomizeEverything);
+    document.getElementById('pillXray').addEventListener('click', toggleExplode);
+    document.getElementById('btnSurprise').addEventListener('click', randomizeEverything);
+    document.getElementById('btnExplode').addEventListener('click', toggleExplode);
+
+    document.getElementById('btnSound').addEventListener('click', () => {
+      state.soundEnabled = !state.soundEnabled;
+      document.getElementById('soundIcon').textContent = state.soundEnabled ? '🔊' : '🔇';
+      showToast(state.soundEnabled ? '🔊 SFX Enabled' : '🔇 SFX Muted');
+    });
+
+    // Copy & Download Baked SVG
     function copySvgToClipboard() {
       const svgText = generateBakedStandaloneSvg();
       const tempArea = document.createElement('textarea');
@@ -2095,6 +2514,7 @@ ${shadowKeyframes}      }
     // Boot Studio
     initMascotCards();
     selectMascot(0);
+    renderBubble();
     requestAnimationFrame(animate);
   </script>
 </body>
